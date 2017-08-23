@@ -2,7 +2,8 @@ var express = require('express');
 var app = express();
 
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+  res.json({marcelo: 'aaaa'});
+
 });
 
 app.listen(3000, function () {
