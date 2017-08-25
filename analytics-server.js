@@ -13,6 +13,10 @@ app.get('/', function(request, response) {
   response.render('pages/index');
 });
 
+// app.get('/monitor', auth, function(request, response) {
+//   response.render('pages/monitor');
+// });
+
 app.listen(app.get('port'), function() {
   console.log('Application Running on port:', app.get('port'));
 });

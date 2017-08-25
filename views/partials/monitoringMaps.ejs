@@ -1,0 +1,24 @@
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-bar-chart-o fa-fw"></i> Monitoramento
+        </div>
+        <div class="panel-body">
+        <div id='myMap' style='width: 70vw; height: 70vh;'></div>
+            <script type='text/javascript'>
+                    var map;
+                    function loadMapScenario() {
+                        map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                            credentials: 'Ao6vpD6q5I9xFZiLoO-2tZm5KNPZ2E80Y8pkPfzVeQpDmUqJ3FoYlkLN9nWC6HET'
+                        });
+                        var pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), { text: 'V', title: 'Viriato', subTitle: 'JXK0455' });
+                        map.entities.push(pushpin);
+                    };
+
+                    
+            </script>       
+    <!-- /.panel -->
+        </div>
+        <!-- /.panel-body -->
+    </div>        
+       
