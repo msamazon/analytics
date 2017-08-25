@@ -5,7 +5,8 @@
   "main": "analytics-server.js",
   "dependencies": {
     "ejs": "^2.5.7",
-    "express": "^4.15.4"
+    "express": "^4.15.4",
+    "grunt": "^1.0.1"
   },
   "devDependencies": {},
   "scripts": {
