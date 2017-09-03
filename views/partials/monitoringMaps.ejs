@@ -8,13 +8,50 @@
             <script type='text/javascript'>
                     var map;
                     function loadMapScenario() {
+                        var navigationBarMode = Microsoft.Maps.NavigationBarMode;
                         map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
-                            credentials: 'Ao6vpD6q5I9xFZiLoO-2tZm5KNPZ2E80Y8pkPfzVeQpDmUqJ3FoYlkLN9nWC6HET'
+                            credentials: 'Ao6vpD6q5I9xFZiLoO-2tZm5KNPZ2E80Y8pkPfzVeQpDmUqJ3FoYlkLN9nWC6HET',
+                            navigationBarMode: navigationBarMode.compact
                         });
-                        var pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), { text: 'V', title: 'Viriato', subTitle: 'JXK0455' });
-                        map.entities.push(pushpin);
+                        // var encodedString = 'qkskt8pvoC74ZqyX7tiBxsP41WkuQjjHqiG0tg6G_hIhlCj7ax8Mt8M35L0lGjD3ii9ByzUx3DDDhlCl1SzmLw4Kxxq8W9jQz8Sw5R44P0icts6Bpxcykbq53yB4uEm7VlhO0tMgiNz6lljv5W9o72xw5WgiN0i4oQ74V_fIGF9oBj7R';
+                        // //Decode the encoded string.
+                        // var locs = Microsoft.Maps.PointCompression.decode(encodedString);
+                        // //Display the locations as a polyline on the map so we can see what it looks like.
+                        // var p = new Microsoft.Maps.Polyline(locs, {
+                        //     strokeColor: 'red',
+                        //     strokeThickness: 5
+                        // });
+                        // map.entities.push(p);
+                        // //Set the view of the map over the polyline.
+                        // map.setView({ bounds: Microsoft.Maps.LocationRect.fromLocations(locs) });
                     };
 
+                    var pushpin;
+
+                    function success(position) {
+                        x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+                        var pos = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+
+                        p++;
+                        console.log(p);
+
+                        if(pushpin){
+                            pushpin.setLocation(pos);
+                        }else{
+                            //infobox
+                            var offsetInfo = new Microsoft.Maps.Point(0, 30); 
+                            var infoboxOptions  = { title: "Location Information", description:   "This is your current location.", offset: offsetInfo };
+                            var callout = new Microsoft.Maps.Infobox(pos, infoboxOptions);
+
+                            //pushpin
+                            var offsetPin = new Microsoft.Maps.Point(0, 5);
+                            var pushpinOptions = {text : '1', visible: true, textOffset: offsetPin};
+                            pushpin = new Microsoft.Maps.Pushpin(pos, pushpinOptions);
+                            map.entities.push(pushpin);
+                        }
+
+                        map.setView({center:pos});
+                    }
                     
             </script>       
     <!-- /.panel -->
