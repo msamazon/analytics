@@ -10,9 +10,25 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
+  response.render('pages/loginBeta');
+});
+
+app.get('/login', function(request, response) {
+  response.render('pages/login');
+});
+
+app.get('/loginBeta', function(request, response) {
+  response.render('pages/loginBeta');
+});
+
+app.get('/portal', function(request, response) {
   response.render('pages/index');
 });
 
+
+app.use(function(req, res) {
+  res.status(404).send({url: req.originalUrl + ' not found'})
+});
 // app.get('/monitor', auth, function(request, response) {
 //   response.render('pages/monitor');
 // });
