@@ -52,7 +52,7 @@
                             crossDomain: "true",
                             contentType: "application/json; charset=UTF-8",
                              complete: function() {                        
-                                 setTimeout(executeQuery, 2000);
+                                 setTimeout(executeQuery, 1000);
                             }
                             //  data:  JSON.stringify({name: "Dennis", address: {city: "Dub", country: "IE"}})
                         }).done(function ( data ) {                               
@@ -69,7 +69,7 @@
                         var mapOptions = {
                             credentials: 'Ao6vpD6q5I9xFZiLoO-2tZm5KNPZ2E80Y8pkPfzVeQpDmUqJ3FoYlkLN9nWC6HET',
                             mapTypeId: Microsoft.Maps.MapTypeId.road,
-                            zoom: 19
+                            zoom: 15
                         };
                         //map initialization
                         map = new Microsoft.Maps.Map(document.getElementById('myMap'), mapOptions);
@@ -110,4 +110,3 @@
         </div>
         <!-- /.panel-body -->
     </div>        
-       
