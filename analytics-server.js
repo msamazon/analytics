@@ -9,21 +9,9 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.get('/', function(request, response) {
-  response.render('pages/loginBeta');
-});
 
-app.get('/login', function(request, response) {
-  response.render('pages/login');
-});
-
-app.get('/loginBeta', function(request, response) {
-  response.render('pages/loginBeta');
-});
-
-app.get('/portal', function(request, response) {
-  response.render('pages/index');
-});
+var routes = require(__dirname + '/routes/Routes'); //importing route
+routes(app); //register the route
 
 
 app.use(function(req, res) {

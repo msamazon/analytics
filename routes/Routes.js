@@ -6,7 +6,7 @@ module.exports = function(app) {
     // =====================================
     // HOME PAGE (with login links) ========
     // =====================================
-    app.get('/', function(req, res) {
+    app.get('/portal', function(req, res) {
         res.render('pages/index'); // load the index.ejs file
     });
 
@@ -54,4 +54,15 @@ module.exports = function(app) {
         req.logout();
         res.redirect('/');
     });
-}
+};
+
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {
+    
+        // if user is authenticated in the session, carry on 
+        if (req.isAuthenticated())
+            return next();
+    
+        // if they aren't redirect them to the home page
+        res.redirect('/');
+    }
