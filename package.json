@@ -1,26 +1,25 @@
 {
-  "name": "analytics",
-  "version": "1.0.0",
-  "description": "",
-  "main": "analytics-server.js",
-  "dependencies": {
-    "ejs": "^2.5.7",
-    "envs": "^0.1.6",
-    "express": "^4.15.4",
-    "grunt": "^1.0.1"
-  },
-  "devDependencies": {},
+  "name": "demo",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/driveonauto/analytics.git"
-  },
-  "author": "Marcelo",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/driveonauto/analytics/issues"
-  },
-  "homepage": "https://github.com/driveonauto/analytics#readme"
+  "dependencies": {
+    "body-parser": "~1.17.1",
+    "bower": "^1.8.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "generate-schema": "^2.5.1",
+    "jade": "~1.11.0",
+    "jquery": "^3.2.1",
+    "jstransformer": "^1.0.0",
+    "mongoose": "^4.11.10",
+    "mongoose-gen": "^2.1.1",
+    "morgan": "~1.8.1",
+    "nodemon": "^1.12.0",
+    "pug": "^2.0.0-rc.4",
+    "serve-favicon": "~2.4.2"
+  }
 }

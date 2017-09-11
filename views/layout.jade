@@ -1,0 +1,900 @@
+doctype html
+html(lang='pt-BR')
+  head
+    title= title
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    meta(name='description', content='DriveOn White Label Platform')
+    meta(name='author', content='DriveOn Devs')
+    meta(name='keyword', content='Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,Angular 2,Angular4,Angular 4,jQuery,CSS,HTML,RWD,Dashboard,React,React.js,Vue,Vue.js')
+    //- link(rel='shortcut icon', href='img/favicon.png')
+    // Icons
+    link(href='css/font-awesome.min.css', rel='stylesheet')
+    link(href='css/simple-line-icons.css', rel='stylesheet')
+
+    link(rel='apple-touch-icon', sizes='180x180', href='img/apple-touch-icon.png')
+    link(rel='icon', type='image/png', sizes='32x32', href='img/favicon-32x32.png')
+    link(rel='icon', type='image/png', sizes='16x16', href='img/favicon-16x16.png')
+    link(rel='manifest', href='/manifest.json')
+    link(rel='mask-icon', href='/safari-pinned-tab.svg', color='#5bbad5')
+    meta(name='theme-color', content='#ffffff')
+
+    // Main styles for this application
+    link(href='css/style.css', rel='stylesheet')
+  body.app.header-fixed.sidebar-fixed.aside-menu-fixed.aside-menu-hidden
+     header.app-header.navbar
+      button.navbar-toggler.mobile-sidebar-toggler.d-lg-none.mr-auto(type='button') ☰
+      a.navbar-brand(href='#')
+      button.navbar-toggler.sidebar-minimizer.d-md-down-none(type='button') ☰
+      ul.nav.navbar-nav.d-md-down-none
+        li.nav-item.px-3
+          a.nav-link(href='#') Dashboard
+        li.nav-item.px-3
+          a.nav-link(href='#') Minha Conta
+        li.nav-item.px-3
+          a.nav-link(href='#') Configurações
+      ul.nav.navbar-nav.ml-auto
+        li.nav-item.d-md-down-none
+          a.nav-link(href='#')
+            i.icon-bell
+            span.badge.badge-pill.badge-danger 5
+        li.nav-item.d-md-down-none
+          a.nav-link(href='#')
+            i.icon-list
+        li.nav-item.d-md-down-none
+          a.nav-link(href='#')
+            i.icon-location-pin
+        li.nav-item.dropdown
+          a.nav-link.dropdown-toggle.nav-link(data-toggle='dropdown', href='#', role='button', aria-haspopup='true', aria-expanded='false')
+            img.img-avatar(src='img/avatars/1.jpg', alt='admin@driveonauto.com')
+            span.d-md-down-none Viriato
+          .dropdown-menu.dropdown-menu-right
+            .dropdown-header.text-center
+              strong Conta de Usuário
+            a.dropdown-item(href='#')
+              i.fa.fa-bell-o
+              |  Eventos
+              span.badge.badge-info 42
+            a.dropdown-item(href='#')
+              i.fa.fa-envelope-o
+              |  Mensagens
+              span.badge.badge-success 42
+            a.dropdown-item(href='#')
+              i.fa.fa-tasks
+              |  Diagnósticos
+              span.badge.badge-danger 42
+            a.dropdown-item(href='#')
+              i.fa.fa-comments
+              |  Avisos
+              span.badge.badge-warning 42
+            .dropdown-header.text-center
+              strong Configurações
+            a.dropdown-item(href='#')
+              i.fa.fa-user
+              |  Perfil
+            a.dropdown-item(href='#')
+              i.fa.fa-wrench
+              |  Parâmetros
+            a.dropdown-item(href='#')
+              i.fa.fa-usd
+              |  Financeiro
+              span.badge.badge-default 42
+            //- a.dropdown-item(href='#')
+            //-   i.fa.fa-file
+            //-   |  Projects
+            //-   span.badge.badge-primary 42
+            .divider
+            a.dropdown-item(href='#')
+              i.fa.fa-shield
+              |  Bloquear usuário
+            a.dropdown-item(href='#')
+              i.fa.fa-lock
+              |  Logout
+      button.navbar-toggler.aside-menu-toggler(type='button') ☰      
+    .app-body
+      .sidebar
+        nav.sidebar-nav
+          ul.nav
+            li.nav-item
+              a.nav-link(href='/')
+                i.icon-speedometer
+                |  Dashboard 
+                span.badge.badge-primary Novo
+            li.nav-title
+              | Meu veículo
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-puzzle
+                |  Veículos
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='components-buttons.html')
+                    i.icon-puzzle
+                    |  Localizar
+                li.nav-item
+                  a.nav-link(href='components-social-buttons.html')
+                    i.icon-puzzle
+                    |  Trajetos
+                li.nav-item
+                  a.nav-link(href='components-cards.html')
+                    i.icon-puzzle
+                    |  Saúde do Veículo                
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-star
+                |  Eventos
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='icons-font-awesome.html')
+                    i.icon-star
+                    |  Alarmes 
+                    span.badge.badge-secondary 4.7
+                li.nav-item
+                  a.nav-link(href='icons-simple-line-icons.html')
+                    i.icon-star
+                    |  Acionar Ação
+            li.nav-item
+              a.nav-link(href='widgets.html')
+                i.icon-calculator
+                |  Widgets 
+                span.badge.badge-primary Novo
+            li.nav-item
+              a.nav-link(href='charts.html')
+                i.icon-pie-chart
+                |  Analytics
+            li.divider
+            li.nav-title
+              | Administração
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-star
+                |  Acesso
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='pages-login.html', target='_top')
+                    i.icon-star
+                    |  Login
+                li.nav-item
+                  a.nav-link(href='pages-register.html', target='_top')
+                    i.icon-star
+                    |  Registrar
+                li.nav-item
+                  a.nav-link(href='pages-404.html', target='_top')
+                    i.icon-star
+                    |  Error 404
+                li.nav-item
+                  a.nav-link(href='pages-500.html', target='_top')
+                    i.icon-star
+                    |  Error 500
+      // Main content
+      main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Principal
+          li.breadcrumb-item
+            a(href='#') Admin
+          li.breadcrumb-item.active Dashboard
+          // Breadcrumb Menu
+          li.breadcrumb-menu.d-md-down-none
+            .btn-group(role='group', aria-label='Button group')
+              a.btn(href='#')
+                i.icon-speech
+              a.btn(href='./')
+                i.icon-graph
+                |   Dashboard
+              a.btn(href='#')
+                i.icon-settings
+                |   Configurações
+        .container-fluid
+          .animated.fadeIn
+            // /.row
+            //- .card
+            //-   .card-body
+            //-     .row
+            //-       .col-sm-5
+            //-         h4.card-title.mb-0 Meu último percurso
+            //-         .small.text-muted 08/09/2017                  
+            //-       // /.col
+            //-     // /.row
+            //-     //- .chart-wrapper(style='height:400px;margin-top:10px;')
+            //-     #myMap(style='left:0vl; width: 74vw; height: 60vh;')
+            //-       script(type='text/javascript').
+            //-         var map;
+            //-         var p = 0;
+            //-         var pushpin;
+                    
+            //-         function loadMapScenario() {                    
+            //-           watchPosition();
+            //-         };
+                    
+            //-         function executeQuery() {
+            //-           jQuery.support.cors = true;
+            //-           $.ajax
+            //-           ({
+            //-             type: "get",
+            //-             url: "http://13.82.53.220:4885/message/gps/33574e2d3136303130303535",
+            //-             dataType: "json",
+            //-             crossDomain: "true",
+            //-             contentType: "application/json; charset=UTF-8",
+            //-             complete: function() {
+            //-               setTimeout(executeQuery, 1000);
+            //-             }
+            //-           //  data:  JSON.stringify({name: "Dennis", address: {city: "Dub", country: "IE"}})
+            //-           }).done(function ( data ) {
+            //-             success(data);
+            //-           });
+            //-         }
+
+            //-         function error(err) {
+            //-           console.log(err.toString());
+            //-         }
+            //-         function watchPosition() {
+            //-           //map options
+            //-           var mapOptions = {
+            //-             credentials: 'Ao6vpD6q5I9xFZiLoO-2tZm5KNPZ2E80Y8pkPfzVeQpDmUqJ3FoYlkLN9nWC6HET',
+            //-             mapTypeId: Microsoft.Maps.MapTypeId.road,
+            //-             zoom: 15
+            //-           };
+            //-           //map initialization
+            //-           map = new Microsoft.Maps.Map(document.getElementById('myMap'), mapOptions);
+            //-           setTimeout(executeQuery, 2000);
+            //-         }
+
+            //-         function success(position) {
+            //-           var geoloc =  position.message.gpsData.split(',');
+            //-           var lati = geoloc[0];
+            //-           var logi = geoloc[1];
+                     
+            //-           var pos = new Microsoft.Maps.Location(lati, logi);
+            //-           p++;
+            //-           // console.log(p);
+            //-           if(pushpin){
+            //-             pushpin.setLocation(pos);
+            //-           }else{
+            //-             //infobox
+            //-             var offsetInfo = new Microsoft.Maps.Point(0, 30);
+            //-             var infoboxOptions  = { title: "Location Information", description:   "This is your current location.", offset: offsetInfo };
+            //-             var callout = new Microsoft.Maps.Infobox(pos, infoboxOptions);
+            //-             //pushpin
+            //-             var offsetPin = new Microsoft.Maps.Point(0, 5);
+            //-             var pushpinOptions = {text : 'V', visible: true, textOffset: offsetPin};
+            //-             pushpin = new Microsoft.Maps.Pushpin(pos, pushpinOptions);
+            //-             map.entities.push(pushpin);
+            //-           }
+            //-           map.setView({center:pos});
+            //-         }               
+
+            //- // /.card
+            //- .row
+            //-   //- .col-sm-6.col-lg-3
+            //-   //-   .card.text-white.bg-primary
+            //-   //-     .card-body.pb-0
+            //-   //-       .btn-group.float-right
+            //-   //-         button.btn.btn-transparent.dropdown-toggle.p-0(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            //-   //-           i.icon-settings
+            //-   //-         .dropdown-menu.dropdown-menu-right
+            //-   //-           a.dropdown-item(href='#') Action
+            //-   //-           a.dropdown-item(href='#') Another action
+            //-   //-           a.dropdown-item(href='#') Something else here
+            //-   //-       h4.mb-0 9.823
+            //-   //-       p Members online
+            //-   //-     .chart-wrapper.px-3(style='height:70px;')
+            //-   //-       canvas#card-chart1.chart(height='70')
+            //-   // /.col
+            //-   .col-sm-6.col-lg-4
+            //-     .card.text-white.bg-info
+            //-       .card-body.pb-0
+            //-         button.btn.btn-transparent.p-0.float-right(type='button')
+            //-           i.icon-location-pin
+            //-         h4.mb-0 0
+            //-         p Diagnósticos
+            //-       .chart-wrapper.px-3(style='height:70px;')
+            //-         canvas#card-chart2.chart(height='70')
+            //-   // /.col
+            //-   .col-sm-6.col-lg-4
+            //-     .card.text-white.bg-warning
+            //-       .card-body.pb-0
+            //-         .btn-group.float-right
+            //-           button.btn.btn-transparent.dropdown-toggle.p-0(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            //-             i.icon-settings
+            //-           .dropdown-menu.dropdown-menu-right
+            //-             a.dropdown-item(href='#') Action
+            //-             a.dropdown-item(href='#') Another action
+            //-             a.dropdown-item(href='#') Something else here
+            //-         h4.mb-0 12.9 V
+            //-         p Nível da Bateria
+            //-       .chart-wrapper(style='height:70px;')
+            //-         canvas#card-chart3.chart(height='70')
+            //-   // /.col
+            //-   .col-sm-6.col-lg-4
+            //-     .card.text-white.bg-danger
+            //-       .card-body.pb-0
+            //-         .btn-group.float-right
+            //-           button.btn.btn-transparent.dropdown-toggle.p-0(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            //-             i.icon-settings
+            //-           .dropdown-menu.dropdown-menu-right
+            //-             a.dropdown-item(href='#') Action
+            //-             a.dropdown-item(href='#') Another action
+            //-             a.dropdown-item(href='#') Something else here
+            //-         h4.mb-0 0
+            //-         p Total de Falhas
+            //-       .chart-wrapper.px-3(style='height:70px;')
+            //-         canvas#card-chart4.chart(height='70')
+            //-   // /.col
+            // /.row
+            //- .card
+            //-   .card-body
+            //-     .row
+            //-       .col-sm-5
+            //-         h4.card-title.mb-0 Nivel de Bateria
+            //-         .small.text-muted September 2017
+            //-       // /.col
+            //-       .col-sm-7.hidden-sm-down
+            //-         button.btn.btn-primary.float-right(type='button')
+            //-           i.icon-cloud-download
+            //-         .btn-toolbar.float-right(role='toolbar', aria-label='Toolbar with button groups')
+            //-           .btn-group.mr-3(data-toggle='buttons', aria-label='First group')
+            //-             label.btn.btn-outline-secondary
+            //-               input#option1(type='radio', name='options')
+            //-               | Day
+            //-             label.btn.btn-outline-secondary.active
+            //-               input#option2(type='radio', name='options', checked='')
+            //-               | Month
+            //-             label.btn.btn-outline-secondary
+            //-               input#option3(type='radio', name='options')
+            //-               | Year
+            //-       // /.col
+            //-     // /.row
+            //-     .chart-wrapper(style='height:300px;margin-top:40px;')
+            //-       canvas#main-chart.chart(height='300')
+            //-   .card-footer
+            //-     ul
+            //-       li
+            //-         .text-muted Visits
+            //-         strong 29.703 Users (40%)
+            //-         .progress.progress-xs.mt-2
+            //-           .progress-bar.bg-success(role='progressbar', style='width: 40%', aria-valuenow='40', aria-valuemin='0', aria-valuemax='100')
+            //-       li.hidden-sm-down
+            //-         .text-muted Unique
+            //-         strong 24.093 Users (20%)
+            //-         .progress.progress-xs.mt-2
+            //-           .progress-bar.bg-info(role='progressbar', style='width: 20%', aria-valuenow='20', aria-valuemin='0', aria-valuemax='100')
+            //-       li
+            //-         .text-muted Pageviews
+            //-         strong 78.706 Views (60%)
+            //-         .progress.progress-xs.mt-2
+            //-           .progress-bar.bg-warning(role='progressbar', style='width: 60%', aria-valuenow='60', aria-valuemin='0', aria-valuemax='100')
+            //-       li.hidden-sm-down
+            //-         .text-muted New Users
+            //-         strong 22.123 Users (80%)
+            //-         .progress.progress-xs.mt-2
+            //-           .progress-bar.bg-danger(role='progressbar', style='width: 80%', aria-valuenow='80', aria-valuemin='0', aria-valuemax='100')
+            //-       li.hidden-sm-down
+            //-         .text-muted Bounce Rate
+            //-         strong 40.15%
+            //-         .progress.progress-xs.mt-2
+            //-           .progress-bar(role='progressbar', style='width: 40%', aria-valuenow='40', aria-valuemin='0', aria-valuemax='100')
+            //- // /.card
+            //- .row
+            //-   .col-sm-6.col-lg-3
+            //-     .social-box.facebook
+            //-       i.fa.fa-facebook
+            //-       .chart-wrapper
+            //-         canvas#social-box-chart-1(height='90')
+            //-       ul
+            //-         li
+            //-           strong 89k
+            //-           span friends
+            //-         li
+            //-           strong 459
+            //-           span feeds
+            //-     // /.social-box
+            //-   // /.col
+            //-   .col-sm-6.col-lg-3
+            //-     .social-box.twitter
+            //-       i.fa.fa-twitter
+            //-       .chart-wrapper
+            //-         canvas#social-box-chart-2(height='90')
+            //-       ul
+            //-         li
+            //-           strong 973k
+            //-           span followers
+            //-         li
+            //-           strong 1.792
+            //-           span tweets
+            //-     // /.social-box
+            //-   // /.col
+            //-   .col-sm-6.col-lg-3
+            //-     .social-box.linkedin
+            //-       i.fa.fa-linkedin
+            //-       .chart-wrapper
+            //-         canvas#social-box-chart-3(height='90')
+            //-       ul
+            //-         li
+            //-           strong 500+
+            //-           span contacts
+            //-         li
+            //-           strong 292
+            //-           span feeds
+            //-     // /.social-box
+            //-   // /.col
+            //-   .col-sm-6.col-lg-3
+            //-     .social-box.google-plus
+            //-       i.fa.fa-google-plus
+            //-       .chart-wrapper
+            //-         canvas#social-box-chart-4(height='90')
+            //-       ul
+            //-         li
+            //-           strong 894
+            //-           span followers
+            //-         li
+            //-           strong 92
+            //-           span circles
+            //-     // /.social-box
+            //-   // /.col
+            //- // /.row
+            .row
+              .col-md-12
+                .card
+                  .card-header
+                    | Veículos
+                  .card-body
+                    .row
+                      #myMap(style='left:15px; width: 74vw; height: 60vh;')
+                        script(type='text/javascript').
+                          var map;
+                          var p = 0;                          
+                          var pushpin;
+                          var dongles = ['33574e2d3136303130303535','33574e2d3136303130303536','3247512d3136303130303139'];
+                          function loadMapScenario() {                    
+                            watchPosition();
+                          };
+                          
+                          function executeQueryA() {
+                              jQuery.support.cors = true;
+                              $.ajax
+                              ({
+                                type: "get",
+                                url: "http://13.82.53.220:4885/message/gps/33574e2d3136303130303535",
+                                dataType: "json",
+                                crossDomain: "true",
+                                contentType: "application/json; charset=UTF-8"                              
+                                //- ,
+                                //- complete: function() {
+                                //-   setTimeout(executeQueryA, 1000);
+                                //- }
+                              //  data:  JSON.stringify({name: "Dennis", address: {city: "Dub", country: "IE"}})
+                              }).done(function ( data ) {
+                                console.log("call : dongles[0]:" + dongles[0] + ", Data:" + data);
+                                success(dongles[0],data);
+                                executeQueryB();
+                              });
+                          };
+
+                          function executeQueryB() {
+                            $.ajax
+                            ({
+                              type: "get",
+                              url: "http://13.82.53.220:4885/message/gps/33574e2d3136303130303536",
+                              dataType: "json",
+                              crossDomain: "true",
+                              contentType: "application/json; charset=UTF-8",
+                              complete: function() {
+                                //- setTimeout(executeQueryA, 1000);
+                              }
+                            //  data:  JSON.stringify({name: "Dennis", address: {city: "Dub", country: "IE"}})
+                            }).done(function ( data ) {
+                              console.log("call : dongles[1]:" + dongles[1] + ", Data:" + data);
+                              success(dongles[1],data);
+                              //- executeQueryA();
+                            });
+                          };
+                          function executeQueryC() {
+                            $.ajax
+                            ({
+                              type: "get",
+                              url: "http://13.82.53.220:4885/message/gps/3247512d3136303130303139",
+                              dataType: "json",
+                              crossDomain: "true",
+                              contentType: "application/json; charset=UTF-8"
+                              //- ,
+                              //- complete: function() {
+                              //-   setTimeout(executeQueryC, 1000);
+                              //- }
+                            //  data:  JSON.stringify({name: "Dennis", address: {city: "Dub", country: "IE"}})
+                            }).done(function ( data ) {
+                              console.log("call : dongles[2]:" + dongles[2] + ", Data:" + data);                              
+                              success(dongles[2],data);
+                            });
+                          };
+
+                          function error(err) {
+                            console.log(err.toString());
+                          }
+                          function watchPosition() {
+                            //map options
+                            var mapOptions = {
+                              credentials: 'Ao6vpD6q5I9xFZiLoO-2tZm5KNPZ2E80Y8pkPfzVeQpDmUqJ3FoYlkLN9nWC6HET',
+                              mapTypeId: Microsoft.Maps.MapTypeId.road,
+                              enableSearchLogo: false,
+                              zoom: 12
+                            };
+                            //map initialization
+                            map = new Microsoft.Maps.Map(document.getElementById('myMap'), mapOptions);
+                            
+                            executeQueryA();
+                            //- executeQueryB();
+                            //- executeQueryC();                            
+                          }
+
+                          function success(dongle, position) {
+                            var geoloc =  position.message.gpsData.split(',');
+                            var lati = geoloc[0];
+                            var logi = geoloc[1];
+                          
+                            var pos = new Microsoft.Maps.Location(lati, logi);
+                            p++;
+                            console.log("Success func => dongle:" + dongle + "  posit:" + position);
+                            //- if(pushpin){
+                            //-   pushpin.setLocation(pos);
+                            //- }else{
+                              //infobox
+                              var offsetInfo = new Microsoft.Maps.Point(0, 30);
+                              var infoboxOptions  = { title: "Info.", description:   "Carro", offset: offsetInfo };
+                              var callout = new Microsoft.Maps.Infobox(pos, infoboxOptions);
+                              //pushpin
+                              var offsetPin = new Microsoft.Maps.Point(0, 5);
+                              var cardraw = '/img/driveonicocar.jpg'
+                              var dongleCode = dongle.match(/.{1,2}/g).map(function(v){
+                                                  return String.fromCharCode(parseInt(v, 16));
+                                                }).join('');
+                              var pushpinOptions = {icon: cardraw, title: 'Viriato', subTitle: dongleCode };
+                              pushpin = new Microsoft.Maps.Pushpin(pos, pushpinOptions);
+
+                              map.entities.push(pushpin);
+                              map.entities.push(callout);
+                            //- }
+                             map.setView({center:pos});
+                          };
+                      // /.col
+                    // /.row
+                    br
+                    table.table.table-responsive.table-hover.table-outline.mb-0
+                      thead.thead-default
+                        tr
+                          th.text-center
+                            i.icon-people
+                          th User
+                          th.text-center Country
+                          th Usage
+                          th.text-center Payment Method
+                          th Activity
+                      tbody
+                        tr
+                          td.text-center
+                            .avatar
+                              img.img-avatar(src='img/avatars/1.jpg', alt='admin@bootstrapmaster.com')
+                              span.avatar-status.badge-success
+                          td
+                            div Yiorgos Avraamu
+                            .small.text-muted
+                              span New
+                              | | Registered: Jan 1, 2015
+                          td.text-center
+                            img(src='img/flags/USA.png', alt='USA', style='height:24px;')
+                          td
+                            .clearfix
+                              .float-left
+                                strong 50%
+                              .float-right
+                                small.text-muted Jun 11, 2015 - Jul 10, 2015
+                            .progress.progress-xs
+                              .progress-bar.bg-success(role='progressbar', style='width: 50%', aria-valuenow='50', aria-valuemin='0', aria-valuemax='100')
+                          td.text-center
+                            i.fa.fa-cc-mastercard(style='font-size:24px')
+                          td
+                            .small.text-muted Last login
+                            strong 10 sec ago
+                        tr
+                          td.text-center
+                            .avatar
+                              img.img-avatar(src='img/avatars/2.jpg', alt='admin@bootstrapmaster.com')
+                              span.avatar-status.badge-danger
+                          td
+                            div Avram Tarasios
+                            .small.text-muted
+                              span Recurring
+                              | | Registered: Jan 1, 2015
+                          td.text-center
+                            img(src='img/flags/Brazil.png', alt='Brazil', style='height:24px;')
+                          td
+                            .clearfix
+                              .float-left
+                                strong 10%
+                              .float-right
+                                small.text-muted Jun 11, 2015 - Jul 10, 2015
+                            .progress.progress-xs
+                              .progress-bar.bg-info(role='progressbar', style='width: 10%', aria-valuenow='10', aria-valuemin='0', aria-valuemax='100')
+                          td.text-center
+                            i.fa.fa-cc-visa(style='font-size:24px')
+                          td
+                            .small.text-muted Last login
+                            strong 5 minutes ago
+                        tr
+                          td.text-center
+                            .avatar
+                              img.img-avatar(src='img/avatars/3.jpg', alt='admin@bootstrapmaster.com')
+                              span.avatar-status.badge-warning
+                          td
+                            div Quintin Ed
+                            .small.text-muted
+                              span New
+                              | | Registered: Jan 1, 2015
+                          td.text-center
+                            img(src='img/flags/India.png', alt='India', style='height:24px;')
+                          td
+                            .clearfix
+                              .float-left
+                                strong 74%
+                              .float-right
+                                small.text-muted Jun 11, 2015 - Jul 10, 2015
+                            .progress.progress-xs
+                              .progress-bar.bg-warning(role='progressbar', style='width: 74%', aria-valuenow='74', aria-valuemin='0', aria-valuemax='100')
+                          td.text-center
+                            i.fa.fa-cc-stripe(style='font-size:24px')
+                          td
+                            .small.text-muted Last login
+                            strong 1 hour ago                      
+              // /.col
+            // /.row
+        // /.conainer-fluid
+      aside.aside-menu
+        ul.nav.nav-tabs(role='tablist')
+          li.nav-item
+            a.nav-link.active(data-toggle='tab', href='#timeline', role='tab')
+              i.icon-list
+          li.nav-item
+            a.nav-link(data-toggle='tab', href='#messages', role='tab')
+              i.icon-speech
+          li.nav-item
+            a.nav-link(data-toggle='tab', href='#settings', role='tab')
+              i.icon-settings
+        // Tab panes
+        .tab-content
+          #timeline.tab-pane.active(role='tabpanel')
+            .callout.m-0.py-2.text-muted.text-center.bg-light.text-uppercase
+              small
+                b Hoje
+            hr.transparent.mx-3.my-0
+            .callout.callout-warning.m-0.py-3
+              .avatar.float-right
+                img.img-avatar(src='img/avatars/7.jpg', alt='admin@bootstrapmaster.com')
+              div
+                | Meeting with
+                strong Lucas
+              small.text-muted.mr-3
+                i.icon-calendar
+                |   1 - 3pm
+              small.text-muted
+                i.icon-location-pin
+                |   Palo Alto, CA
+            hr.mx-3.my-0
+            .callout.callout-info.m-0.py-3
+              .avatar.float-right
+                img.img-avatar(src='img/avatars/4.jpg', alt='admin@bootstrapmaster.com')
+              div
+                | Skype with
+                strong Megan
+              small.text-muted.mr-3
+                i.icon-calendar
+                |   4 - 5pm
+              small.text-muted
+                i.icon-social-skype
+                |   On-line   
+            hr.transparent.mx-3.my-0
+            .callout.callout-danger.m-0.py-3
+              div
+                | New UI Project -
+                strong deadline
+              small.text-muted.mr-3
+                i.icon-calendar
+                |   10 - 11pm
+              small.text-muted
+                i.icon-home
+                |   creativeLabs HQ
+              .avatars-stack.mt-2
+                .avatar.avatar-xs
+                  img.img-avatar(src='img/avatars/2.jpg', alt='admin@bootstrapmaster.com')
+                .avatar.avatar-xs
+                  img.img-avatar(src='img/avatars/3.jpg', alt='admin@bootstrapmaster.com')
+                .avatar.avatar-xs
+                  img.img-avatar(src='img/avatars/4.jpg', alt='admin@bootstrapmaster.com')
+                .avatar.avatar-xs
+                  img.img-avatar(src='img/avatars/5.jpg', alt='admin@bootstrapmaster.com')
+                .avatar.avatar-xs
+                  img.img-avatar(src='img/avatars/6.jpg', alt='admin@bootstrapmaster.com')
+            hr.mx-3.my-0
+            .callout.callout-success.m-0.py-3
+              div
+                strong #10 Startups.Garden
+                | Meetup
+              small.text-muted.mr-3
+                i.icon-calendar
+                |   1 - 3pm
+              small.text-muted
+                i.icon-location-pin
+                |   Palo Alto, CA
+            hr.mx-3.my-0
+            .callout.callout-primary.m-0.py-3
+              div
+                strong Team meeting
+              small.text-muted.mr-3
+                i.icon-calendar
+                |   4 - 6pm
+              small.text-muted
+                i.icon-home
+                |   creativeLabs HQ
+              .avatars-stack.mt-2
+                .avatar.avatar-xs
+                  img.img-avatar(src='img/avatars/2.jpg', alt='admin@bootstrapmaster.com')
+                .avatar.avatar-xs
+                  img.img-avatar(src='img/avatars/3.jpg', alt='admin@bootstrapmaster.com')
+                .avatar.avatar-xs
+                  img.img-avatar(src='img/avatars/4.jpg', alt='admin@bootstrapmaster.com')
+                .avatar.avatar-xs
+                  img.img-avatar(src='img/avatars/5.jpg', alt='admin@bootstrapmaster.com')
+                .avatar.avatar-xs
+                  img.img-avatar(src='img/avatars/6.jpg', alt='admin@bootstrapmaster.com')
+                .avatar.avatar-xs
+                  img.img-avatar(src='img/avatars/7.jpg', alt='admin@bootstrapmaster.com')
+                .avatar.avatar-xs
+                  img.img-avatar(src='img/avatars/8.jpg', alt='admin@bootstrapmaster.com')
+            hr.mx-3.my-0
+          #messages.tab-pane.p-3(role='tabpanel')
+            .message
+              .py-3.pb-5.mr-3.float-left
+                .avatar
+                  img.img-avatar(src='img/avatars/7.jpg', alt='admin@bootstrapmaster.com')
+                  span.avatar-status.badge-success
+              div
+                small.text-muted Lukasz Holeczek
+                small.text-muted.float-right.mt-1 1:52 PM
+              .text-truncate.font-weight-bold Lorem ipsum dolor sit amet
+              small.text-muted
+                | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
+            hr
+            .message
+              .py-3.pb-5.mr-3.float-left
+                .avatar
+                  img.img-avatar(src='img/avatars/7.jpg', alt='admin@bootstrapmaster.com')
+                  span.avatar-status.badge-success
+              div
+                small.text-muted Lukasz Holeczek
+                small.text-muted.float-right.mt-1 1:52 PM
+              .text-truncate.font-weight-bold Lorem ipsum dolor sit amet
+              small.text-muted
+                | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
+            hr
+            .message
+              .py-3.pb-5.mr-3.float-left
+                .avatar
+                  img.img-avatar(src='img/avatars/7.jpg', alt='admin@bootstrapmaster.com')
+                  span.avatar-status.badge-success
+              div
+                small.text-muted Lukasz Holeczek
+                small.text-muted.float-right.mt-1 1:52 PM
+              .text-truncate.font-weight-bold Lorem ipsum dolor sit amet
+              small.text-muted
+                | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
+            hr
+            .message
+              .py-3.pb-5.mr-3.float-left
+                .avatar
+                  img.img-avatar(src='img/avatars/7.jpg', alt='admin@bootstrapmaster.com')
+                  span.avatar-status.badge-success
+              div
+                small.text-muted Lukasz Holeczek
+                small.text-muted.float-right.mt-1 1:52 PM
+              .text-truncate.font-weight-bold Lorem ipsum dolor sit amet
+              small.text-muted
+                | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
+            hr
+            .message
+              .py-3.pb-5.mr-3.float-left
+                .avatar
+                  img.img-avatar(src='img/avatars/7.jpg', alt='admin@bootstrapmaster.com')
+                  span.avatar-status.badge-success
+              div
+                small.text-muted Lukasz Holeczek
+                small.text-muted.float-right.mt-1 1:52 PM
+              .text-truncate.font-weight-bold Lorem ipsum dolor sit amet
+              small.text-muted
+                | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...
+          #settings.tab-pane.p-3(role='tabpanel')
+            h6 Settings
+            .aside-options
+              .clearfix.mt-4
+                small
+                  b Option 1
+                label.switch.switch-text.switch-pill.switch-success.switch-sm.float-right
+                  input.switch-input(type='checkbox', checked='')
+                  span.switch-label(data-on='On', data-off='Off')
+                  span.switch-handle
+              div
+                small.text-muted
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            .aside-options
+              .clearfix.mt-3
+                small
+                  b Option 2
+                label.switch.switch-text.switch-pill.switch-success.switch-sm.float-right
+                  input.switch-input(type='checkbox')
+                  span.switch-label(data-on='On', data-off='Off')
+                  span.switch-handle
+              div
+                small.text-muted
+                  | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            .aside-options
+              .clearfix.mt-3
+                small
+                  b Option 3
+                label.switch.switch-text.switch-pill.switch-success.switch-sm.float-right
+                  input.switch-input(type='checkbox')
+                  span.switch-label(data-on='On', data-off='Off')
+                  span.switch-handle
+            .aside-options
+              .clearfix.mt-3
+                small
+                  b Option 4
+                label.switch.switch-text.switch-pill.switch-success.switch-sm.float-right
+                  input.switch-input(type='checkbox', checked='')
+                  span.switch-label(data-on='On', data-off='Off')
+                  span.switch-handle
+            hr
+            h6 System Utilization
+            .text-uppercase.mb-1.mt-4
+              small
+                b CPU Usage
+            .progress.progress-xs
+              .progress-bar.bg-info(role='progressbar', style='width: 25%', aria-valuenow='25', aria-valuemin='0', aria-valuemax='100')
+            small.text-muted 348 Processes. 1/4 Cores.
+            .text-uppercase.mb-1.mt-2
+              small
+                b Memory Usage
+            .progress.progress-xs
+              .progress-bar.bg-warning(role='progressbar', style='width: 70%', aria-valuenow='70', aria-valuemin='0', aria-valuemax='100')
+            small.text-muted 11444GB/16384MB
+            .text-uppercase.mb-1.mt-2
+              small
+                b SSD 1 Usage
+            .progress.progress-xs
+              .progress-bar.bg-danger(role='progressbar', style='width: 95%', aria-valuenow='95', aria-valuemin='0', aria-valuemax='100')
+            small.text-muted 243GB/256GB
+            .text-uppercase.mb-1.mt-2
+              small
+                b SSD 2 Usage
+            .progress.progress-xs
+              .progress-bar.bg-success(role='progressbar', style='width: 10%', aria-valuenow='10', aria-valuemin='0', aria-valuemax='100')
+            small.text-muted 25GB/256GB
+    footer.app-footer
+      a(href='http://driveonauto.com') DriveOn Auto
+      |  © 2017.
+      span.float-right
+        | Powered by 
+        a(href='http://driveonauto.com') DriveOn Auto
+  // Bootstrap and necessary plugins
+  script(src='bower_components/jquery/dist/jquery.min.js')
+  script(src='bower_components/popper.js/dist/umd/popper.min.js')
+  script(src='bower_components/bootstrap/dist/js/bootstrap.min.js')
+  script(src='bower_components/pace/pace.min.js')
+  // Plugins and scripts required by all views
+  script(src='bower_components/chart.js/dist/Chart.min.js')
+  // GenesisUI main scripts
+  script(src='js/app.js')
+  // Plugins and scripts required by this views
+  // Custom scripts required by this view
+  script(src='js/views/main.js')
+  // Bing GeoLocation
+  script(type='text/javascript', src='http://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario&setMkt=pt-BR&setLang=pt-BR',async, defer)
+
