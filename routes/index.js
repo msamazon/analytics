@@ -9,9 +9,9 @@ router.get('/', function(req, res, next) {
 });
 
 // Messages
-router.get('/:id', message.list);
-router.get('/gps/:id', message.getgeo);
+router.get('/message/:id', message.list);
+router.get('/message/gps/:id', message.getgeo);
 // Get single message by id
-router.get('/show/:id', message.show);
+router.get('/message/show/:id', message.show);
 
 module.exports = router;
