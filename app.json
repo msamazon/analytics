@@ -1,0 +1,17 @@
+{
+  "name": "analytics",
+  "description": "Drive On Analytics ",
+  "scripts": {
+  },
+  "env": {
+    "env": "dev"
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ]
+}
