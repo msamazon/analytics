@@ -1,6 +1,6 @@
 {
-  "name": "analytics",
-  "description": "Drive On Analytics ",
+  "name": "driveon-enterprise",
+  "description": "Drive On Analytics Enterprise Platform",
   "scripts": {
   },
   "env": {
