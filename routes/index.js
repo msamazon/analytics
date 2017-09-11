@@ -1,14 +1,17 @@
 var express = require('express');
 var router = express.Router();
 
-var eventos = require('../controllers/do_car_a00');
+var message = require("../controllers/messageController.js");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'DriveOn Portal' });
 });
 
-/* GET Alarms and Events. */
-// router.get('/do_car_a00', eventos.listEvents);
+// Messages
+router.get('/:id', message.list);
+router.get('/gps/:id', message.getgeo);
+// Get single message by id
+router.get('/show/:id', message.show);
 
 module.exports = router;

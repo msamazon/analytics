@@ -7,8 +7,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://dbuser:123mudar#@ds139428.mlab.com:39428/driveondb'); 
-mongoose.connect('mongodb://msa:projeto59@ds139428.mlab.com:39428/driveondb', { useMongoClient: true }); 
+mongoose.connect('mongodb://dbuser:123mudar#@ds139428.mlab.com:39428/driveondb', { useMongoClient: true });  
 
 // Models
 // var companies = require('./models/do_com_m00');
@@ -32,9 +31,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-// app.use('/users', users);
-// app.use('/companies', companies);
-// app.use('/do_car_a00', do_car_a00);
+app.use('/message', message);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
