@@ -16,6 +16,6 @@ var DO_CAR_M00 = new Schema({
 })
 
 //Register schema to Mongoose
-var Message = mongoose.model('DO_CAR_M00', DO_CAR_M00);
+var Vehicle = mongoose.model('DO_CAR_M00', DO_CAR_M00);
 
-module.exports = Message
+module.exports = Vehicle
