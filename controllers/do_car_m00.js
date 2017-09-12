@@ -1,11 +1,11 @@
-var mongoose = require("mongoose")
-var Vehicle = require("../models/do_car_m00")
+var mongoose = require("mongoose");
+var Vehicle = require("../models/do_car_m00");
 
-var vehicleController = {}
+var vehicleController = {};
 
 vehicleController.list = function(req, res) {
   
-    Vehicle.find({'activeStatus':'yes'}).sort({'dateReceived' : -1}).exec(function (err, Vehicle) {
+    Vehicle.find({'activeStatus':'yes'}).sort({$natural:-1}).exec(function (err, Vehicle) {
     
     console.log("Veiculos:"+ Vehicle);
 
@@ -36,7 +36,7 @@ vehicleController.list = function(req, res) {
               }
               arrayVehicle.push(vehicles0);                 
           }        
-      res.json({Vehicle: vehicleId});
+      res.json({Vehicle: arrayVehicle});
     }
   })
 }

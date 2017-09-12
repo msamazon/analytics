@@ -1,7 +1,7 @@
-var mongoose  = require("mongoose")
-var Schema    = mongoose.Schema
+var mongoose  = require("mongoose");
+var Schema    = mongoose.Schema;
 
-var DO_CAR_M00 = new Schema({
+var DO_CAR_M00Schema = new Schema({
         vehicleId : Number, 
         deviceId : String, 
         deviceHex : String, 
@@ -13,9 +13,9 @@ var DO_CAR_M00 = new Schema({
         ownerId : Number,         
         createdAt : Date, 
         createdBy : String   
-})
+});
 
 //Register schema to Mongoose
-var Vehicle = mongoose.model('DO_CAR_M00', DO_CAR_M00);
+var Vehicle = mongoose.model('DO_CAR_M00', DO_CAR_M00Schema);
 
-module.exports = Vehicle
+module.exports = Vehicle;
