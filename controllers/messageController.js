@@ -39,7 +39,7 @@ messageController.getgeo = function(req, res) {
   
     var dongleCode = req.params.id
   
-    Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({'dateReceived' : -1}).limit(50).exec(function (err, message) {
+    Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({$natural:-1}).limit(10).exec(function (err, message) {
       
       if (err) {
         console.log("Error:", err);
