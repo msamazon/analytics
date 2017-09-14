@@ -10,12 +10,11 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://dbuser:123mudar#@ds139428.mlab.com:39428/driveondb', { useMongoClient: true });  
 
 // Models
-// var companies = require('./models/do_com_m00');
+//  var companies = require('./models/do_car_alarmsperday');
 // var do_car_a00 = require('./models/do_car_a00');
 
 // Routes
 var index = require('./routes/index');
-var timeline = require('./routes/timeline');
 
 var app = express();
 
@@ -32,7 +31,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/alarms', timeline);
 
 // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
@@ -50,6 +48,12 @@ app.get('/locate', function(req, res){
 app.get('/alarmes', function(req, res){
   res.render('ealarms', {
     title: 'Drive On Portal | Alarmes'
+  });
+});
+
+app.get('/analytics', function(req, res){
+  res.render('analytics', {
+    title: 'Drive On Portal | Analytics Data'
   });
 });
 

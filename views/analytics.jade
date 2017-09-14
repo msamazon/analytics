@@ -1,0 +1,12 @@
+extends layout
+block content
+ main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Meu veículo
+          li.breadcrumb-item Veiculo
+          li.breadcrumb-item.active Localizar
+        .container-fluid
+          .animated.fadeIn
+            .row     
+                iframe(src='https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/5116937845390896/292710492678053/2416752467241978/latest.html', height='400px', width='100%', allowfullscreen='yes', frameborder='0')
