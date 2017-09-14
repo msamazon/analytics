@@ -43,15 +43,17 @@ app.use('/alarms', timeline);
 
 app.get('/locate', function(req, res){
   res.render('locate', {
-    title: 'Drive On Portal| Localizar'
+    title: 'Drive On Portal | Localizar'
   });
 });
 
 app.get('/alarmes', function(req, res){
   res.render('ealarms', {
-    title: 'Drive On Portal| Alarmes'
+    title: 'Drive On Portal | Alarmes'
   });
 });
+
+// app.get('/alarms',timeline.list);
 // error handler
 app.use(function(err, req, res, next) {
 
