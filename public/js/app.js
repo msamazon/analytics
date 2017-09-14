@@ -72,15 +72,15 @@ $(document).ready(function($){
     }, 62.5);
   }
 
-  function updateEvents(){    
-    // var parameters = { companyId: $(this).val() };
-    var parameters = 2;
+  // function updateEvents(){    
+  //   // var parameters = { companyId: $(this).val() };
+  //   var parameters = 2;
     
-    $.get('/do_car_a00', function(data, status){
-        console.log("Data: " + data + "\nStatus: " + status);
-        //  $('#timeline').html(data);
-    });
-  }   
+  //   $.get('/do_car_a00', function(data, status){
+  //       console.log("Data: " + data + "\nStatus: " + status);
+  //       //  $('#timeline').html(data);
+  //   });
+  // }   
 
   /* ---------- Main Menu Open/Close, Min/Full ---------- */
   $('.navbar-toggler').click(function(){
@@ -98,7 +98,7 @@ $(document).ready(function($){
     if ($(this).hasClass('aside-menu-toggler')) {
       $('body').toggleClass('aside-menu-hidden');
       resizeBroadcast();
-      updateEvents();
+      // updateEvents();
     }
 
     if ($(this).hasClass('mobile-sidebar-toggler')) {
