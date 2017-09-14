@@ -15,6 +15,7 @@ mongoose.connect('mongodb://dbuser:123mudar#@ds139428.mlab.com:39428/driveondb',
 
 // Routes
 var index = require('./routes/index');
+var timeline = require('./routes/timeline');
 
 var app = express();
 
@@ -31,14 +32,26 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/alarms', timeline);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+// app.use(function(req, res, next) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   res.render('error', err);
+// });
+
+app.get('/locate', function(req, res){
+  res.render('locate', {
+    title: 'Drive On Portal| Localizar'
+  });
 });
 
+app.get('/alarmes', function(req, res){
+  res.render('ealarms', {
+    title: 'Drive On Portal| Alarmes'
+  });
+});
 // error handler
 app.use(function(err, req, res, next) {
 
@@ -52,6 +65,12 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+// Make our db accessible to our router
+app.use(function(req,res,next){
+  req.db = mongoose;
+  next();
 });
 
 mongoose.connection.on('connected', () => {

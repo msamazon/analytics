@@ -7,7 +7,7 @@ messageController.list = function(req, res) {
 
   var dongleCode = req.params.id
 
-  Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({'dateReceived' : -1}).limit(5).exec(function (err, message) {
+  Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({$natural :1}).limit(5).exec(function (err, message) {
     
     // console.log("Message: %s", message)
     if (err) {
