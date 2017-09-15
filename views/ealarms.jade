@@ -5,7 +5,7 @@ block content
         ol.breadcrumb
           li.breadcrumb-item Meu Veículo
           li.breadcrumb-item Eventos
-          li.breadcrumb-item.active Alertas
+          li.breadcrumb-item.active Alarmes
         .container-fluid
           .animated.fadeIn
             .row
@@ -67,27 +67,27 @@ block content
                         li.page-item
                           a.page-link(href='#') Next
 scripts(lang='javascript').  
-$(document).ready(function() {
-      // Populate the user table on initial page load
-      populateTable();
+  $(document).ready(function() {
+        // Populate the user table on initial page load
+        //- populateTable();
 
-});         
-function populateTable() {
-    // Empty content string
-    var tableContent = '';
-    // jQuery AJAX call for JSON
-    $.getJSON( '/users/userlist', function( data ) {
+  });         
+  function populateTable() {
+      // Empty content string
+      var tableContent = '';
+      // jQuery AJAX call for JSON
+      $.getJSON( '/users/userlist', function( data ) {
 
-        // For each item in our JSON, add a table row and cells to the content string
-        $.each(data, function(){
-            tableContent += '<tr>';
-            tableContent += '<td><a href="#" class="linkshowuser" rel="' + this.username + '">' + this.username + '</a></td>';
-            tableContent += '<td>' + this.email + '</td>';
-            tableContent += '<td><a href="#" class="linkdeleteuser" rel="' + this._id + '">delete</a></td>';
-            tableContent += '</tr>';
-        });
+          // For each item in our JSON, add a table row and cells to the content string
+          $.each(data, function(){
+              tableContent += '<tr>';
+              tableContent += '<td><a href="#" class="linkshowuser" rel="' + this.username + '">' + this.username + '</a></td>';
+              tableContent += '<td>' + this.email + '</td>';
+              tableContent += '<td><a href="#" class="linkdeleteuser" rel="' + this._id + '">delete</a></td>';
+              tableContent += '</tr>';
+          });
 
-        // Inject the whole content string into our existing HTML table
-        $('#userList table tbody').html(tableContent);
-    });
-};                 
+          // Inject the whole content string into our existing HTML table
+          $('#userList table tbody').html(tableContent);
+      });
+  };                 
