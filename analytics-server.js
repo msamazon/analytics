@@ -83,11 +83,16 @@ var passport        = require('passport')
 var jwt             = require('jsonwebtoken')
 var config          = require('./lib/config')
 var routes          = require('./routes/api.js')
+var path            = require('path')
 
 var port = process.env.PORT || 3000
 
-//mongo 
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
+
+//mongo
 mongoose.Promise = global.Promise
 mongoose.connect(config.database, { useMongoClient: true })
 
@@ -105,10 +110,12 @@ mongoose.connection.on('error', error => {
 
 //----
 
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -123,6 +130,6 @@ app.listen(port, function () {
     console.log('Analytics-API listening on port ' + port)
 })
 
-app.get('/', function(req, res) {
-    res.send('Analytics-API listening on port ' + port)
-})
+// app.get('/', function(req, res) {
+//     res.render('index',)
+// })

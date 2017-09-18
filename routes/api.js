@@ -6,13 +6,11 @@ var getToken    = require('../lib/getToken')
 
 var message = require("../controllers/messageController.js")
 var users = require('../controllers/userController.js')
-//var page = require('../controllers/pageController.js')
+var page = require('../controllers/pageController.js')
 var currtripinfo = require("../controllers/currenttripinfoController.js")
 
-
-router.get('/', function(req, res) {
-    res.json({ message: 'Analytics-api' })
-})
+//Main window
+router.post('/', page.main)
 
 //users
 router.post('/signup', users.signup)
