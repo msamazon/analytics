@@ -37,6 +37,28 @@ currenttripinfoController.list = function(req, res) {
 }
 
 
+currenttripinfoController.calDayTripMileage = function(req, res) {
+  
+  console.log('calDayTripMileage')
+
+  var date = req.body.date
+
+  DO_CAR_C01.find({'dreceived': {'$gte':date}}).sort({'treceived': 1}).exec(function(err, info) {
+    var count = 0
+    var last = 0
+    for (var i=0; i < info.length-1; i++) {
+      if(info[i].currentTripFuelConsumption > info[i+1].currentTripFuelConsumption) {
+        count += info[i].currentTripFuelConsumption
+        last = i
+      }
+    }
+    if(last < info.length) {
+      count += info[info.length-1].currentTripFuelConsumption
+    }
+    res.json({sumDay: count})
+  })
+}
+
 currenttripinfoController.sumTripMileage = function(req, res) {
 
   console.log('sumTripMileage')

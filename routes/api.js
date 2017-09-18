@@ -21,6 +21,7 @@ router.post('/logout', users.logout)
 router.get('/users', users.users)
 
 router.post('/cntMileageMonth', currtripinfo.sumTripMileage)
+router.post('/cntMileageDay', currtripinfo.calDayTripMileage)
     
 //  //devices
 //  router.get('/devices', devices.devices)
