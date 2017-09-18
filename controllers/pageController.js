@@ -8,7 +8,7 @@ exports.main = function(req, res) {
     var firstday = new Date(curr.setDate(first)).toLocaleDateString('pt-BR');
     var lastday = new Date(curr.setDate(last)).toLocaleDateString('pt-BR');
 
-    res.render('index', { 
+    res.render('login', { 
         title: 'DriveOn Portal', params:{CurWStart:firstday, CurWEnd:lastday} 
     }) 
 }

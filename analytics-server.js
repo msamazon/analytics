@@ -91,7 +91,6 @@ var port = process.env.PORT || 3000
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-
 //mongo
 mongoose.Promise = global.Promise
 mongoose.connect(config.database, { useMongoClient: true })
@@ -109,8 +108,6 @@ mongoose.connection.on('error', error => {
 })
 
 //----
-
-
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(passport.initialize());
@@ -130,6 +127,6 @@ app.listen(port, function () {
     console.log('Analytics-API listening on port ' + port)
 })
 
-// app.get('/', function(req, res) {
-//     res.render('index',)
-// })
+app.get('/', function(req, res) {
+    res.render('index',{title:'DriveOn Portal'});
+})
