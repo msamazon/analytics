@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose        = require("mongoose")
-var User            = require("../models/UserAnalytics")
+var User            = require("../models/User")
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
@@ -26,7 +26,7 @@ exports.login = function(req, res) {
                 var isOk = user.comparePassword(req.body.password)
                 
                 if (isOk) {
-                    var token = jwt.sign(user, config.system.jwtSecret)
+                    var token = jwt.sign(user, config.jwtSecret)
 
                     res.json({ success: true, token: token })
                 }else {
@@ -64,6 +64,10 @@ exports.users = function(req, res) {
     User.find({}, function(err, users) {
         res.json({ users: users })
     })
+}
+
+exports.profile = function(req, res) {
+    console.log('profile')
 }
     
 exports.logout = function(req, res) {

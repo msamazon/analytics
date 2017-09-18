@@ -6,18 +6,18 @@ var getToken    = require('../lib/getToken')
 
 var message = require("../controllers/messageController.js")
 var users = require('../controllers/userController.js')
-var page = require('../controllers/pageController.js')
+//var page = require('../controllers/pageController.js')
 
 
- router.get('/', function(req, res) {
-     res.json({ message: 'Frota-api' })
- })
+router.get('/', function(req, res) {
+    res.json({ message: 'Analytics-api' })
+})
 
- //users
- router.post('/signup', users.signup)
- router.post('/login', users.login)
- router.post('/logout', users.logout)
- router.get('/users', getToken, users.users)
+//users
+router.post('/signup', users.signup)
+router.post('/login', users.login)
+router.post('/logout', users.logout)
+router.get('/users', users.users)
 //  //devices
 //  router.get('/devices', devices.devices)
 //  router.get('/device/:id', devices.deviceid)
@@ -25,10 +25,10 @@ var page = require('../controllers/pageController.js')
 
 //page
 
-router.get('/locate', page.locate)
-router.get('/myvehicle', page.myvehicle)
-router.get('/alarmes', page.alarmes)
-router.get('/analytics', page.analytics)
+// router.get('/locate', page.locate)
+// router.get('/myvehicle', page.myvehicle)
+// router.get('/alarmes', page.alarmes)
+// router.get('/analytics', page.analytics)
 
 // app.get('/locate', function(req, res){
 //   res.render('locate', {
