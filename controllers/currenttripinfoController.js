@@ -48,14 +48,14 @@ currenttripinfoController.calDayTripMileage = function(req, res) {
     var last = 0
     for (var i=0; i < info.length-1; i++) {
       if(info[i].currentTripFuelConsumption > info[i+1].currentTripFuelConsumption) {
-        count += info[i].currentTripFuelConsumption
+        count += info[i].currentTripMileage
         last = i
       }
     }
     if(last < info.length) {
-      count += info[info.length-1].currentTripFuelConsumption
+      count += info[info.length-1].currentTripMileage
     }
-    res.json({sumDay: count})
+    res.json({sumDay: count/1000})
   })
 }
 
