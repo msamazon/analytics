@@ -6,20 +6,36 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "body-parser": "~1.17.1",
-    "bower": "^1.8.0",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.3",
-    "express": "~4.15.2",
-    "generate-schema": "^2.5.1",
-    "jade": "~1.11.0",
-    "jquery": "^3.2.1",
-    "jstransformer": "^1.0.0",
-    "mongoose": "^4.11.10",
-    "mongoose-gen": "^2.1.1",
-    "morgan": "~1.8.1",
-    "nodemon": "^1.12.0",
-    "pug": "^2.0.0-rc.4",
-    "serve-favicon": "~2.4.2"
-  }
+    "@types/bcrypt": "^1.0.0",
+    "@types/body-parser": "^1.16.5",
+    "@types/express": "^4.0.37",
+    "@types/jsonwebtoken": "^7.2.3",
+    "@types/jwt-simple": "^0.5.33",
+    "@types/mongoose": "^4.7.21",
+    "@types/passport": "^0.3.4",
+    "@types/passport-jwt": "^2.0.24",
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.1",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^7.4.3",
+    "jwt-simple": "^0.5.1",
+    "mongoose": "^4.11.11",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.0"
+  },
+  "description": "This project is created from a GitLab [Project Template](https://docs.gitlab.com/ce/gitlab-basics/create-project.html)",
+  "main": "analytics-server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/driveonauto/analytics.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/driveonauto/analytics/issues"
+  },
+  "homepage": "https://github.com/driveonauto/analytics#readme"
 }
