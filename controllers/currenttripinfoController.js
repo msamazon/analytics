@@ -1,5 +1,5 @@
 var mongoose = require("mongoose")
-var Message = require("../models/CurrentTripInfo")
+var DO_CAR_C01 = require("../models/CurrentTripInfo")
 
 var currenttripinfoController = {}
 
@@ -38,28 +38,34 @@ currenttripinfoController.list = function(req, res) {
 
 
 currenttripinfoController.sumTripMileage = function(req, res) {
+
+  console.log('sumTripMileage')
+  var dInit = req.body.dStartd
+  var dFinish = req.body.dEndd
+
+
   
-    var dInit = req.body.dStartd
-    var dFinish = req.body.dEndd
-    DO_CAR_B03.find({'dreceived':{'$gte':dInit},'dreceived':{'$lte':dFinish}}).sort({$natural :1}).exec(function (err, currinfo) {    
-            if (err) {
-                console.log("Error:", err);
-            }else {
-                var sumcurrentTripMileage = 0;
+  DO_CAR_C01.find({'dreceived':{'$gte':dInit},'dreceived':{'$lte':dFinish}}).sort({$natural :1}).exec(function (err, currinfo) {    
+          if (err) {
+              console.log("Error:", err);
+          }else {
+              var sumcurrentTripMileage = 0
 
-                for(var i = 0; i < currinfo.length; i++) {
-        
-                    var currentTripMileage          = currinfo[i].currentTripMileage
-                    sumcurrentTripMileage = sumcurrentTripMileage + currentTripMileage
+              var arrayCurrinfo = []
 
-                    var message0 =  { "sumcurrentTripMileage": sumcurrentTripMileage  }
-                    arrayCurrinfo.push(message0)
-                       
-                }   
-                
-                res.json({CurrTripInfo: arrayCurrinfo})
-            }
-    })
+              for(var i = 0; i < currinfo.length; i++) {
+      
+                  var currentTripMileage  = currinfo[i].currentTripMileage
+                  sumcurrentTripMileage   = sumcurrentTripMileage + currentTripMileage
+
+                  var message0 =  { "sumcurrentTripMileage": sumcurrentTripMileage  }
+                  arrayCurrinfo.push(message0)
+                     
+              }   
+              
+              res.json({CurrTripInfo: arrayCurrinfo})
+          }
+  })
   };
 
   module.exports = currenttripinfoController
