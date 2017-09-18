@@ -3,70 +3,193 @@ block content
  main.main
         // Breadcrumb
         ol.breadcrumb
-          li.breadcrumb-item Principal
+          li.breadcrumb-item Home
           li.breadcrumb-item
-            a(href='#') Viriato
+            a(href='#') Admin
           li.breadcrumb-item.active Dashboard
         .container-fluid
-             //- .animated.fadeIn
+          .animated.fadeIn
+            .row
+              .col-sm-6.col-lg-3
+                .card.text-white.bg-primary
+                  .card-body.pb-0
+                    .btn-group.float-right
+                      button.btn.btn-transparent.dropdown-toggle.p-0(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                        i.icon-settings
+                      .dropdown-menu.dropdown-menu-right
+                        a.dropdown-item(href='#') Detalhes
+                    //- Develop EndPoint - Count TripMileage 
+                    h4.mb-0 1.324 Km
+                    p Distância Percorrida
+                  .chart-wrapper.px-3(style='height:70px;')
+                    canvas#card-chart1.chart(height='70')
+              // /.col
+              .col-sm-6.col-lg-3
+                .card.text-white.bg-info
+                  .card-body.pb-0
+                    .btn-group.float-right
+                      button.btn.btn-transparent.dropdown-toggle.p-0(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                        i.icon-settings
+                      .dropdown-menu.dropdown-menu-right
+                        a.dropdown-item(href='#') Detalhes
+                    //- Develop EndPoint - Count Alarms Idle Engine (Sum alarm time) 
+                    h4.mb-0 60 minutos
+                    p Motor Ocioso
+                  .chart-wrapper.px-3(style='height:70px;')
+                    canvas#card-chart2.chart(height='70')
+              // /.col
+              .col-sm-6.col-lg-3
+                .card.text-white.bg-warning
+                  .card-body.pb-0
+                    .btn-group.float-right
+                      button.btn.btn-transparent.dropdown-toggle.p-0(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                        i.icon-settings
+                      .dropdown-menu.dropdown-menu-right
+                        a.dropdown-item(href='#') Detalhes
+                    //- Develop EndPoint - Count Alarms Accelaration (Sum alarm time)    
+                    h4.mb-0 0 minutos
+                    p Altas Acelarações
+                  .chart-wrapper(style='height:70px;')
+                    canvas#card-chart3.chart(height='70')
+              // /.col
+              .col-sm-6.col-lg-3
+                .card.text-white.bg-danger
+                  .card-body.pb-0
+                    .btn-group.float-right
+                      button.btn.btn-transparent.dropdown-toggle.p-0(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                        i.icon-settings
+                      .dropdown-menu.dropdown-menu-right
+                        a.dropdown-item(href='#') Detalhes
+                    //- Develop EndPoint - Count Alarms Harsh Brake (Sum alarm time)        
+                    h4.mb-0 0 minutos
+                    p Freadas bruscas
+                  .chart-wrapper.px-3(style='height:70px;')
+                    canvas#card-chart4.chart(height='70')
             .row
               .col-md-12
                 .card
                   .card-header
-                    .form-group.row
-                        .col-md-3
-                          select#select.form-control(name='select')
-                            option(value='0') Periodo
-                            option(value='1') 10/09/2017 a 16/09/2017
-                            option(value='2') 03/09/2017 a 09/09/2017
-                        .col-md-4
-                          select#select.form-control(name='select')
-                            option(value='0') Todos Veículos
-                            option(value='1') JXW-0933 - Sandero Prata 1.0 Autentique Flex 2011
-                            option(value='2') HAH-3244 - Onix Preto 1.0 Flex 2011 
-                        button.btn.btn-sm.btn-chartjs(type='submit')
-                          i.fa.fa-hand-pointer-o
-                          |  Atualizar 
-                  .card-body 
-                  .chart-wrapper.px-3(style='height:350px;')
-                    canvas#card-chart3.chart(height='70')     
-                      script(type='text/javascript').
-                       var doughnutData = {
-                          labels: [
-                            'Red',
-                            'Green'
-                          ],
-                          datasets: [{
-                            data: [300, 50, 100],
-                            backgroundColor: [
-                              '#FF6384',
-                              '#36A2EB',
-                              '#FFCE56'
-                            ],
-                            hoverBackgroundColor: [
-                              '#FF6384',
-                              '#36A2EB',
-                              '#FFCE56'
-                            ]
-                          }]
-                        };
-                       
-                        //- var ctx = document.getElementById('canvas-3').getContext("2d");;
-                        //- var chart = new Chart(ctx, {
-                        //-   type: 'doughnut',
-                        //-   data: doughnutData,
-                        //-   options: {
-                        //-     responsive: true
-                        //-   }
-                        //- });
-                        window.onload = function() {
-                          var ctx = document.getElementById('card-chart3').getContext("2d");;
-                          var chart = new Chart(ctx, {
-                            type: 'doughnut',
-                            data: doughnutData,
-                            options: {
-                              responsive: true
-                            }
-                          });
-                           console.log("Entrou!!");
-                        };                  
+                    | Veiculos - Mensal
+                  .card-body
+                    .row
+                      .col-sm-12.col-lg-4
+                        .row
+                          .col-sm-6
+                            .callout.callout-info
+                              small.text-muted Conectados
+                              br
+                              //- EndPoint - Provide Total Connected (login recente or alarm conected)
+                              strong.h4 2
+                              .chart-wrapper
+                                canvas#sparkline-chart-1(width='100', height='30')
+                          // /.col
+                          .col-sm-6
+                            .callout.callout-danger
+                              small.text-muted Desconectados
+                              br
+                              //- EndPoint - Provide Total Disconnected (login recente or alarm disconected)
+                              strong.h4 0
+                              .chart-wrapper
+                                canvas#sparkline-chart-2(width='100', height='30')
+                      .col-sm-6.col-lg-4
+                        .row
+                          .col-sm-6
+                            .callout.callout-warning
+                              small.text-muted SOS
+                              br
+                              //- EndPoint - Provide Total SOS Alarms
+                              strong.h4 0
+                              .chart-wrapper
+                                canvas#sparkline-chart-3(width='100', height='30')
+                          // /.col
+                          .col-sm-6
+                            .callout.callout-success
+                              small.text-muted Rebocados
+                              br
+                              //- EndPoint - Provide Total Towing alarms
+                              strong.h4 0
+                              .chart-wrapper
+                                canvas#sparkline-chart-4(width='100', height='30')
+                          // /.col                        
+                      .col-sm-6.col-lg-4
+                        .row
+                          .col-sm-6
+                            .callout
+                              small.text-muted Combustível
+                              br
+                              //- EndPoint - Provide Total Speeding alarms
+                              strong.h4 10 L
+                              .chart-wrapper
+                                canvas#sparkline-chart-5(width='100', height='30')
+                          // /.col
+                          .col-sm-6
+                            .callout.callout-primary
+                              small.text-muted MIL*
+                              br
+                              //- EndPoint - Provide Total MIL alarms
+                              strong.h4 0
+                              .chart-wrapper
+                                canvas#sparkline-chart-6(width='100', height='30')
+                          // /.col                        
+                    br
+                    table.table.table-responsive.table-hover.table-outline.mb-0
+                      thead.thead-default
+                        tr
+                          th.text-center
+                            i.icon-people
+                          th Veículos
+                          th.text-center Cliente
+                          th Uso
+                          th.text-center Seguro
+                          th Atividades
+                      tbody
+                        tr
+                          td.text-center
+                            .avatar
+                              img.img-avatar(src='img/avatars/1.jpg', alt='admin@bootstrapmaster.com')
+                              span.avatar-status.badge-success
+                          td
+                            div JXA-0944
+                            .small.text-muted
+                              span New
+                              | | Registered: Sep 10, 2017
+                          td.text-center
+                            img(src='img/flags/USA.png', alt='USA', style='height:24px;')
+                          td
+                            .clearfix
+                              .float-left
+                                strong 20%
+                              .float-right
+                                small.text-muted #{params.CurWStart} ~ #{params.CurWEnd}                                                                  
+                            .progress.progress-xs
+                              .progress-bar.bg-success(role='progressbar', style='width: 50%', aria-valuenow='50', aria-valuemin='0', aria-valuemax='100')
+                          td.text-center
+                            i.fa.fa-cc-mastercard(style='font-size:24px')
+                          td
+                            .small.text-muted Last login
+                            strong 10 sec ago
+                        tr
+                          td.text-center
+                            .avatar
+                              img.img-avatar(src='img/avatars/2.jpg', alt='admin@bootstrapmaster.com')
+                              span.avatar-status.badge-danger
+                          td
+                            div Avram Tarasios
+                            .small.text-muted
+                              span Recurring
+                              | | Registered: Jan 1, 2015
+                          td.text-center
+                            img(src='img/flags/Brazil.png', alt='Brazil', style='height:24px;')
+                          td
+                            .clearfix
+                              .float-left
+                                strong 10%
+                              .float-right
+                                small.text-muted #{params.CurWStart} ~ #{params.CurWEnd}
+                            .progress.progress-xs
+                              .progress-bar.bg-info(role='progressbar', style='width: 10%', aria-valuenow='10', aria-valuemin='0', aria-valuemax='100')
+                          td.text-center
+                            i.fa.fa-cc-visa(style='font-size:24px')
+                          td
+                            .small.text-muted Last login
+                            strong 5 minutes ago

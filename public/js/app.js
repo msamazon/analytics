@@ -61,8 +61,8 @@ $(document).ready(function($){
   });
 
   // Aside Populate
-  populateASIDEAlarms();
-
+  // populateASIDEAlarms();
+   
   function resizeBroadcast() {
 
     var timesRun = 0;

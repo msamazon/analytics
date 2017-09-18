@@ -11,7 +11,8 @@ $(function(){
     var result = 'rgba('+r+','+g+','+b+','+opacity/100+')';
     return result;
   }
-
+  
+  
   //Cards with Charts
   var labels = ['January','February','March','April','May','June','July'];
   var data = {
