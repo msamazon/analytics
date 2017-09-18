@@ -1,5 +1,5 @@
 $(function (){
-  'use strict';
+  // 'use strict';
 
   var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
   var lineChartData = {
@@ -24,14 +24,14 @@ $(function (){
     ]
   }
 
-  var ctx = document.getElementById('canvas-1');
-  var chart = new Chart(ctx, {
-    type: 'line',
-    data: lineChartData,
-    options: {
-      responsive: true
-    }
-  });
+  // var ctx = document.getElementById('canvas-1');
+  // var chart = new Chart(ctx, {
+  //   type: 'line',
+  //   data: lineChartData,
+  //   options: {
+  //     responsive: true
+  //   }
+  // });
 
 
   var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
@@ -54,14 +54,14 @@ $(function (){
       }
     ]
   }
-  var ctx = document.getElementById('canvas-2');
-  var chart = new Chart(ctx, {
-    type: 'bar',
-    data: barChartData,
-    options: {
-      responsive: true
-    }
-  });
+  // var ctx = document.getElementById('canvas-2');
+  // var chart = new Chart(ctx, {
+  //   type: 'bar',
+  //   data: barChartData,
+  //   options: {
+  //     responsive: true
+  //   }
+  // });
 
 
   var doughnutData = {
@@ -84,7 +84,8 @@ $(function (){
       ]
     }]
   };
-  var ctx = document.getElementById('canvas-3');
+  console.log("Entrou!!");
+  var ctx = document.getElementById('canvas-3').getContext("2d");;
   var chart = new Chart(ctx, {
     type: 'doughnut',
     data: doughnutData,
@@ -119,14 +120,14 @@ $(function (){
       }
     ]
   };
-  var ctx = document.getElementById('canvas-4');
-  var chart = new Chart(ctx, {
-    type: 'radar',
-    data: radarChartData,
-    options: {
-      responsive: true
-    }
-  });
+  // var ctx = document.getElementById('canvas-4');
+  // var chart = new Chart(ctx, {
+  //   type: 'radar',
+  //   data: radarChartData,
+  //   options: {
+  //     responsive: true
+  //   }
+  // });
 
 
   var pieData = {
@@ -149,14 +150,14 @@ $(function (){
       ]
     }]
   };
-  var ctx = document.getElementById('canvas-5');
-  var chart = new Chart(ctx, {
-    type: 'pie',
-    data: pieData,
-    options: {
-      responsive: true
-    }
-  });
+  // var ctx = document.getElementById('canvas-5');
+  // var chart = new Chart(ctx, {
+  //   type: 'pie',
+  //   data: pieData,
+  //   options: {
+  //     responsive: true
+  //   }
+  // });
 
 
   var polarData = {
@@ -185,12 +186,12 @@ $(function (){
       'Blue'
     ]
   };
-  var ctx = document.getElementById('canvas-6');
-  var chart = new Chart(ctx, {
-    type: 'polarArea',
-    data: polarData,
-    options: {
-      responsive: true
-    }
-  });
+  // var ctx = document.getElementById('canvas-6');
+  // var chart = new Chart(ctx, {
+  //   type: 'polarArea',
+  //   data: polarData,
+  //   options: {
+  //     responsive: true
+  //   }
+  // });
 });

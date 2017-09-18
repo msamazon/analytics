@@ -45,6 +45,12 @@ app.get('/locate', function(req, res){
   });
 });
 
+app.get('/myvehicle', function(req, res){
+  res.render('myvehicle', {
+    title: 'Drive On Portal | Meu veículo'
+  });
+});
+
 app.get('/alarmes', function(req, res){
   res.render('ealarms', {
     title: 'Drive On Portal | Alarmes'
