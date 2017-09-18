@@ -7,6 +7,7 @@ var getToken    = require('../lib/getToken')
 var message = require("../controllers/messageController.js")
 var users = require('../controllers/userController.js')
 //var page = require('../controllers/pageController.js')
+var currtripinfo = require("../controllers/currenttripinfoController.js")
 
 
 router.get('/', function(req, res) {
@@ -18,6 +19,9 @@ router.post('/signup', users.signup)
 router.post('/login', users.login)
 router.post('/logout', users.logout)
 router.get('/users', users.users)
+
+router.post('/cntMileageMonth', currtripinfo.sumTripMileage)
+    
 //  //devices
 //  router.get('/devices', devices.devices)
 //  router.get('/device/:id', devices.deviceid)
