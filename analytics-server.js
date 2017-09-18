@@ -1,22 +1,26 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+var express         = require('express');
+var path            = require('path');
+var favicon         = require('serve-favicon');
+var logger          = require('morgan');
+var cookieParser    = require('cookie-parser');
+var bodyParser      = require('body-parser');
+var mongoose        = require('mongoose');
+var config          = require('./lib/config');
+var routes          = require('./routes/api.js')
+var app             = express()
+
 // mongoose instance connection url connection
+
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://dbuser:123mudar#@ds139428.mlab.com:39428/driveondb', { useMongoClient: true });  
+mongoose.connect(config.database, { useMongoClient: true });  
 
 // Models
 //  var companies = require('./models/do_car_alarmsperday');
 // var do_car_a00 = require('./models/do_car_a00');
 
 // Routes
-var index = require('./routes/index');
+app.use('/api', routes)
 
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+// app.use('/', index);
 
 // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
@@ -39,29 +43,6 @@ app.use('/', index);
 //   res.render('error', err);
 // });
 
-app.get('/locate', function(req, res){
-  res.render('locate', {
-    title: 'Drive On Portal | Localizar'
-  });
-});
-
-app.get('/myvehicle', function(req, res){
-  res.render('myvehicle', {
-    title: 'Drive On Portal | Meu veículo'
-  });
-});
-
-app.get('/alarmes', function(req, res){
-  res.render('ealarms', {
-    title: 'Drive On Portal | Alarmes'
-  });
-});
-
-app.get('/analytics', function(req, res){
-  res.render('analytics', {
-    title: 'Drive On Portal | Analytics Data'
-  });
-});
 
 // app.get('/alarms',timeline.list);
 // error handler

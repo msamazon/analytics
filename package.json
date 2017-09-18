@@ -6,19 +6,26 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@types/bcrypt": "^1.0.0",
+    "@types/jsonwebtoken": "^7.2.3",
+    "@types/passport-jwt": "^2.0.24",
+    "bcrypt": "^1.0.3",
     "body-parser": "~1.17.1",
     "bower": "^1.8.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
-    "express": "~4.15.2",
+    "express": "^4.15.4",
     "generate-schema": "^2.5.1",
     "jade": "~1.11.0",
     "jquery": "^3.2.1",
+    "jsonwebtoken": "^8.0.1",
     "jstransformer": "^1.0.0",
+    "jwt-simple": "^0.5.1",
     "mongoose": "^4.11.10",
     "mongoose-gen": "^2.1.1",
     "morgan": "~1.8.1",
     "nodemon": "^1.12.0",
+    "passport-jwt": "^3.0.0",
     "pug": "^2.0.0-rc.4",
     "serve-favicon": "~2.4.2"
   }
