@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node analytics-server.js"
   },
   "dependencies": {
     "@types/bcrypt": "^1.0.0",
