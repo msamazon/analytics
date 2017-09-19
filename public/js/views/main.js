@@ -287,12 +287,12 @@ $(function(){
       }
     },
   };
-  var ctx = $('#main-chart');
-  var mainChart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: options
-  });
+  // var ctx = $('#main-chart');
+  // var mainChart = new Chart(ctx, {
+  //   type: 'line',
+  //   data: data,
+  //   options: options
+  // });
 
 
   //Social Box Charts
@@ -332,12 +332,12 @@ $(function(){
       data: [65, 59, 84, 84, 51, 55, 40]
     }]
   };
-  var ctx = $('#social-box-chart-1');
-  var socialBoxChart1 = new Chart(ctx, {
-    type: 'line',
-    data: data1,
-    options: options
-  });
+  // var ctx = $('#social-box-chart-1');
+  // var socialBoxChart1 = new Chart(ctx, {
+  //   type: 'line',
+  //   data: data1,
+  //   options: options
+  // });
 
   var data2 = {
     labels: labels,
@@ -351,12 +351,12 @@ $(function(){
       }
     ]
   };
-  var ctx = $('#social-box-chart-2').get(0).getContext('2d');
-  var socialBoxChart2 = new Chart(ctx, {
-    type: 'line',
-    data: data2,
-    options: options
-  });
+  // var ctx = $('#social-box-chart-2').get(0).getContext('2d');
+  // var socialBoxChart2 = new Chart(ctx, {
+  //   type: 'line',
+  //   data: data2,
+  //   options: options
+  // });
 
   var data3 = {
     labels: labels,
@@ -370,12 +370,12 @@ $(function(){
       }
     ]
   };
-  var ctx = $('#social-box-chart-3').get(0).getContext('2d');
-  var socialBoxChart3 = new Chart(ctx, {
-    type: 'line',
-    data: data3,
-    options: options
-  });
+  // var ctx = $('#social-box-chart-3').get(0).getContext('2d');
+  // var socialBoxChart3 = new Chart(ctx, {
+  //   type: 'line',
+  //   data: data3,
+  //   options: options
+  // });
 
   var data4 = {
     labels: labels,
@@ -389,12 +389,12 @@ $(function(){
       }
     ]
   };
-  var ctx = $('#social-box-chart-4').get(0).getContext('2d');
-  var socialBoxChart4 = new Chart(ctx, {
-    type: 'line',
-    data: data4,
-    options: options
-  });
+  // var ctx = $('#social-box-chart-4').get(0).getContext('2d');
+  // var socialBoxChart4 = new Chart(ctx, {
+  //   type: 'line',
+  //   data: data4,
+  //   options: options
+  // });
 
 
 
@@ -434,12 +434,12 @@ $(function(){
       }
     ]
   };
-  var ctx = $('#sparkline-chart-1');
-  var sparklineChart1 = new Chart(ctx, {
-    type: 'line',
-    data: data1,
-    options: options
-  });
+  // var ctx = $('#sparkline-chart-1');
+  // var sparklineChart1 = new Chart(ctx, {
+  //   type: 'line',
+  //   data: data1,
+  //   options: options
+  // });
 
   var data2 = {
     labels: labels,
@@ -452,12 +452,12 @@ $(function(){
       }
     ]
   };
-  var ctx = $('#sparkline-chart-2');
-  var sparklineChart2 = new Chart(ctx, {
-    type: 'line',
-    data: data2,
-    options: options
-  });
+  // var ctx = $('#sparkline-chart-2');
+  // var sparklineChart2 = new Chart(ctx, {
+  //   type: 'line',
+  //   data: data2,
+  //   options: options
+  // });
 
   var data3 = {
     labels: labels,
@@ -470,12 +470,12 @@ $(function(){
       }
     ]
   };
-  var ctx = $('#sparkline-chart-3');
-  var sparklineChart3 = new Chart(ctx, {
-    type: 'line',
-    data: data3,
-    options: options
-  });
+  // var ctx = $('#sparkline-chart-3');
+  // var sparklineChart3 = new Chart(ctx, {
+  //   type: 'line',
+  //   data: data3,
+  //   options: options
+  // });
 
   var data4 = {
     labels: labels,
@@ -488,12 +488,12 @@ $(function(){
       }
     ]
   };
-  var ctx = $('#sparkline-chart-4');
-  var sparklineChart4 = new Chart(ctx, {
-    type: 'line',
-    data: data4,
-    options: options
-  });
+  // var ctx = $('#sparkline-chart-4');
+  // var sparklineChart4 = new Chart(ctx, {
+  //   type: 'line',
+  //   data: data4,
+  //   options: options
+  // });
 
   var data5 = {
     labels: labels,
@@ -506,12 +506,12 @@ $(function(){
       }
     ]
   };
-  var ctx = $('#sparkline-chart-5');
-  var sparklineChart5 = new Chart(ctx, {
-    type: 'line',
-    data: data5,
-    options: options
-  });
+  // var ctx = $('#sparkline-chart-5');
+  // var sparklineChart5 = new Chart(ctx, {
+  //   type: 'line',
+  //   data: data5,
+  //   options: options
+  // });
 
   var data6 = {
     labels: labels,
@@ -524,11 +524,11 @@ $(function(){
       }
     ]
   };
-  var ctx = $('#sparkline-chart-6');
-  var sparklineChart6= new Chart(ctx, {
-    type: 'line',
-    data: data6,
-    options: options
-  });
+  // var ctx = $('#sparkline-chart-6');
+  // var sparklineChart6= new Chart(ctx, {
+  //   type: 'line',
+  //   data: data6,
+  //   options: options
+  // });
 
 });

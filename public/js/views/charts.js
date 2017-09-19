@@ -161,14 +161,14 @@ $(function (){
       'Blue'
     ]
   };
-  // var ctx = document.getElementById('canvas-6');
-  // var chart = new Chart(ctx, {
-  //   type: 'polarArea',
-  //   data: polarData,
-  //   options: {
-  //     responsive: true
-  //   }
-  // });
+  var ctx = document.getElementById('canvas-6');
+  var chart = new Chart(ctx, {
+    type: 'polarArea',
+    data: polarData,
+    options: {
+      responsive: true
+    }
+  });
 });
 
 

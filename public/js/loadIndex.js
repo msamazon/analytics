@@ -4,7 +4,7 @@ var uListData = [];
 // DOM Ready =============================================================
 $(document).ready(function() {
     // Populate the  table on initial page load
-    populateTable();
+    // populateTable();
 
 });
 
@@ -25,24 +25,24 @@ function populateTable() {
         // GET THE FIRST AND LAST DATE OF THE MONTH.
         var FirstDay = formatDate(new Date(year, month, 1));
         var LastDay = formatDate(new Date(year, month + 1, 0));
-
+        var tableContent = '';
  
     // jQuery AJAX call for JSON
-    $.post( '/cntMileageMonth',{dStartd:FirstDay,dEndd:LastDay}, function( data ) {
-        // For each item in our JSON, add a table row and cells to the content string
-        $.each(data, function(){
-            // console.log('Dados de cntMileageMonth:' + JSON.stringify(data))
-            // tableContent += '<tr>';
-            // tableContent += '<td><a href="#" class="linkshowuser" rel="' + this.username + '">' + this.username + '</a></td>';
-            // tableContent += '<td>' + this.email + '</td>';
-            // tableContent += '<td><a href="#" class="linkdeleteuser" rel="' + this._id + '">delete</a></td>';
-            // tableContent += '</tr>';
-            tableContent += data
-        });
+    // $.post( '/cntMileageMonth',{dStartd:FirstDay,dEndd:LastDay}, function( data ) {
+    //     // For each item in our JSON, add a table row and cells to the content string
+    //     $.each(data, function(){
+    //         // console.log('Dados de cntMileageMonth:' + JSON.stringify(data))
+    //         // tableContent += '<tr>';
+    //         // tableContent += '<td><a href="#" class="linkshowuser" rel="' + this.username + '">' + this.username + '</a></td>';
+    //         // tableContent += '<td>' + this.email + '</td>';
+    //         // tableContent += '<td><a href="#" class="linkdeleteuser" rel="' + this._id + '">delete</a></td>';
+    //         // tableContent += '</tr>';
+    //         tableContent += data
+    //     });
 
-        // Inject the whole content string into our existing HTML table
-        $('#SumCurMileage').html(tableContent);
-    });
+    //     // Inject the whole content string into our existing HTML table
+    //     $('#SumCurMileage').html(tableContent);
+    // });
 };
 
 function pad(n) {
