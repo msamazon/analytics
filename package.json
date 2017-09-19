@@ -21,7 +21,7 @@
     "jade": "^1.11.0",
     "jsonwebtoken": "^7.4.3",
     "jwt-simple": "^0.5.1",
-    "mongoose": "^4.11.11",
+    "mongoose": "^4.11.12",
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.0"
   },
