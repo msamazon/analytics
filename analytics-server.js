@@ -46,7 +46,7 @@ app.use(function(req, res, next) {
 
 app.use('/', routes)
 
-app.listen(8080, function () {
+app.listen(port, function () {
     console.log('Analytics-API listening on port ' + port)
 })
 
