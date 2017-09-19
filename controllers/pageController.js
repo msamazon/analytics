@@ -37,10 +37,10 @@ exports.alarmes = function(req, res) {
 }
 
 exports.analytics = function(req, res) {
-  console.log ('analytics')
-  
-  res.render('analytics', {
-    title: 'Drive On Portal | Analytics Data'
-  })
+  console.log ('analytics')  
+  devid = '3WXE16010055'
+  res.render('analytics', { 
+    title: 'DriveOn Portal | Analytics', params:{device:devid} 
+  }) 
 }
 

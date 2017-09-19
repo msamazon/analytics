@@ -138,27 +138,15 @@ $(function (){
   var polarData = {
     datasets: [{
       data: [
-        11,
-        16,
-        7,
-        3,
-        14
+          0
       ],
       backgroundColor: [
-        '#FF6384',
-        '#4BC0C0',
-        '#FFCE56',
-        '#E7E9ED',
-        '#36A2EB'
+        '#FF6384'
       ],
-      label: 'My dataset' // for legend
+      label: '3WN-16010055' // for legend
     }],
     labels: [
-      'Red',
-      'Green',
-      'Yellow',
-      'Grey',
-      'Blue'
+      'DTC'
     ]
   };
   var ctx = document.getElementById('canvas-6');
