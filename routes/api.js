@@ -10,7 +10,7 @@ var page = require('../controllers/pageController.js')
 var currtripinfo = require("../controllers/currenttripinfoController.js")
 
 //Main window
-router.post('/', page.main)
+// router.post('/', page.main)
 
 //users
 router.post('/signup', users.signup)
@@ -21,7 +21,8 @@ router.get('/users', users.users)
 router.post('/cntMileageMonth', currtripinfo.sumTripMileage)
 router.post('/cntMileageDay', currtripinfo.calDayTripMileage)
 router.post('/cntMileageListDay', currtripinfo.calDaylistTripMileage)
-    
+
+router.get('/dashboard',page.main)
 //  //devices
 //  router.get('/devices', devices.devices)
 //  router.get('/device/:id', devices.deviceid)
@@ -29,10 +30,10 @@ router.post('/cntMileageListDay', currtripinfo.calDaylistTripMileage)
 
 //page
 
-// router.get('/locate', page.locate)
-// router.get('/myvehicle', page.myvehicle)
-// router.get('/alarmes', page.alarmes)
-// router.get('/analytics', page.analytics)
+router.get('/locate', page.locate)
+router.get('/myvehicle', page.myvehicle)
+router.get('/alarmes', page.alarmes)
+router.get('/analytics', page.analytics)
 
 // app.get('/locate', function(req, res){
 //   res.render('locate', {

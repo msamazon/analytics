@@ -96,21 +96,37 @@ currenttripinfoController.sumTripMileage = function(req, res) {
           if (err) {
               console.log("Error:", err);
           }else {
-              var sumcurrentTripMileage = 0
+              // var sumcurrentTripMileage = 0
 
-              var arrayCurrinfo = []
+              // var arrayCurrinfo = []
 
-              for(var i = 0; i < currinfo.length; i++) {
+              // for(var i = 0; i < currinfo.length; i++) {
       
-                  var currentTripMileage  = currinfo[i].currentTripMileage
-                  sumcurrentTripMileage   = sumcurrentTripMileage + currentTripMileage
+              //     var currentTripMileage  = currinfo[i].currentTripMileage
+              //     sumcurrentTripMileage   = sumcurrentTripMileage + currentTripMileage
 
-                  var message0 =  { "sumcurrentTripMileage": sumcurrentTripMileage  }
-                  arrayCurrinfo.push(message0)
+              //     var message0 =  { "sumcurrentTripMileage": sumcurrentTripMileage  }
+              //     arrayCurrinfo.push(message0)
                      
-              }   
+              // }   
               
-              res.json({CurrTripInfo: arrayCurrinfo})
+              // res.json({CurrTripInfo: arrayCurrinfo})
+
+              var count = 0
+              var last = 0
+              var list = []
+              for (var i=0; i < currinfo.length-1; i++) {
+                if(currinfo[i].currentTripFuelConsumption > currinfo[i+1].currentTripFuelConsumption) {
+                  count += currinfo[i].currentTripMileage
+                  list.push(currinfo[i])
+                  last = i
+                }
+              }
+              if(last < currinfo.length) {
+                count += currinfo[currinfo.length-1].currentTripMileage
+                list.push(currinfo[currinfo.length-1])
+              }
+              res.json({currinfo: list})
           }
   })
   };

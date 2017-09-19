@@ -121,12 +121,16 @@ app.use(function(req, res, next) {
 })
 
 
-app.use('/api', routes)
+app.use('/', routes)
 
 app.listen(port, function () {
     console.log('Analytics-API listening on port ' + port)
 })
 
 app.get('/', function(req, res) {
-    res.render('index',{title:'DriveOn Portal'});
+    res.redirect('/dashboard');
+})
+
+app.get('/locate', function(req, res) {
+    res.redirect('/locate');
 })

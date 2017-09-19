@@ -1,5 +1,4 @@
-exports.main = function(req, res) {
-  console.log ('main')
+exports.main = function(req, res) {  
     // Provide Current Week to show up data on Grid
     var curr = new Date; // get current date
     var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
@@ -8,7 +7,7 @@ exports.main = function(req, res) {
     var firstday = new Date(curr.setDate(first)).toLocaleDateString('pt-BR');
     var lastday = new Date(curr.setDate(last)).toLocaleDateString('pt-BR');
 
-    res.render('login', { 
+    res.render('index', { 
         title: 'DriveOn Portal', params:{CurWStart:firstday, CurWEnd:lastday} 
     }) 
 }
