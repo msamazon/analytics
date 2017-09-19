@@ -1,6 +1,6 @@
 var mongoose = require("mongoose")
 var DO_CAR_C01 = require("../models/CurrentTripInfo")
-
+var DO_CAR_A03 = require("../models/do_car_a03")
 var currenttripinfoController = {}
 
 currenttripinfoController.list = function(req, res) {
@@ -35,7 +35,6 @@ currenttripinfoController.list = function(req, res) {
     }
   })
 }
-
 
 currenttripinfoController.calDayTripMileage = function(req, res) {
   
@@ -81,6 +80,31 @@ currenttripinfoController.calDaylistTripMileage = function(req, res) {
       list.push(info[info.length-1])
     }
     res.json({detailsDay: list})
+  })
+}
+
+currenttripinfoController.calAlarm = function(req, res) {
+  
+  console.log('calAlarm')
+
+  var dini = req.body.dini
+  var dend = req.body.dend
+
+  var array = []
+  DO_CAR_A03.find(
+    {'Data':{'$gte':dini, '$lte': dend}}).exec(function (err, info) {
+
+    console.log("info.length %s", info.length)
+    var count = 0
+    for (var i =0; i < info.length; i++) {
+
+      console.log(info[i].Min)
+
+      count += Number(info[i].Min)
+
+      array.push(info[i])
+    }
+    res.json({alarm: array, total: count})
   })
 }
 
