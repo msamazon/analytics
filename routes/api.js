@@ -22,6 +22,7 @@ router.post('/cntMileageMonth', currtripinfo.sumTripMileage)
 router.post('/cntMileageDay', currtripinfo.calDayTripMileage)
 router.post('/cntMileageListDay', currtripinfo.calDaylistTripMileage)
 router.post('/calAlarm', currtripinfo.calAlarm)
+router.post('/stub', currtripinfo.stub)
 
 //  //devices
 //  router.get('/devices', devices.devices)

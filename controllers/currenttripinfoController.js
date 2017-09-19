@@ -1,6 +1,7 @@
 var mongoose = require("mongoose")
 var DO_CAR_C01 = require("../models/CurrentTripInfo")
 var DO_CAR_A03 = require("../models/do_car_a03")
+var DO_CAR_M00 = require("../models/do_car_m00")
 var currenttripinfoController = {}
 
 currenttripinfoController.list = function(req, res) {
@@ -137,6 +138,70 @@ currenttripinfoController.sumTripMileage = function(req, res) {
               res.json({CurrTripInfo: arrayCurrinfo})
           }
   })
-  };
+}
+currenttripinfoController.stub = function(req, res) {
 
-  module.exports = currenttripinfoController
+  var teste1 = new DO_CAR_M00( {
+    vehicleId : 1.0,
+    deviceId : "3WN-16010055",
+    deviceHex : "33574e2d3136303130303535",
+    vin : "",
+    plate : "HAH-3244",
+    model : "Onix",
+    color : "Preto",
+    state : "AM",
+    ownerId : "2.0",
+    activeStatus : "yes",
+    createdAt : "2017-08-23T00:19:17.427Z",
+    createdBy : "SYSTEM",
+    updatedAt : "",
+    updatedBy : "",
+    motor : "1.0",
+    fueltype : "Flex",
+    manufYear : "2016"
+  })
+  teste1.save()
+
+  var teste2 = new DO_CAR_M00( {
+    vehicleId : 2.0,
+    deviceId : "3WN-16010056",
+    vin : "3FADP0L34BR186721",
+    plate : "JXW-0933",
+    model : "Sandero",
+    motor : "1.0 Authentique",
+    color : "Prata",
+    state : "AM",
+    fueltype : "Flex",
+    manufYear : "2011",
+    ownerId : 2.0,
+    activeStatus : "yes",
+    createdAt : "2017-08-23T00:19:17.427Z",
+    createdBy : "SYSTEM",
+    updatedAt : "",
+    updatedBy : "",
+    deviceHex : "33574e2d3136303130303536"
+  })
+  teste2.save()
+
+  var teste3 = new DO_CAR_M00( {
+    vehicleId : "3.0",
+    deviceId : "2GQ-16010019",
+    vin : "",
+    plate : "AAA9999",
+    model : "",
+    motor : "",
+    color : "",
+    state : "",
+    fueltype : "",
+    manufYear : "",
+    ownerId : "1.0",
+    activeStatus : "no",
+    createdAt : "2017-09-05T16:27:08.579Z",
+    createdBy : "SYSTEM",
+    updatedAt : "",
+    updatedBy : "",
+    deviceHex : "3247512d3136303130303139"
+  })
+  teste3.save()
+}
+module.exports = currenttripinfoController
