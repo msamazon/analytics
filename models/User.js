@@ -21,6 +21,7 @@ var UserSchema = new Schema({
     admin: Boolean
 }
 )
+// Validate the password
 UserSchema.methods.comparePassword = function(password) {
     console.log(this.hashpassword)
     return bcrypt.compareSync(password, this.hashpassword)

@@ -7,7 +7,10 @@ var jwt             = require('jsonwebtoken')
 var config          = require('./lib/config')
 var routes          = require('./routes/api.js')
 var path            = require('path')
-var flash        = require('req-flash')
+var flash           = require('req-flash')
+var cookieParser    = require('cookie-parser')
+// var session         = require('cookie-session')
+var session         = require('express-session')
 
 var port = process.env.PORT || 8080
 
@@ -36,8 +39,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser('secretString'));
+app.use(session({cookie: { maxAge: 60000 }}));
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(function(req, res, next){
+    res.locals.success_messages = req.flash('success_messages');
+    res.locals.error_messages = req.flash('error_messages');
+    next();
+});
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

@@ -13,6 +13,7 @@ exports.main = function(req, res) {
 }
 
 exports.login = function(req, res) {    
+  req.flash('loginMessage','Bem vindo a DriveOn!')
   res.render('login', { title: 'DriveOn Portal', message: req.flash('loginMessage')}) 
 }
 
@@ -43,15 +44,7 @@ exports.alarmes = function(req, res) {
 exports.analytics = function(req, res) {
   console.log ('analytics')  
   res.render('analytics', { 
-    title: 'DriveOn Portal | Analytics', params:{device:devid} 
-  }) 
-}
-
-
-exports.init = function(req, res) {
-  console.log ('init')
-  res.render('init', { 
-    title: 'DriveOn Portal'
+    title: 'DriveOn Portal | Analytics'
   }) 
 }
 
