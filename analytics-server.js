@@ -7,6 +7,7 @@ var jwt             = require('jsonwebtoken')
 var config          = require('./lib/config')
 var routes          = require('./routes/api.js')
 var path            = require('path')
+var flash        = require('req-flash')
 
 var port = process.env.PORT || 8080
 
@@ -31,10 +32,11 @@ mongoose.connection.on('error', error => {
 })
 
 //----
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
@@ -43,17 +45,8 @@ app.use(function(req, res, next) {
     next();
 })
 
-
 app.use('/', routes)
 
 app.listen(port, function () {
     console.log('Analytics-API listening on port ' + port)
-})
-
-app.get('/', function(req, res) {
-    res.redirect('/dashboard');
-})
-
-app.get('/locate', function(req, res) {
-    res.redirect('/locate');
 })

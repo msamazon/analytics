@@ -6,7 +6,7 @@ var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
 
-exports.login = function(req, res) {
+exports.logging = function(req, res) {
 
     if(req.body.email && req.body.password) {
         var _email = req.body.email
@@ -73,5 +73,5 @@ exports.profile = function(req, res) {
 exports.logout = function(req, res) {
     console.log('logging out')
     req.logout();
-    res.redirect('/')
+    res.redirect('/');
 }

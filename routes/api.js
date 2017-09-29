@@ -1,65 +1,56 @@
 var express     = require('express')
-
 var router      = express.Router()
 var jwt         = require('jsonwebtoken')
 var getToken    = require('../lib/getToken')
-
-var message = require("../controllers/messageController.js")
-var users = require('../controllers/userController.js')
-var page = require('../controllers/pageController.js')
+var message     = require("../controllers/messageController.js")
+var users       = require('../controllers/userController.js')
+var page        = require('../controllers/pageController.js')
 var currtripinfo = require("../controllers/currenttripinfoController.js")
-
-//Main window
-// router.post('/', page.main)
 
 //users
 router.post('/signup', users.signup)
-router.post('/login', users.login)
+router.post('/logging', users.logging)
 router.post('/logout', users.logout)
 router.get('/users', users.users)
 
+//Dashboard
+// Top 1
 router.post('/cntMileageMonth', currtripinfo.sumTripMileage)
-router.post('/cntMileageDay', currtripinfo.calDayTripMileage)
-router.post('/cntMileageListDay', currtripinfo.calDaylistTripMileage)
+router.post('/chartMileageMonth', currtripinfo.chartTripMileage)
+// Top 2
+router.post('/cntIdleTime', currtripinfo.sumIdleEngineTime)
+router.post('/chartIdleTime', currtripinfo.chartIdleEngineTime)
+// Top 3
+router.post('/cntHACCOccur', currtripinfo.cntHarshAcc)
+router.post('/chartHACCOccur', currtripinfo.chartHarshAcc)
+// Top 4
+router.post('/cntHBRAKEOccur', currtripinfo.cntHarshBrake)
+router.post('/chartHBRAKEOccur', currtripinfo.chartHarshBrake)
 
-router.get('/dashboard',page.main)
+// Generic Tools
 router.post('/calAlarm', currtripinfo.calAlarm)
 router.post('/stub', currtripinfo.stub)
 
-//  //devices
-//  router.get('/devices', devices.devices)
-//  router.get('/device/:id', devices.deviceid)
-//  router.get('/device/gps/:id', devices.devicesgpsid)
+//Locates
+router.get('/message/gps/:id', message.getgeo)
 
-//page
-
+//Pages
+router.get('/', page.index)
 router.get('/locate', page.locate)
 router.get('/myvehicle', page.myvehicle)
 router.get('/alarmes', page.alarmes)
 router.get('/analytics', page.analytics)
+router.get('/dashboard',page.main)
+router.get('/login', page.login)
 
-// app.get('/locate', function(req, res){
-//   res.render('locate', {
-//     title: 'Drive On Portal | Localizar'
-//   });
-// });
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {    
+        // if user is authenticated in the session, carry on 
+        if (req.isAuthenticated())
+            return next();
+    
+        // if they aren't redirect them to the home page
+        res.redirect('/');
+    }
 
-// app.get('/myvehicle', function(req, res){
-//   res.render('myvehicle', {
-//     title: 'Drive On Portal | Meu veículo'
-//   });
-// });
-
-// app.get('/alarmes', function(req, res){
-//   res.render('ealarms', {
-//     title: 'Drive On Portal | Alarmes'
-//   });
-// });
-
-// app.get('/analytics', function(req, res){
-//   res.render('analytics', {
-//     title: 'Drive On Portal | Analytics Data'
-//   });
-// });
-
- module.exports =  router
+module.exports =  router

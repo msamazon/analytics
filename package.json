@@ -23,7 +23,8 @@
     "jwt-simple": "^0.5.1",
     "mongoose": "^4.11.12",
     "passport": "^0.4.0",
-    "passport-jwt": "^3.0.0"
+    "passport-jwt": "^3.0.0",
+    "req-flash": "0.0.3"
   },
   "description": "This project is created from a GitLab [Project Template](https://docs.gitlab.com/ce/gitlab-basics/create-project.html)",
   "main": "analytics-server.js",

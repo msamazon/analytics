@@ -1,70 +1,43 @@
 extends layout
 block content
- // GenesisUI main scripts
-
- main.main
-        // Breadcrumb
+  main.main         
         ol.breadcrumb
           li.breadcrumb-item Home
           li.breadcrumb-item
             a(href='#') Admin
-          li.breadcrumb-item.active Dashboard
+          li.breadcrumb-item.active Dashboard          
         .container-fluid
           .animated.fadeIn
-            .row
+            .row               
               .col-sm-6.col-lg-3
                 .card.text-white.bg-primary
-                  .card-body.pb-0
-                    .btn-group.float-right
-                      button.btn.btn-transparent.dropdown-toggle.p-0(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                        i.icon-settings
-                      .dropdown-menu.dropdown-menu-right
-                        a.dropdown-item(href='#') Detalhes
-                    //- Develop EndPoint - Count TripMileage 
-                    h4.mb-0 27,34 Km
-                        #SumCurMileage                              
+                  .card-body.pb-0                  
+                    h4.mb-0 
+                      #SumCurMileage                             
                     p Distância Percorrida
                   .chart-wrapper.px-3(style='height:70px;')
-                    canvas#card-chart1.chart(height='70')
-              // /.col
+                    canvas#card-chart1.chart(height='70')                
               .col-sm-6.col-lg-3
                 .card.text-white.bg-info
-                  .card-body.pb-0
-                    .btn-group.float-right
-                      button.btn.btn-transparent.dropdown-toggle.p-0(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                        i.icon-settings
-                      .dropdown-menu.dropdown-menu-right
-                        a.dropdown-item(href='#') Detalhes
-                    //- Develop EndPoint - Count Alarms Idle Engine (Sum alarm time) 
-                    h4.mb-0 60 minutos
+                  .card-body.pb-0                   
+                    h4.mb-0
+                      #SumIdleEngine 
                     p Motor Ocioso
                   .chart-wrapper.px-3(style='height:70px;')
-                    canvas#card-chart2.chart(height='70')
-              // /.col
+                    canvas#card-chart2.chart(height='70')               
               .col-sm-6.col-lg-3
                 .card.text-white.bg-warning
-                  .card-body.pb-0
-                    .btn-group.float-right
-                      button.btn.btn-transparent.dropdown-toggle.p-0(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                        i.icon-settings
-                      .dropdown-menu.dropdown-menu-right
-                        a.dropdown-item(href='#') Detalhes
-                    //- Develop EndPoint - Count Alarms Accelaration (Sum alarm time)    
-                    h4.mb-0 0 minutos
+                  .card-body.pb-0                  
+                    h4.mb-0 
+                      #SumHACCOccur
                     p Altas Acelerações
                   .chart-wrapper(style='height:70px;')
-                    canvas#card-chart3.chart(height='70')
-              // /.col
+                    canvas#card-chart3.chart(height='70')               
               .col-sm-6.col-lg-3
                 .card.text-white.bg-danger
-                  .card-body.pb-0
-                    .btn-group.float-right
-                      button.btn.btn-transparent.dropdown-toggle.p-0(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                        i.icon-settings
-                      .dropdown-menu.dropdown-menu-right
-                        a.dropdown-item(href='#') Detalhes
-                    //- Develop EndPoint - Count Alarms Harsh Brake (Sum alarm time)        
-                    h4.mb-0 0 minutos
+                  .card-body.pb-0                  
+                    h4.mb-0
+                      #SumHBRAKEOccur
                     p Freadas bruscas
                   .chart-wrapper.px-3(style='height:70px;')
                     canvas#card-chart4.chart(height='70')
@@ -82,7 +55,8 @@ block content
                               small.text-muted Conectados
                               br
                               //- EndPoint - Provide Total Connected (login recente or alarm conected)
-                              strong.h4 1
+                              strong.h4 
+                               #VehicleON
                               .chart-wrapper
                                 canvas#sparkline-chart-1(width='100', height='30')
                           // /.col
@@ -91,7 +65,8 @@ block content
                               small.text-muted Desconectados
                               br
                               //- EndPoint - Provide Total Disconnected (login recente or alarm disconected)
-                              strong.h4 1
+                              strong.h4 
+                               #VehicleOFF
                               .chart-wrapper
                                 canvas#sparkline-chart-2(width='100', height='30')
                       .col-sm-6.col-lg-4
@@ -101,7 +76,8 @@ block content
                               small.text-muted SOS
                               br
                               //- EndPoint - Provide Total SOS Alarms
-                              strong.h4 0
+                              strong.h4 
+                               #SOScnt
                               .chart-wrapper
                                 canvas#sparkline-chart-3(width='100', height='30')
                           // /.col
@@ -110,7 +86,8 @@ block content
                               small.text-muted Rebocados
                               br
                               //- EndPoint - Provide Total Towing alarms
-                              strong.h4 0
+                              strong.h4 
+                               #SOScnt
                               .chart-wrapper
                                 canvas#sparkline-chart-4(width='100', height='30')
                           // /.col                        
@@ -121,7 +98,8 @@ block content
                               small.text-muted Combustível
                               br
                               //- EndPoint - Provide Total Speeding alarms
-                              strong.h4 10 L
+                              strong.h4 
+                                #SumFuel
                               .chart-wrapper
                                 canvas#sparkline-chart-5(width='100', height='30')
                           // /.col
@@ -130,7 +108,8 @@ block content
                               small.text-muted MIL*
                               br
                               //- EndPoint - Provide Total MIL alarms
-                              strong.h4 0
+                              strong.h4 
+                                #MILcnt
                               .chart-wrapper
                                 canvas#sparkline-chart-6(width='100', height='30')
                           // /.col                        
@@ -176,3 +155,4 @@ block content
                           td
                             .small.text-muted Último login
                             strong 7 dias atrás
+  

@@ -5,57 +5,48 @@ html(lang='en')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
     meta(name='description', content='DriveOn White Label Platform')
-    meta(name='author', content='DriveOn Devs')
-    meta(name='keyword', content='Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,Angular 2,Angular4,Angular 4,jQuery,CSS,HTML,RWD,Dashboard,React,React.js,Vue,Vue.js')
-   
-    title= title
-    // Icons
+    meta(name='author', content='DriveOn Devs')    
+    title= title    
     link(rel='apple-touch-icon', sizes='180x180', href='img/apple-touch-icon.png')
     link(rel='icon', type='image/png', sizes='32x32', href='img/favicon-32x32.png')
     link(rel='icon', type='image/png', sizes='16x16', href='img/favicon-16x16.png')
     link(rel='manifest', href='/manifest.json')
     link(rel='mask-icon', href='/safari-pinned-tab.svg', color='#5bbad5')
     meta(name='theme-color', content='#ffffff')
-    link(href='css/font-awesome.min.css', rel='stylesheet')
-    link(href='css/simple-line-icons.css', rel='stylesheet')
-    // Main styles for this application
+    
+    link#bootstrap-css(href='//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css', rel='stylesheet')
+    link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css') 
+    // load fontawesome
+
+    link(href='css/initstyle.css', rel='stylesheet')
     link(href='css/style.css', rel='stylesheet')
+    script(src='bower_components/popper.js/dist/umd/popper.min.js')  
+    script(src='bower_components/jquery/dist/jquery.min.js')
   body.app.flex-row.align-items-center
     .container
-      .row.justify-content-center
-        .col-md-4
-          .card-group.mb-0
-            .card.p-2
-              .card-body
-                form(action='/signup',method='post')
-                    //- h1 Login
-                    img.img-avatar(src='img/apple-touch-icon.png')
-                    //- p.text-muted Acesse sua conta
-                    .input-group.mb-3
-                    span.input-group-addon
-                        i.icon-user
-                    input.form-control(type='text', placeholder='Usuário')
-                    .input-group.mb-4
-                    span.input-group-addon
-                        i.icon-lock
-                    input.form-control(type='password', placeholder='Senha')
-                    .row
-                    .col-6
-                    p
-                        button.btn.btn-primary.px-4(type='button') Login
-                    .col-6.text-center
-                        button.btn.btn-link.px-0(type='button') Esqueceu sua senha?
-            //- .card.text-white.bg-primary.py-5.d-md-down-none(style='width:44%')
-            //-   .card-body.text-center
-            //-     div
-            //-       h2 Viriato
-            //-       img.img-avatar(src='img/avatars/1.jpg')
-            //-       p
-            //-         | Viriato Rent a car 
-            //-     //-   button.btn.btn-primary.active.mt-3(type='button') Register Now!
-    // Bootstrap and necessary plugins
-    script(src='bower_components/jquery/dist/jquery.min.js')
-    script(src='bower_components/popper.js/dist/umd/popper.min.js')
-    script(src='bower_components/tether/dist/js/tether.min.js')
-    script(src='bower_components/bootstrap/dist/js/bootstrap.min.js')
-    
+      .row
+        .col-md-4.col-md-offset-8
+         .panel.panel-default
+            .panel-heading
+              //- span.glyphicon.glyphicon-lock
+              img.img-avatar(src='img/logo.png', border='0', alt='DriveOn Auto')
+              //- |  Login
+            .panel-body      
+              - if (message)
+               .alert.alert-danger #{message}                          
+              form.form-horizontal(role='form', action='/logging')
+                .form-group
+                  label.col-sm-3.control-label(for='inputEmail3') E-mail
+                  .col-sm-9
+                    input#inputEmail3.form-control(type='email', placeholder='Email', required='')
+                .form-group
+                  label.col-sm-3.control-label(for='inputPassword3') Senha
+                  .col-sm-9
+                    input#inputPassword3.form-control(type='password', placeholder='Senha', required='')                
+                .form-group.last
+                  .col-sm-offset-3.col-sm-9
+                    button.btn.btn-success.btn-sm(type='submit') Log in
+                    //- button.btn.btn-default.btn-sm(type='reset') Reset
+            .panel-footer
+              | Powered by  
+              a(href='http://www.driveonauto.com') DriveOn Insurance Intelligence
