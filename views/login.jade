@@ -29,18 +29,18 @@ html(lang='en')
          .panel.panel-default
             .panel-heading
               //- span.glyphicon.glyphicon-lock
-              img.img-avatar(src='img/logo.png', border='0', alt='DriveOn Auto')
+              img.img-fluid(src='img/logo_login.png', border='0', alt='DriveOn Auto')
               //- |  Login
             .panel-body      
               - if (message)
                .alert.alert-danger #{message}                          
-              form.form-horizontal(role='form', action='/login')
+              form.form-horizontal(role='form', action='/login', method='post')
                 .form-group
-                  label.col-sm-3.control-label(for='inputEmail3') E-mail
+                  label.col-sm-3.control-label(for='email') E-mail
                   .col-sm-9
                     input#inputEmail3.form-control(type='email', placeholder='Email', required='')
                 .form-group
-                  label.col-sm-3.control-label(for='inputPassword3') Senha
+                  label.col-sm-3.control-label(for='password') Senha
                   .col-sm-9
                     input#inputPassword3.form-control(type='password', placeholder='Senha', required='')                
                 .form-group.last

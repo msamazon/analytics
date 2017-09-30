@@ -8,20 +8,20 @@ exports.main = function(req, res) {
     var lastday = new Date(curr.setDate(last)).toLocaleDateString('pt-BR');
 
     res.render('index', { 
-        title: 'DriveOn Portal', params:{CurWStart:firstday, CurWEnd:lastday} 
+        title: 'Coral Portal', params:{CurWStart:firstday, CurWEnd:lastday} 
     }) 
 }
 
 exports.login = function(req, res) {    
-  req.flash('loginMessage','Bem vindo a DriveOn!')
-  res.render('login', { title: 'DriveOn Portal', message: req.flash('loginMessage')}) 
+  req.flash('loginMessage','Bem vindo a Coral Rent a Car!')
+  res.render('login', { title: 'Coral Portal'}) 
 }
 
 
 exports.locate = function(req, res) {
   console.log ('locate')
   res.render('locate', {
-    title: 'Drive On Portal | Localizar'
+    title: 'Coral Portal | Localizar'
   })
 }
 
@@ -29,7 +29,7 @@ exports.myvehicle = function(req, res) {
   console.log ('myvehicle')
   
   res.render('myvehicle', {
-    title: 'Drive On Portal | Meu veículo'
+    title: 'Coral Portal | Meu veículo'
   })
 }
 
@@ -37,14 +37,14 @@ exports.alarmes = function(req, res) {
   console.log ('alarmes')
   
   res.render('ealarms', {
-    title: 'Drive On Portal | Alarmes'
+    title: 'Coral Portal | Alarmes'
   })
 }
 
 exports.analytics = function(req, res) {
   console.log ('analytics')  
   res.render('analytics', { 
-    title: 'DriveOn Portal | Analytics'
+    title: 'Coral Portal | Analytics'
   }) 
 }
 
@@ -59,7 +59,6 @@ exports.index = function(req, res) {
   var firstday = new Date(curr.setDate(first)).toLocaleDateString('pt-BR');
   var lastday = new Date(curr.setDate(last)).toLocaleDateString('pt-BR');
 
-  res.render('index', { 
-      title: 'DriveOn Portal', params:{CurWStart:firstday, CurWEnd:lastday} 
+  res.render('index', { title: 'Coral Portal', params:{CurWStart:firstday, CurWEnd:lastday} 
   }) 
 }

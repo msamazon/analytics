@@ -9,8 +9,8 @@ var routes          = require('./routes/api.js')
 var path            = require('path')
 var flash           = require('req-flash')
 var cookieParser    = require('cookie-parser')
-// var session         = require('cookie-session')
 var session         = require('express-session')
+var localpass       = require('./lib/passport')(passport)
 
 var port = process.env.PORT || 8080
 
@@ -37,10 +37,10 @@ mongoose.connection.on('error', error => {
 //----
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(session({secret: 'driveonbeta',saveUninitialized: true, resave: true,cookie: { maxAge: 60000 }}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cookieParser('secretString'));
-app.use(session({cookie: { maxAge: 60000 }}));
+app.use(cookieParser('secret'));
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -2,55 +2,63 @@ var express     = require('express')
 var router      = express.Router()
 var jwt         = require('jsonwebtoken')
 var getToken    = require('../lib/getToken')
+var passport    = require('passport')
 var message     = require("../controllers/messageController.js")
 var users       = require('../controllers/userController.js')
 var page        = require('../controllers/pageController.js')
 var currtripinfo = require("../controllers/currenttripinfoController.js")
 
 //users
-router.post('/signup', users.signup)
-router.post('/logging', users.logging)
+// router.post('/signup', users.signup)
+
+// router.post('/login', passport.authenticate('login', {    
+//     successRedirect : '/', // redirect to the secure profile section
+//     failureRedirect : '/login', // redirect back to the signup page if there is an error
+//     failureFlash : true // allow flash messages    
+// }));
+router.post('/login', page.index)
 router.post('/logout', users.logout)
 router.get('/users', users.users)
 
 //Dashboard
 // Top 1
-router.post('/cntMileageMonth', currtripinfo.sumTripMileage)
-router.post('/chartMileageMonth', currtripinfo.chartTripMileage)
+router.post('/cntMileageMonth',  currtripinfo.sumTripMileage)
+router.post('/chartMileageMonth',  currtripinfo.chartTripMileage)
 // Top 2
-router.post('/cntIdleTime', currtripinfo.sumIdleEngineTime)
-router.post('/chartIdleTime', currtripinfo.chartIdleEngineTime)
+router.post('/cntIdleTime',  currtripinfo.sumIdleEngineTime)
+router.post('/chartIdleTime',  currtripinfo.chartIdleEngineTime)
 // Top 3
-router.post('/cntHACCOccur', currtripinfo.cntHarshAcc)
-router.post('/chartHACCOccur', currtripinfo.chartHarshAcc)
+router.post('/cntHACCOccur',  currtripinfo.cntHarshAcc)
+router.post('/chartHACCOccur',  currtripinfo.chartHarshAcc)
 // Top 4
-router.post('/cntHBRAKEOccur', currtripinfo.cntHarshBrake)
-router.post('/chartHBRAKEOccur', currtripinfo.chartHarshBrake)
+router.post('/cntHBRAKEOccur',  currtripinfo.cntHarshBrake)
+router.post('/chartHBRAKEOccur',  currtripinfo.chartHarshBrake)
 
 // Generic Tools
-router.post('/calAlarm', currtripinfo.calAlarm)
-router.post('/stub', currtripinfo.stub)
+router.post('/calAlarm',  currtripinfo.calAlarm)
+router.post('/stub',  currtripinfo.stub)
 
 //Locates
-router.get('/message/gps/:id', message.getgeo)
+router.get('/message/gps/:id',  message.getgeo)
 
 //Pages
-router.get('/', page.index)
-router.get('/locate', page.locate)
-router.get('/myvehicle', page.myvehicle)
-router.get('/alarmes', page.alarmes)
-router.get('/analytics', page.analytics)
-router.get('/dashboard',page.main)
+router.get('/',  page.login)
+router.get('/locate',  page.locate)
+router.get('/myvehicle',  page.myvehicle)
+router.get('/alarmes',  page.alarmes)
+router.get('/analytics',  page.analytics)
+router.get('/dashboard',  page.main)
 router.get('/login', page.login)
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {    
         // if user is authenticated in the session, carry on 
+        console.log('Acessou isAuthenticated:'+ req.isAuthenticated())
         if (req.isAuthenticated())
             return next();
     
         // if they aren't redirect them to the home page
-        res.redirect('/');
+        res.redirect('/login');
     }
 
-module.exports =  router
+module.exports = router
