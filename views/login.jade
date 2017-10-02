@@ -16,8 +16,7 @@ html(lang='en')
     
     link#bootstrap-css(href='//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css', rel='stylesheet')
     link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css') 
-    // load fontawesome
-
+    
     link(href='css/initstyle.css', rel='stylesheet')
     link(href='css/style.css', rel='stylesheet')
     script(src='bower_components/popper.js/dist/umd/popper.min.js')  
@@ -33,7 +32,7 @@ html(lang='en')
               //- |  Login
             .panel-body      
               - if (message)
-               .alert.alert-danger #{message}                          
+                .alert.alert-danger #{message}                          
               form.form-horizontal(role='form', action='/login', method='post')
                 .form-group
                   label.col-sm-3.control-label(for='email') E-mail

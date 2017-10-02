@@ -11,50 +11,46 @@ var currtripinfo = require("../controllers/currenttripinfoController.js")
 //users
 // router.post('/signup', users.signup)
 
-router.post('/login',
-        passport.authenticate('local-login', {    
-                successRedirect : '/', // redirect to the secure profile section
-                failureRedirect : '/login', // redirect back to the signup page if there is an error
-                failureFlash : true, // allow flash messages    
-                badRequestMessage: 'Sem credenciais.', //missing credentials
-            },function(req,res,info){                
-                   console.log('Info:' + info)
-            }
-        )
+// router.post('/login',
+//         passport.authenticate('local-login', {    
+//                 successRedirect : '/', // redirect to the secure profile section
+//                 failureRedirect : '/login', // redirect back to the signup page if there is an error
+//                 failureFlash : true, // allow flash messages    
+//                 badRequestMessage: 'Falha na autenticação.', //missing credentials
+//             },function(req,res,info){                
+//                    console.log('Info:' + JSON.stringify(Info))
+//             }
+//         )
         
-);
+// );
 
-
-// router.post('/login', function (req, res, next) {
-    
-//         var user = req.params;
-//         console.log(user)
-//       passport.authenticate('local-login', function(err, user, info) {
-    
-//         // Just to see the sample expected output
-//         res.send(JSON.stringify(info))
-    
-//       })(req, res) // passport.authenticate ends here
-//     })
-
-// router.post('/login', page.index)
+router.post('/login', function(req, res, next) {
+    passport.authenticate('local-login', function(err, user, info) {
+        if (err) { return next(err); }
+        if (!user) { return res.render('login', {message: req.flash('loginMessage')}); }
+        req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            return res.redirect('/');
+        });
+    })(req, res, next);
+});
 
 router.post('/logout', users.logout)
 router.get('/users', users.users)
 
 //Dashboard
 // Top 1
-router.post('/cntMileageMonth',  currtripinfo.sumTripMileage)
-router.post('/chartMileageMonth',  currtripinfo.chartTripMileage)
+router.post('/cntMileageMonth', isLoggedIn, currtripinfo.sumTripMileage)
+router.post('/chartMileageMonth', isLoggedIn, currtripinfo.chartTripMileage)
 // Top 2
-router.post('/cntIdleTime',  currtripinfo.sumIdleEngineTime)
-router.post('/chartIdleTime',  currtripinfo.chartIdleEngineTime)
+router.post('/cntIdleTime', isLoggedIn,  currtripinfo.sumIdleEngineTime)
+router.post('/chartIdleTime', isLoggedIn,  currtripinfo.chartIdleEngineTime)
 // Top 3
-router.post('/cntHACCOccur',  currtripinfo.cntHarshAcc)
-router.post('/chartHACCOccur',  currtripinfo.chartHarshAcc)
+router.post('/cntHACCOccur', isLoggedIn, currtripinfo.cntHarshAcc)
+router.post('/chartHACCOccur', isLoggedIn, currtripinfo.chartHarshAcc)
 // Top 4
-router.post('/cntHBRAKEOccur',  currtripinfo.cntHarshBrake)
-router.post('/chartHBRAKEOccur',  currtripinfo.chartHarshBrake)
+router.post('/cntHBRAKEOccur', isLoggedIn,  currtripinfo.cntHarshBrake)
+router.post('/chartHBRAKEOccur', isLoggedIn,  currtripinfo.chartHarshBrake)
 
 // Generic Tools
 router.post('/calAlarm',  currtripinfo.calAlarm)
@@ -64,13 +60,16 @@ router.post('/stub',  currtripinfo.stub)
 router.get('/message/gps/:id',  message.getgeo)
 
 //Pages
-router.get('/',  page.login)
-router.get('/locate',  page.locate)
-router.get('/myvehicle',  page.myvehicle)
-router.get('/alarmes',  page.alarmes)
-router.get('/analytics',  page.analytics)
-router.get('/dashboard',  page.main)
-router.get('/login', page.login)
+router.get('/', isLoggedIn, page.index)
+router.get('/locate', isLoggedIn, page.locate)
+router.get('/myvehicle', isLoggedIn, page.myvehicle)
+router.get('/alarmes', isLoggedIn, page.alarmes)
+router.get('/analytics', isLoggedIn, page.analytics)
+router.get('/dashboard', isLoggedIn,  page.main)
+// router.get('/login', page.login)
+router.get('/login', function(req, res) {    
+    res.render('login', { title: 'Coral Portal', message: req.flash('loginMessage') });
+});
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {    

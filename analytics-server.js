@@ -45,19 +45,19 @@ app.use(cookieParser('driveonbeta'));
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Set Global Messages
-app.use(function(req, res, next){
-    res.locals.success_messages = req.flash('success_messages');
-    res.locals.error_messages = req.flash('error_messages');
-    next();
-});
-
 // Set Service Scope for Intercharge messages
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 })
+
+// // Set Global Messages
+// app.use(function(req, res, next){
+//     res.locals.success_messages = req.flash('success_messages');
+//     res.locals.error_messages = req.flash('error_messages');    
+//     next();
+// });
 
 // Set Main Route
 app.use('/', routes)
