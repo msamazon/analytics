@@ -11,12 +11,34 @@ var currtripinfo = require("../controllers/currenttripinfoController.js")
 //users
 // router.post('/signup', users.signup)
 
-// router.post('/login', passport.authenticate('login', {    
-//     successRedirect : '/', // redirect to the secure profile section
-//     failureRedirect : '/login', // redirect back to the signup page if there is an error
-//     failureFlash : true // allow flash messages    
-// }));
-router.post('/login', page.index)
+router.post('/login',
+        passport.authenticate('local-login', {    
+                successRedirect : '/', // redirect to the secure profile section
+                failureRedirect : '/login', // redirect back to the signup page if there is an error
+                failureFlash : true, // allow flash messages    
+                badRequestMessage: 'Sem credenciais.', //missing credentials
+            },function(req,res,info){                
+                   console.log('Info:' + info)
+            }
+        )
+        
+);
+
+
+// router.post('/login', function (req, res, next) {
+    
+//         var user = req.params;
+//         console.log(user)
+//       passport.authenticate('local-login', function(err, user, info) {
+    
+//         // Just to see the sample expected output
+//         res.send(JSON.stringify(info))
+    
+//       })(req, res) // passport.authenticate ends here
+//     })
+
+// router.post('/login', page.index)
+
 router.post('/logout', users.logout)
 router.get('/users', users.users)
 
