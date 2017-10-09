@@ -292,8 +292,28 @@ currenttripinfoController.chartHarshBrake = function(req, res) {
           }
   })
  }
+currenttripinfoController.cntVehiclesConnecteds = function(req, res) {  
+   DO_DEV_M00.find().exec(function (err, currinfo) {    
+    if (err) {
+        console.log("cntVehiclesConnecteds Error:", err);
+    }else {
+        var cntVEHICLES = 0
+        // var arrayCurrinfo = []
+        // console.log("Retorno do banco:" + currinfo.length)
+        if (currinfo.length > 0) {
+          cntVEHICLES = currinfo.length
+        }
+           
+        var message0 =  { "cntVEHICLES": cntVEHICLES  }
 
+        res.json(message0)              
+
+    }
+   })
+}
  
+ 
+
 currenttripinfoController.stub = function(req, res) {
 
   var teste1 = new DO_CAR_M00( {

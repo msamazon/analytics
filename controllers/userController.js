@@ -75,3 +75,10 @@ exports.logout = function(req, res) {
     req.logout();
     res.redirect('/');
 }
+
+exports.userlist = function(req, res) {
+    console.log ('userlist')  
+    User.find({}, function(err, usuarios){
+        res.render('userlist',{ title: 'Coral Portal | Usuários', usuarios: usuarios});
+    });   
+  }

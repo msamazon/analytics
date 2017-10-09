@@ -62,3 +62,4 @@ exports.index = function(req, res) {
   res.render('index', { title: 'Coral Portal', params:{CurWStart:firstday, CurWEnd:lastday} 
   }) 
 }
+

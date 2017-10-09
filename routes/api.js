@@ -10,20 +10,6 @@ var currtripinfo = require("../controllers/currenttripinfoController.js")
 
 //users
 // router.post('/signup', users.signup)
-
-// router.post('/login',
-//         passport.authenticate('local-login', {    
-//                 successRedirect : '/', // redirect to the secure profile section
-//                 failureRedirect : '/login', // redirect back to the signup page if there is an error
-//                 failureFlash : true, // allow flash messages    
-//                 badRequestMessage: 'Falha na autenticação.', //missing credentials
-//             },function(req,res,info){                
-//                    console.log('Info:' + JSON.stringify(Info))
-//             }
-//         )
-        
-// );
-
 router.post('/login', function(req, res, next) {
     passport.authenticate('local-login', function(err, user, info) {
         if (err) { return next(err); }
@@ -52,6 +38,9 @@ router.post('/chartHACCOccur', isLoggedIn, currtripinfo.chartHarshAcc)
 router.post('/cntHBRAKEOccur', isLoggedIn,  currtripinfo.cntHarshBrake)
 router.post('/chartHBRAKEOccur', isLoggedIn,  currtripinfo.chartHarshBrake)
 
+// From Index Monthly Grid
+router.post('/cntVehicleON', isLoggedIn,  currtripinfo.cntVehiclesConnecteds)
+
 // Generic Tools
 router.post('/calAlarm',  currtripinfo.calAlarm)
 router.post('/stub',  currtripinfo.stub)
@@ -66,6 +55,9 @@ router.get('/myvehicle', isLoggedIn, page.myvehicle)
 router.get('/alarmes', isLoggedIn, page.alarmes)
 router.get('/analytics', isLoggedIn, page.analytics)
 router.get('/dashboard', isLoggedIn,  page.main)
+
+// User Management
+router.get('/userlist', isLoggedIn,  users.userlist)
 // router.get('/login', page.login)
 router.get('/login', function(req, res) {    
     res.render('login', { title: 'Coral Portal', message: req.flash('loginMessage') });
