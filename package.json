@@ -29,7 +29,8 @@
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.0",
     "passport-local": "^1.0.0",
-    "req-flash": "0.0.3"
+    "req-flash": "0.0.3",
+    "view-helpers": "^0.1.5"
   },
   "description": "This project is created from a GitLab [Project Template](https://docs.gitlab.com/ce/gitlab-basics/create-project.html)",
   "main": "analytics-server.js",

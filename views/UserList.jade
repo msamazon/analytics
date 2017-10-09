@@ -14,20 +14,22 @@ block content
                     .card-header
                       i.fa.fa-align-justify
                       |  Usuários
-                    .card-body
+                    .card-body                    
                       table.table.table-striped
                         thead
                           tr
                             th Nome
                             th Email
                             th Administrador
+                            th Criado em
                             th Ações
-                        tbody                          
-                            each usuario in usuarios
+                        tbody                                                  
+                            - each usuario in usuarios
                               tr
                                 td #{usuario.fullname}
                                 td #{usuario.email} 
-                                td #{usuario.admin}
+                                td - var adm = usuario.admin =="Yes"?"Sim":"Não" 
+                                td #{formatDate(usuario.createdAt)}
                                 td 
                                   a(href='/user/edit/#{usuario.id}') Editar 
                                   span
@@ -35,16 +37,19 @@ block content
                             div
                                   p
                                     a(href='user/create') Novo
-                      ul.pagination
-                        li.page-item
-                          a.page-link(href='#') Prev
-                        li.page-item.active
-                          a.page-link(href='#') 1
-                        li.page-item
-                          a.page-link(href='#') 2
-                        li.page-item
-                          a.page-link(href='#') 3
-                        li.page-item
-                          a.page-link(href='#') 4
-                        li.page-item
-                          a.page-link(href='#') Next                
+                      - if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)                                    
+                      //- ul.pagination
+                      //-   li.page-item
+                      //-     a.page-link(href='#') Prev
+                      //-   li.page-item.active
+                      //-     a.page-link(href='#') 1
+                      //-   li.page-item
+                      //-     a.page-link(href='#') 2
+                      //-   li.page-item
+                      //-     a.page-link(href='#') 3
+                      //-   li.page-item
+                      //-     a.page-link(href='#') 4
+                      //-   li.page-item
+                      //-     a.page-link(href='#') Next                

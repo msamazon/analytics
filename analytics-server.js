@@ -12,6 +12,7 @@ var flash           = require('req-flash')
 var cookieParser    = require('cookie-parser')
 var session         = require('express-session')
 var localpass       = require('./lib/passport')(passport)
+var helpers         = require('view-helpers')
 // Service Port
 var port = process.env.PORT || 8080
 
@@ -43,6 +44,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser('driveonbeta'));
 app.use(flash());
+app.use(helpers('analytics'))
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Set Service Scope for Intercharge messages

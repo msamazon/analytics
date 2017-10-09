@@ -76,9 +76,26 @@ exports.logout = function(req, res) {
     res.redirect('/');
 }
 
-exports.userlist = function(req, res) {
-    console.log ('userlist')  
+/**
+ * List
+ */
+exports.userlist = async(function* (req, res) {    
+    const page = (req.query.page > 0 ? req.query.page : 1) - 1;
+    const _id = req.query.item;
+    const limit = 30;
+    const options = {
+      limit: limit,
+      page: page
+    };
+
+    const count = yield User.count();
+
     User.find({}, function(err, usuarios){
-        res.render('userlist',{ title: 'Coral Portal | Usuários', usuarios: usuarios});
+        res.render('userlist',
+                    { title: 'Coral Portal | Usuários', 
+                        usuarios: usuarios,
+                        page: page + 1,
+                        pages: Math.ceil(count / limit)}
+                    );
     });   
-  }
+  });
