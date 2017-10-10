@@ -5,7 +5,7 @@ var User            = require("../models/User")
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
-
+var async           = require('run-async')
 exports.logging = function(req, res) {
 
     if(req.body.email && req.body.password) {
@@ -80,8 +80,11 @@ exports.logout = function(req, res) {
  * List
  */
 exports.userlist = async(function* (req, res) {    
+    console.log('Entrou controller user List')
     const page = (req.query.page > 0 ? req.query.page : 1) - 1;
+    console.log('Page:'+ page)
     const _id = req.query.item;
+    console.log('Item:'+ _id)
     const limit = 30;
     const options = {
       limit: limit,
@@ -89,7 +92,7 @@ exports.userlist = async(function* (req, res) {
     };
 
     const count = yield User.count();
-
+    console.log('Contagem:'+ count)
     User.find({}, function(err, usuarios){
         res.render('userlist',
                     { title: 'Coral Portal | Usuários', 
