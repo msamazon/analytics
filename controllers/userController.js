@@ -92,7 +92,7 @@ exports.userlist = async(function* (req, res) {
 
     User.find({}, function(err, usuarios){
         res.render('userlist',
-                    { title: 'Coral Portal | Usuários', 
+                    { title: 'DriveOn Portal | Usuários', 
                         usuarios: usuarios,
                         page: page + 1,
                         pages: Math.ceil(count / limit)}

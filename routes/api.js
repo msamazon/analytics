@@ -21,7 +21,7 @@ router.post('/login', function(req, res, next) {
     })(req, res, next);
 });
 
-router.post('/logout', users.logout)
+router.get('/logout', users.logout)
 router.get('/users', users.users)
 
 //Dashboard
@@ -60,7 +60,7 @@ router.get('/dashboard', isLoggedIn,  page.main)
 router.get('/userlist', isLoggedIn,  users.userlist)
 // router.get('/login', page.login)
 router.get('/login', function(req, res) {    
-    res.render('login', { title: 'Coral Portal', message: req.flash('loginMessage') });
+    res.render('login', { title: 'DriveOn Portal', message: req.flash('loginMessage') });
 });
 
 // route middleware to make sure a user is logged in
