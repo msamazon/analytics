@@ -5,7 +5,7 @@ var User            = require("../models/User")
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
-
+var async           = require('run-async')
 exports.logging = function(req, res) {
 
     if(req.body.email && req.body.password) {
