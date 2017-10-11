@@ -380,52 +380,24 @@ function getChartVelocity() {
     // }).done(function ( data ) {            
     //   fn_chartVel_load(data)   
     // });  
-    fn_chartVel_load(data);
+    fn_chartVel_load();
   
   };
 
 function fn_chartVel_load(data){
     var lbl = []      
     var dts = []
-    $.each(data, function(index, value) {      //Cards with Charts
+    // $.each(data, function(index, value) {      //Cards with Charts
       //  var rawDrecv = value.dreceived
       //  var cumTot   = value.TotDeslocamento
-       var rawDrecv = ['Aug 24 2017',
-                      'Aug 25 2017',
-                      'Sep 01 2017',
-                      'Sep 02 2017',
-                      'Sep 03 2017',
-                      'Sep 04 2017',
-                      'Sep 05 2017',
-                      'Sep 06 2017',
-                      'Sep 07 2017',
-                      'Sep 08 2017',
-                      'Sep 09 2017',
-                      'Sep 10 2017',
-                      'Sep 11 2017',
-                      'Sep 12 2017',
-                      'Sep 16 2017'];         
-       var cumTot   = ['0.485',
-       '0.35',
-       '11.63',
-       '12.02',
-       '19.76',
-       '17.06',
-       '12.57',
-       '9.95',
-       '20.92',
-       '20.88',
-       '13.35',
-       '13.58',
-       '22.41',
-       '23.01',
-       '36.76']
+       var rawDrecv = ['Aug 24 2017','Aug 25 2017','Sep 01 2017','Sep 02 2017','Sep 03 2017','Sep 04 2017','Sep 05 2017','Sep 06 2017','Sep 07 2017','Sep 08 2017','Sep 09 2017','Sep 10 2017','Sep 11 2017','Sep 12 2017','Sep 16 2017'];         
+       var cumTot   = ['0.485','0.35','11.63','12.02','19.76','17.06','12.57','9.95','20.92','20.88','13.35','13.58','22.41','23.01','36.76'];
       //  rawDrecv =  rawDrecv.toString().substr(6,2) + '/' + rawDrecv.toString().substr(4,2)  
  
        lbl.push(rawDrecv);
        dts.push(cumTot);
     
-    });
+    // });
    
    var labels = lbl;
    var data = {
