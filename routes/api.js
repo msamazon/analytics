@@ -58,6 +58,7 @@ router.get('/dashboard', isLoggedIn,  page.main)
 
 // User Management
 router.get('/userlist', isLoggedIn,  users.userlist)
+
 // router.get('/login', page.login)
 router.get('/login', function(req, res) {    
     res.render('login', { title: 'DriveOn Portal', message: req.flash('loginMessage') });

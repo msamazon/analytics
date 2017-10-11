@@ -310,7 +310,7 @@ currenttripinfoController.cntVehiclesConnecteds = function(req, res) {
 
     }
    })
-}
+ }
  
  
 

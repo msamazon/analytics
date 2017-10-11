@@ -1,5 +1,4 @@
-'use strict';
-
+// 'use strict';
 var mongoose        = require("mongoose")
 var User            = require("../models/User")
 var bcrypt          = require('bcrypt')
@@ -35,7 +34,7 @@ exports.logging = function(req, res) {
             }
         })
     }
-}
+ }
 
 exports.signup = function (req, res) {
 
@@ -57,45 +56,49 @@ exports.signup = function (req, res) {
 
         res.json({success: true, token: token})
     })
-}
+ }
 
 exports.users = function(req, res) {
     console.log ('User List')
     User.find({}, function(err, users) {
         res.json({ users: users })
     })
-}
+ }
 
 exports.profile = function(req, res) {
     console.log('profile')
-}
+ }
     
 exports.logout = function(req, res) {
     console.log('logging out')
     req.logout();
     res.redirect('/');
-}
+ }
 
 /**
  * List
  */
-exports.userlist = async(function* (req, res) {    
+// exports.userlist = async(function* (req, res) {  
+exports.userlist = function(req, res) {     
     const page = (req.query.page > 0 ? req.query.page : 1) - 1;
     const _id = req.query.item;
-    const limit = 30;
+    const limit = 10;
     const options = {
       limit: limit,
       page: page
     };
 
-    const count = yield User.count();
-
-    User.find({}, function(err, usuarios){
-        res.render('userlist',
+    User
+        .find({}, function(err, usuarios){
+            User.count().exec(function(err, count){
+                    res.render('userlist',
                     { title: 'DriveOn Portal | Usuários', 
                         usuarios: usuarios,
                         page: page + 1,
                         pages: Math.ceil(count / limit)}
                     );
-    });   
-  });
+            });        
+        })
+        .limit(limit)
+        .skip(limit * page);   
+  };

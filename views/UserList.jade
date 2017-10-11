@@ -4,8 +4,8 @@ block content
         // Breadcrumb
         ol.breadcrumb
           li.breadcrumb-item Administração
-          li.breadcrumb-item Acesso
-          li.breadcrumb-item.active Login
+          li.breadcrumb-item Dados Mestres
+          li.breadcrumb-item.active Segurados
         .container-fluid
           .animated.fadeIn
             .row
@@ -13,7 +13,7 @@ block content
                   .card
                     .card-header
                       i.fa.fa-align-justify
-                      |  Usuários
+                      |  Segurados
                     .card-body                    
                       table.table.table-striped
                         thead
@@ -24,12 +24,13 @@ block content
                             th Criado em
                             th Ações
                         tbody                                                  
-                            - each usuario in usuarios
+                             each usuario in usuarios
                               tr
                                 td #{usuario.fullname}
                                 td #{usuario.email} 
-                                td - var adm = usuario.admin =="Yes"?"Sim":"Não" 
-                                td #{formatDate(usuario.createdAt)}
+                                td #{adm = usuario.admin?"Sim":"Não" }
+                                //- td #{formatDate(usuario.created)}
+                                td #{(usuario.created)}
                                 td 
                                   a(href='/user/edit/#{usuario.id}') Editar 
                                   span
@@ -37,7 +38,7 @@ block content
                             div
                                   p
                                     a(href='user/create') Novo
-                      - if (pages > 1)
+                       if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)                                    
                       //- ul.pagination
