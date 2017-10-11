@@ -38,6 +38,8 @@ router.post('/chartHACCOccur', isLoggedIn, currtripinfo.chartHarshAcc)
 router.post('/cntHBRAKEOccur', isLoggedIn,  currtripinfo.cntHarshBrake)
 router.post('/chartHBRAKEOccur', isLoggedIn,  currtripinfo.chartHarshBrake)
 
+// For Mobile
+router.post('/chartVelocityMonth', isLoggedIn,  currtripinfo.chartVelocityMonth)
 // From Index Monthly Grid
 router.post('/cntVehicleON', isLoggedIn,  currtripinfo.cntVehiclesConnecteds)
 

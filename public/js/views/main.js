@@ -347,25 +347,114 @@ $(function(){
 
   // Action for TOP Index
   // 1.Top Mileage 
-  getTotMileage();
-  getChartMileage();
+  // getTotMileage();
+  // getChartMileage();
 
-  // 2. Idle Time
-  getTotIdleTime();
-  getChartIdleTime();
+  // // 2. Idle Time
+  // getTotIdleTime();
+  // getChartIdleTime();
 
-  // 3. Harsh Accelation
-  getCntHAccOccur();
-  getChartHAccOccur();
+  // // 3. Harsh Accelation
+  // getCntHAccOccur();
+  // getChartHAccOccur();
   
-  // 4.Harsh Brake
-  getCntHBrakeOccur();
-  getChartHBrakeOccur();
+  // // 4.Harsh Brake
+  // getCntHBrakeOccur();
+  // getChartHBrakeOccur();
   
+
+  // 1.Velocity 
+  getChartVelocity();
 });
 
 
 // Fill table with data
+function getChartVelocity() {
+    $.ajax
+    ({
+      type: "post",
+      url: "/chartVelocityMonth/3WN-16010055",
+      dataType: "json",
+      crossDomain: "false",
+      contentType: "application/json; charset=UTF-8"                                                             
+    }).done(function ( data ) {            
+      fn_chartVel_load(data)   
+    });  
+  };
+
+function fn_chartVel_load(data){
+    var lbl = []      
+    var dts = []
+    $.each(data, function(index, value) {      //Cards with Charts
+       var rawDrecv = value.dreceived
+       var cumTot   = value.TotDeslocamento
+ 
+      //  rawDrecv =  rawDrecv.toString().substr(6,2) + '/' + rawDrecv.toString().substr(4,2)  
+ 
+       lbl.push(rawDrecv);
+       dts.push(cumTot);
+    
+    });
+   
+   var labels = lbl;
+   var data = {
+     labels: labels,
+     datasets: [
+       {
+         label: 'Velocidade Média',
+         backgroundColor: $.brandPrimary,
+         borderColor: 'rgba(255,255,255,.55)',
+         data: dts
+       },
+     ]
+   };
+   var options = {
+       maintainAspectRatio: false,
+       legend: {
+         display: true
+       },
+       scales: {
+         xAxes: [{
+           gridLines: {
+             color: 'transparent',
+             zeroLineColor: 'transparent'
+           },
+           ticks: {
+             fontSize: 2,
+             fontColor: 'transparent',
+           }
+ 
+         }],
+         yAxes: [{
+           display: true,
+           ticks: {
+             display: true,
+             min: Math.min.apply(Math, data.datasets[0].data) - 5,
+             max: Math.max.apply(Math, data.datasets[0].data) + 5,
+           }
+         }],
+       },
+       elements: {
+         line: {
+           borderWidth: 1
+         },
+         point: {
+           radius: 4,
+           hitRadius: 10,
+           hoverRadius: 4,
+         },
+       }
+     };
+     var ctx = $('#card-chartVel');
+     var cardChart1 = new Chart(ctx, {
+       type: 'line',
+       data: data,
+       options: options
+     });
+    
+     
+  }  
+
 function getTotMileage() {
   
       // Empty content string
@@ -698,6 +787,10 @@ function getChartHBrakeOccur(){
    };
 
 function fn_chart04_load(data){
+
+
+
+
   var lbl = []      
   var dts = []
   $.each(data, function(index, value) {      //Cards with Charts

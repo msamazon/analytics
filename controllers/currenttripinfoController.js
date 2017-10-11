@@ -6,6 +6,7 @@ var DO_CAR_C02 = require("../models/do_car_c02")
 var DO_CAR_C03 = require("../models/do_car_c03")
 var DO_CAR_A10 = require("../models/do_car_a10")
 var DO_CAR_A11 = require("../models/do_car_a11")
+var DO_CAR_A13 = require("../models/do_car_a13")
 
 var currenttripinfoController = {}
 
@@ -292,7 +293,51 @@ currenttripinfoController.chartHarshBrake = function(req, res) {
           }
   })
  }
-currenttripinfoController.cntVehiclesConnecteds = function(req, res) {  
+
+currenttripinfoController.chartVelocityMonth = function(req, res) {  
+  console.log('entrou em chartVelocityMonth')
+  var deviceId = req.body.devId
+  DO_CAR_C13.group({
+    "key": {
+        "deviceid": true,
+        "dreceived": true
+    },
+    "initial": {
+        "sumforaveragevelocity": 0,
+        "countforaveragevelocity": 0
+    },
+    "reduce": function(obj, prev) {
+        prev.sumforaveragevelocity += obj.velocity;
+        prev.countforaveragevelocity++;
+    },
+    "finalize": function(prev) {
+        prev.velocity = prev.sumforaveragevelocity / prev.countforaveragevelocity;
+        delete prev.sumforaveragevelocity;
+        delete prev.countforaveragevelocity;
+    },
+    "cond": {
+        "deviceid": deviceId
+    }
+    }).exec(function (err, currinfo) {    
+        if (err) {
+            console.log("chartVelocityMonth Error:", err);
+        }else {
+          var arrayMessage = []
+
+                for(var i = 0; i < currinfo.length; i++) {
+          
+                  var id                        = currinfo[i]._id
+                  var dreceived                 = currinfo[i].dreceived
+                  var velocity                  = currinfo[i].velocity
+                  var message0 =  { "_id": id, "dreceived": dreceived,  "velocity": velocity }
+                  arrayMessage.push(message0)
+                }        
+          
+                res.json(arrayMessage)
+        }
+    })
+  }
+ currenttripinfoController.cntVehiclesConnecteds = function(req, res) {  
    DO_DEV_M00.find().exec(function (err, currinfo) {    
     if (err) {
         console.log("cntVehiclesConnecteds Error:", err);
@@ -310,7 +355,7 @@ currenttripinfoController.cntVehiclesConnecteds = function(req, res) {
 
     }
    })
- }
+  }
  
  
 
