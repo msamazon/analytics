@@ -57,6 +57,7 @@ router.get('/myvehicle', isLoggedIn, page.myvehicle)
 router.get('/alarmes', isLoggedIn, page.alarmes)
 router.get('/analytics', isLoggedIn, page.analytics)
 router.get('/dashboard', isLoggedIn,  page.main)
+router.get('/sinistros', isLoggedIn,  page.sinistros)
 
 // User Management
 router.get('/userlist', isLoggedIn,  users.userlist)

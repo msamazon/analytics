@@ -1,0 +1,62 @@
+extends layout
+block content
+ main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Perfil do Condutor
+          li.breadcrumb-item Meu Veículo
+          li.breadcrumb-item.active Sinistros
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    //- .card-header
+                    //-   i.fa.fa-align-justify
+                    //-   |  Alertas
+                    .card-body
+                      table.table.table-striped
+                        //- thead
+                        //-   tr
+                        //-     th Em #{dateNow()}                            
+                        tbody
+                          tr
+                            td 
+                             | Assistencia 24 horas 
+                            td  
+                             label.switch.switch-lg.switch-3d.switch-primary 
+                              input.switch-input(type='checkbox', checked='')
+                              span.switch-label
+                              span.switch-handle
+                          tr
+                            td 
+                             | Colisão 
+                            td  
+                             label.switch.switch-lg.switch-3d.switch-primary 
+                              input.switch-input(type='checkbox', checked='')
+                              span.switch-label
+                              span.switch-handle
+                          tr
+                            td 
+                             | Furto do Veículo  
+                            td 
+                             label.switch.switch-lg.switch-3d.switch-primary 
+                              input.switch-input(type='checkbox', checked='')
+                              span.switch-label
+                              span.switch-handle
+                          tr
+                            td 
+                             | Roubo do Veículo 
+                            td  
+                             label.switch.switch-lg.switch-3d.switch-primary 
+                              input.switch-input(type='checkbox', checked='')
+                              span.switch-label
+                              span.switch-handle
+                          tr
+                            td 
+                             | Incêndio  
+                            td 
+                             label.switch.switch-lg.switch-3d.switch-primary 
+                              input.switch-input(type='checkbox', checked='')
+                              span.switch-label
+                              span.switch-handle                         

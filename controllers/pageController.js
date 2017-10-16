@@ -72,3 +72,10 @@ exports.index = function(req, res) {
   }) 
 }
 
+
+exports.sinistros = function(req, res) {
+  console.log ('locate')
+  res.render('sinistros', {
+    title: 'DriveOn Portal | Sinistros'
+  })
+}
