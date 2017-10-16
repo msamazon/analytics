@@ -791,9 +791,6 @@ function getChartHBrakeOccur(){
 
 function fn_chart04_load(data){
 
-
-
-
   var lbl = []      
   var dts = []
   $.each(data, function(index, value) {      //Cards with Charts
