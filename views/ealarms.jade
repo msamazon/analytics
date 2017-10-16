@@ -3,9 +3,9 @@ block content
  main.main
         // Breadcrumb
         ol.breadcrumb
+          li.breadcrumb-item Perfil do Condutor
           li.breadcrumb-item Meu Veículo
-          li.breadcrumb-item Eventos
-          li.breadcrumb-item.active Alarmes
+          li.breadcrumb-item.active Alertas
         .container-fluid
           .animated.fadeIn
             .row
@@ -13,46 +13,31 @@ block content
                   .card
                     .card-header
                       i.fa.fa-align-justify
-                      |  Alarmes
+                      |  Alertas
                     .card-body
                       table.table.table-striped
                         thead
                           tr
-                            th Alarme
-                            th Data
-                            th Hora
-                            th Condição
+                            th Em #{dateNow()}                            
                         tbody
                           tr
-                            td Ignição
-                            td Sep 12 2017
-                            td 00:45
-                            td 
-                              span.badge.badge-success Alarme Ligado
+                            td 10:22 Ignição do veículo         
+                              span.badge.badge-success Condição Normal
                           tr
-                            td Baixa Voltagem
-                            td Sep 12 2017
-                            td 00:47
-                            td 
-                              span.badge.badge-danger Alarme Desligado
+                            td 13:07 Frenagem Brusca                            
+                              span.badge.badge-danger Perigo
                           tr
-                            td Ignição
-                            td Sep 12 2017
-                            td 00:51
-                            td
-                              span.badge.badge-success Alarme Ligado
+                            td 13:22 Velocidade Acima da Média de 60 KM/h
+                              span.badge.badge-danger Consumo 
                           tr
-                            td Motor Ocioso
-                            td Sep 12 2017
-                            td 01:06
-                            td
-                              span.badge.badge-warning Alarme Ligado
+                            td 13:48 Motor Ocioso                            
+                              span.badge.badge-warning Consumo 
                           tr
-                            td Dongle Conectado
-                            td Sep 12 2017
-                            td 01:28
-                            td
-                              span.badge.badge-success Alarme Ligado
+                            td 14:15 Dongle Desconectado                            
+                              span.badge.badge-success Informação
+                          tr
+                            td 14:20 Dongle Conectado                            
+                              span.badge.badge-success Informação    
                       ul.pagination
                         li.page-item
                           a.page-link(href='#') Prev
@@ -66,28 +51,3 @@ block content
                           a.page-link(href='#') 4
                         li.page-item
                           a.page-link(href='#') Next
-scripts(lang='javascript').  
-  $(document).ready(function() {
-        // Populate the user table on initial page load
-        //- populateTable();
-
-  });         
-  function populateTable() {
-      // Empty content string
-      var tableContent = '';
-      // jQuery AJAX call for JSON
-      $.getJSON( '/users/userlist', function( data ) {
-
-          // For each item in our JSON, add a table row and cells to the content string
-          $.each(data, function(){
-              tableContent += '<tr>';
-              tableContent += '<td><a href="#" class="linkshowuser" rel="' + this.username + '">' + this.username + '</a></td>';
-              tableContent += '<td>' + this.email + '</td>';
-              tableContent += '<td><a href="#" class="linkdeleteuser" rel="' + this._id + '">delete</a></td>';
-              tableContent += '</tr>';
-          });
-
-          // Inject the whole content string into our existing HTML table
-          $('#userList table tbody').html(tableContent);
-      });
-  };                 

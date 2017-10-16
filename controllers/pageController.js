@@ -37,7 +37,16 @@ exports.alarmes = function(req, res) {
   console.log ('alarmes')
   
   res.render('ealarms', {
-    title: 'DriveOn Portal | Alarmes'
+    title: 'DriveOn Portal | Alarmes',
+    dateNow: function() {
+      var dateNow = new Date();
+      var dd = dateNow.getDate();
+      var monthSingleDigit = dateNow.getMonth() + 1,
+          mm = monthSingleDigit < 10 ? '0' + monthSingleDigit : monthSingleDigit;
+      var yy = dateNow.getFullYear().toString().substr(2);
+
+      return (dd + '/' + mm + '/' + yy);
+  } 
   })
 }
 
