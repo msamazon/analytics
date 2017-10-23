@@ -7,7 +7,7 @@ var message     = require("../controllers/messageController.js")
 var users       = require('../controllers/userController.js')
 var page        = require('../controllers/pageController.js')
 var currtripinfo = require("../controllers/currenttripinfoController.js")
-
+var devices     = require('../controllers/deviceController.js')
 //users
 // router.post('/signup', users.signup)
 router.post('/login', function(req, res, next) {
@@ -63,6 +63,11 @@ router.get('/userlist', isLoggedIn,  users.userlist)
 router.get('/login', function(req, res) {    
     res.render('login', { title: 'DriveOn Portal', message: req.flash('loginMessage') });
 });
+
+// Devices
+require('express-crud')(express);
+express.crud('devices', devices);
+
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {    
