@@ -15,9 +15,9 @@ var DO_DEV_M00Schema = new Schema({
     sms_password: String,
     sms_set_ip  : String,
     sms_set_port: String,
-    createdAt   : String,
+    createdAt   : Date,
     createdBy   : String,
-    updatedAt   : String,
+    updatedAt   : { type: Date, default: Date.now },
     updatedBy   : String
 })
 

@@ -64,11 +64,22 @@ router.get('/login', function(req, res) {
     res.render('login', { title: 'DriveOn Portal', message: req.flash('loginMessage') });
 });
 
-// Devices
-require('express-crud')(express);
-express.crud('devices', devices);
-
-
+// ++++++++++++++++++++++ Devices +++++++++++++++++++++++++++
+// List all dongles
+router.get('/devices', isLoggedIn, devices.list);
+// Get single dongle by id
+router.get('/device/show/:id', isLoggedIn, devices.show);
+// Create dongle
+router.get('/device/create', isLoggedIn, devices.create);
+// Save dongle
+router.post('/device/save', isLoggedIn, devices.save);
+// Edit dongle
+router.get('/device/edit/:id', isLoggedIn, devices.edit);
+// Edit dongle
+router.post('/device/update/:id', isLoggedIn, devices.update);
+// Delete
+router.post('/device/delete/:id', isLoggedIn, devices.delete);
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {    
         // if user is authenticated in the session, carry on 
