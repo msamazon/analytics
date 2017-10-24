@@ -14,7 +14,7 @@ var DO_STAT_M00Schema = new Schema({
         type: String,
         index: true
     },
-    Risk:  {
+    risk:  {
         type: String,
         index: false
     },    

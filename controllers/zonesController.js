@@ -14,11 +14,11 @@ exports.list = function(req, res){
     };
 
     zones
-        .find({'activeStatus':'yes'}, function(err, zonas){
+        .find({}, function(err, zon){
             zones.count().exec(function(err, count){
                     res.render('zones',
                     { title: 'DriveOn | Zonas de Pontuação', 
-                        zonas: zonas,
+                        zonas: zon,
                         page: page + 1,
                         pages: Math.ceil(count / limit)}
                     );

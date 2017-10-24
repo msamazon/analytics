@@ -875,4 +875,16 @@ function getGAS() {
     $('#SumFuel').html(retrnCnt);    
   });
 
+  // $.ajax
+  // ({
+  //   type: "post",
+  //   url: "/stub",
+  //   dataType: "json",
+  //   crossDomain: "false",
+  //   contentType: "application/json; charset=UTF-8"                                                             
+  // }).done(function ( data ) {  
+  //   console.log('Stub:'+ JSON.stringify(data))      
+  // });
+
+
 };   

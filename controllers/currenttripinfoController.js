@@ -7,6 +7,7 @@ var DO_CAR_C03 = require("../models/do_car_c03")
 var DO_CAR_A10 = require("../models/do_car_a10")
 var DO_CAR_A11 = require("../models/do_car_a11")
 var DO_COM_M00 = require("../models/do_com_m00")
+var DO_STAT_M00 = require("../models/do_stat_m00")
 
 var currenttripinfoController = {}
 
@@ -168,7 +169,7 @@ currenttripinfoController.sumTripMileage = function(req, res) {
                   var currentTripMileage  = currinfo[i].TotDeslocamento
                   sumcurrentTripMileage   = sumcurrentTripMileage + currentTripMileage
               }   
-              var message0 =  { "sumcurrentTripMileage": sumcurrentTripMileage  }
+              var message0 =  { "sumcurrentTripMileage": Math.round(sumcurrentTripMileage)  }
               arrayCurrinfo.push(message0)
               // res.json({message:arrayCurrinfo})
               res.json(message0)              
@@ -387,7 +388,14 @@ currenttripinfoController.stub = function(req, res) {
   })
   testeDO_CAR_C02.save()
 
-  
+  var testeDO_STAT_M00 = new DO_STAT_M00( {
+    mapid : 1,
+    district : "Centro",
+    zone : "Sul",
+    risk : "Azul",
+    ReducePoints : 0
+  })
+  testeDO_STAT_M00.save()
 
 
 
