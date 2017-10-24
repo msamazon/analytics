@@ -82,14 +82,13 @@ block content
                           label.form-control-label(for='createdBy') Criado por
                           .controls
                             .input-group
-                              input#createdBy.form-control(size='16', type='text')  
-                              
-                                  a(href='/devices/edit/#{device.id}') Editar 
-                                  span
-                                  a(href='/devices/delete/#{device.id}') Deletar
+                              input#createdBy.form-control(size='16', type='text')                                                             
                             div
-                                  p
-                                    a(href='device/create') Novo
+                                a(href='/devices/edit/#{device.id}') Editar                                 
                         .form-actions
-                          button.btn.btn-primary(type='submit',url='/employees/delete/#{device.id}') Deletar
-                          button.btn.btn-secondary(type='button') Cancel                                                                       
+                          button.btn.btn-sm.btn-primary(type='submit',url='/employees/delete/#{device.id}')
+                            i.fa.fa-dot-circle-o
+                            |  Deletar                          
+                          button.btn.btn-sm.btn-danger(type='reset')
+                            i.fa.fa-ban
+                            |  Cancelar                               

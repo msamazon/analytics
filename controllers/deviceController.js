@@ -3,7 +3,7 @@ var Device          = require("../models/do_dev_m00")
 
 exports.create = function(req, res){
     console.log('Novos Dongles')
-    res.render('device_create');
+    res.render('device_create', { title: 'DriveOn | Instalação de Dongles'});
  };   
 exports.list = function(req, res){
     console.log('List Dongles')
@@ -18,7 +18,7 @@ exports.list = function(req, res){
     Device
         .find({}, function(err, devices){
             Device.count().exec(function(err, count){
-                    res.render('devices/index',
+                    res.render('device_index',
                     { title: 'DriveOn Portal | Dongles', 
                         devices: devices,
                         page: page + 1,
@@ -31,14 +31,27 @@ exports.list = function(req, res){
  };
 
 exports.show = function(req, res){
+
+  if (req.params.id != null || req.params.id != undefined) {      
     Device.findOne({_id: req.params.id}).exec(function (err, devices) {
         if (err) {
           console.log("Error at show Dongles:", err);
         }
         else {
+          devices = {id: req.params.id}
           res.render('device_show', {devices: devices});
         }
       });
+  } else {
+    Device.findOne({_id: req.params.id}).exec(function (err, devices) {
+      if (err) {
+        console.log("Error at show Dongles:", err);
+      }
+      else {
+        res.render('device_show', {devices: devices});
+      }
+    });
+  }
  };   
 exports.edit = function(req, res){
     console.log('Device Edit')
@@ -66,15 +79,17 @@ exports.update = function(req, res){
       });
  }; 
 exports.save  =   function(req, res){
-    console.log('Device Save')
-    var device = new Employee(req.body);    
-    Device.save(function(err) {
+    console.log('Device Save, body data:'+ req.body)
+    var dongle = new Device(req.body);   
+    console.log('Dados para salvar=>'+JSON.stringify(dongle));
+    
+    dongle.save(function(err) {
         if(err) {
           console.log("Error on Device Save:" + err);
-          res.render('device_create');
+          res.render('device_create', { title: 'DriveOn | Instalação de Dongles'});
         } else {
           console.log("Dongle registrado com sucesso.");
-          res.redirect("/device/show/"+device._id);
+          res.redirect("/device/show/"+dongle._id);
         }
       });
  };

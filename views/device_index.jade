@@ -51,12 +51,9 @@ block content
                                 td #{formatDate(device.createdAt)}
                                 td #{device.createdBy}                              
                                 td                                
-                                  a(href='/devices/edit/#{device.id}') Editar 
+                                  a(href='/device/edit/#{device.id}') Editar 
                                   span
-                                  a(href='/devices/delete/#{device.id}') Deletar
-                            div
-                                  p
-                                    a(href='device/create') Novo
+                                  a(href='/device/delete/#{device.id}') Deletar                            
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)                                                                        

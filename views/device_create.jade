@@ -1,0 +1,82 @@
+extends layout
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item Devices
+          li.breadcrumb-item.active Instalação
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Dongles - Instalação
+                    .card-body   
+                      form.form-horizontal(action='/device/save', method='post')
+                        .form-group
+                          label.form-control-label(for='HW Hex') HW Id
+                          .controls
+                            .input-group
+                              input#name.form-control(size='16', type='text')
+                        //- .form-group
+                        //-   label.col-md-3.form-control-label(for='actived') Ativo?
+                        //-   .controls
+                        //-     .col-md-9
+                        //-       select#select.form-control-sm(name='actived')
+                        //-         option(value='') Selecione
+                        //-         option(value='Sim') Sim
+                        //-         option(value='Nao') Não
+                        //-     //- .input-group
+                        //-     //-   input#actived.form-control(size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='firmware') Firmware
+                          .controls
+                            .input-group
+                              input#firmware.form-control(size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='version') Versão
+                          .controls
+                            .input-group
+                              input#version.form-control(size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='sms_srv_addr') Provedor de SMS
+                          .controls
+                            .input-group
+                              input#sms_srv_addr.form-control(size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='sms_srv_key') Chave do Provedor de SMS
+                          .controls
+                            .input-group
+                              input#sms_srv_key.form-control(size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='sms_apn') SMS APN
+                          .controls
+                            .input-group
+                              input#sms_apn.form-control(size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='sms_user') SMS Usuário
+                          .controls
+                            .input-group
+                              input#sms_user.form-control(size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='sms_password') SMS Senha
+                          .controls
+                            .input-group
+                              input#sms_password.form-control(size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='sms_set_ip') Servidor
+                          .controls
+                            .input-group
+                              input#sms_set_ip.form-control(size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='sms_set_port') Porta do Servidor
+                          .controls
+                            .input-group
+                              input#sms_set_port.form-control(size='16', type='text')                        
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Salvar
+                          button.btn.btn-sm.secondary(type='button') Cancelar                                                                       

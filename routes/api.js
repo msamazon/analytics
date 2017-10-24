@@ -70,7 +70,7 @@ router.get('/devices', isLoggedIn, devices.list);
 // Get single dongle by id
 router.get('/device/show/:id', isLoggedIn, devices.show);
 // Create dongle
-router.get('/device/create', isLoggedIn, devices.create);
+router.get('/devicecreate', isLoggedIn, devices.create);
 // Save dongle
 router.post('/device/save', isLoggedIn, devices.save);
 // Edit dongle
@@ -78,7 +78,7 @@ router.get('/device/edit/:id', isLoggedIn, devices.edit);
 // Edit dongle
 router.post('/device/update/:id', isLoggedIn, devices.update);
 // Delete
-router.post('/device/delete/:id', isLoggedIn, devices.delete);
+router.get('/device/delete/:id', isLoggedIn, devices.delete);
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {    
