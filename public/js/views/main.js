@@ -362,6 +362,20 @@ $(function(){
   getCntHBrakeOccur();
   getChartHBrakeOccur();
   
+
+  // Action for ACC Index
+  // 1.Connected Dongles
+  getConnected();
+  // 2.Disconnected Dongles
+  getDisconnected(); 
+  // 3.SOS Alarms
+  getSOS();
+  // 4.Rebocados
+  getReb(); 
+  // 5. SUM Gas
+  getGAS();  
+  // 6.MIL Alarm
+  getMIL(); 
 });
 
 
@@ -743,3 +757,122 @@ function fn_chart04_load(data){
       options: options
     });
  }
+
+function getConnected() {
+  
+      // Empty content string
+      var tableContent = '0 ';  
+
+      $.ajax
+      ({
+        type: "post",
+        url: "/cntDevConnected",
+        dataType: "json",
+        crossDomain: "false",
+        contentType: "application/json; charset=UTF-8"                                                             
+      }).done(function ( data ) {  
+        // console.log('cntDevConnected:'+ JSON.stringify(data))
+        retrnCnt = data.total;
+        $('#VehicleON').html(retrnCnt);    
+      });
+
+  }; 
+
+
+function getDisconnected() {
+  
+      // Empty content string
+      var tableContent = '0 ';  
+
+      $.ajax
+      ({
+        type: "post",
+        url: "/cntDevDisconnected",
+        dataType: "json",
+        crossDomain: "false",
+        contentType: "application/json; charset=UTF-8"                                                             
+      }).done(function ( data ) {  
+        // console.log('cntDevConnected:'+ JSON.stringify(data))
+        retrnCnt = data.total;
+        $('#VehicleOFF').html(retrnCnt);    
+      });
+
+  };  
+
+function getSOS() {
+    
+        // Empty content string
+        var tableContent = '0 ';  
+  
+        $.ajax
+        ({
+          type: "post",
+          url: "/cntSOS",
+          dataType: "json",
+          crossDomain: "false",
+          contentType: "application/json; charset=UTF-8"                                                             
+        }).done(function ( data ) {  
+          // console.log('cntDevConnected:'+ JSON.stringify(data))
+          retrnCnt = data.total;
+          $('#SOScnt').html(retrnCnt);    
+        });
+  
+    };   
+
+function getReb() {
+      
+          // Empty content string
+          var tableContent = '0 ';  
+    
+          $.ajax
+          ({
+            type: "post",
+            url: "/cntReb",
+            dataType: "json",
+            crossDomain: "false",
+            contentType: "application/json; charset=UTF-8"                                                             
+          }).done(function ( data ) {  
+            // console.log('cntDevConnected:'+ JSON.stringify(data))
+            retrnCnt = data.total;
+            $('#Rebcnt').html(retrnCnt);    
+          });
+    
+      }; 
+
+function getMIL() {
+      // Empty content string
+      var tableContent = '0 ';  
+
+      $.ajax
+      ({
+        type: "post",
+        url: "/cntMIL",
+        dataType: "json",
+        crossDomain: "false",
+        contentType: "application/json; charset=UTF-8"                                                             
+      }).done(function ( data ) {  
+        // console.log('cntDevConnected:'+ JSON.stringify(data))
+        retrnCnt = data.total;
+        $('#MILcnt').html(retrnCnt);    
+      });
+
+  }; 
+
+function getGAS() {
+  // Empty content string
+  var tableContent = '0 ';  
+
+  $.ajax
+  ({
+    type: "post",
+    url: "/sumGAS/33574e2d3136303130303535",
+    dataType: "json",
+    crossDomain: "false",
+    contentType: "application/json; charset=UTF-8"                                                             
+  }).done(function ( data ) {  
+    console.log('cntDevConnected:'+ JSON.stringify(data))
+    retrnCnt = parseInt(data.total) * 0.1;
+    $('#SumFuel').html(retrnCnt);    
+  });
+
+};   

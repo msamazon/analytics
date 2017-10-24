@@ -6,6 +6,7 @@ var DO_CAR_C02 = require("../models/do_car_c02")
 var DO_CAR_C03 = require("../models/do_car_c03")
 var DO_CAR_A10 = require("../models/do_car_a10")
 var DO_CAR_A11 = require("../models/do_car_a11")
+var DO_COM_M00 = require("../models/do_com_m00")
 
 var currenttripinfoController = {}
 
@@ -321,7 +322,7 @@ currenttripinfoController.stub = function(req, res) {
     deviceId : "3WN-16010055",
     deviceHex : "33574e2d3136303130303535",
     vin : "",
-    plate : "HAH-3244",
+    plate : "ZZZ-9999",
     model : "Onix",
     color : "Preto",
     state : "AM",
@@ -385,6 +386,10 @@ currenttripinfoController.stub = function(req, res) {
     TotDeslocamento : 14.7
   })
   testeDO_CAR_C02.save()
+
+  
+
+
 
  }
 module.exports = currenttripinfoController

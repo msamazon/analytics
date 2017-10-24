@@ -32,7 +32,7 @@ messageController.list = function(req, res) {
       res.json({message: arrayMessage})
     }
   })
-}
+ }
 
 
 messageController.getgeo = function(req, res) {
@@ -90,4 +90,46 @@ messageController.show = function(req, res) {
     });
   };
 
-  module.exports = messageController
+messageController.SOSCounter = function(req, res) {
+    
+    Message
+      .find({'eventcode':'0320','alarmNo':'0e'}).count().exec(function(err, count){                       
+            var message0 = {'total':count}
+                res.json(message0);                     
+          });        
+      
+    };
+  
+messageController.GuinchoCounter = function(req, res) {
+    
+    Message
+      .find({'eventcode':'0320','alarmNo':'06'}).count().exec(function(err, count){                       
+            var message0 = {'total':count}
+                res.json(message0);                     
+          });        
+      
+    };  
+
+messageController.MILCounter = function(req, res) {
+  
+  Message
+    .find({'eventcode':'0320','alarmNo':'01'}).count().exec(function(err, count){                       
+          var message0 = {'total':count}
+              res.json(message0);                     
+        });        
+    
+  };    
+
+messageController.GASsum = function(req, res) {
+  var dongleCode = req.params.id
+
+  Message.findOne({'dongleCode':dongleCode,'eventcode':'0120'}).sort({$natural :1}).exec(function (err, message) {  
+        var sumgas = message.currentTripFuelConsumption
+        var message0 = {'total':sumgas}
+              res.json(message0);                     
+        });        
+    
+  };  
+
+  
+module.exports = messageController

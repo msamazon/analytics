@@ -106,3 +106,24 @@ exports.delete = function(req, res){
         }
       });
  };
+
+
+ exports.cntVehiclesConnecteds = function(req, res) {      
+      Device
+      .find({'activated':'Sim'}, function(err, devices){
+          Device.count().exec(function(err, count){                       
+            var message0 = {'total':count}
+                res.json(message0);                     
+          });        
+      });
+  };
+
+exports.cntVehiclesDisconnecteds = function(req, res) {      
+  Device
+  .find({'activated':'Não'}, function(err, devices){
+      Device.count().exec(function(err, count){                       
+        var message0 = {'total':count}
+            res.json(message0);                     
+      });        
+  });
+};  

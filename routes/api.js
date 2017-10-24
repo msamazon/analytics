@@ -8,6 +8,8 @@ var users       = require('../controllers/userController.js')
 var page        = require('../controllers/pageController.js')
 var currtripinfo = require("../controllers/currenttripinfoController.js")
 var devices     = require('../controllers/deviceController.js')
+var masterdata  = require('../controllers/masterController')
+var zones  = require('../controllers/zonesController')
 //users
 // router.post('/signup', users.signup)
 router.post('/login', function(req, res, next) {
@@ -39,8 +41,12 @@ router.post('/cntHBRAKEOccur', isLoggedIn,  currtripinfo.cntHarshBrake)
 router.post('/chartHBRAKEOccur', isLoggedIn,  currtripinfo.chartHarshBrake)
 
 // From Index Monthly Grid
-router.post('/cntVehicleON', isLoggedIn,  currtripinfo.cntVehiclesConnecteds)
-
+router.post('/cntDevConnected', isLoggedIn, devices.cntVehiclesConnecteds)
+router.post('/cntDevDisconnected', isLoggedIn, devices.cntVehiclesDisconnecteds)
+router.post('/cntSOS', isLoggedIn, message.SOSCounter)
+router.post('/cntReb', isLoggedIn, message.GuinchoCounter)
+router.post('/cntMIL', isLoggedIn, message.MILCounter)
+router.post('/sumGAS/:id', isLoggedIn, message.GASsum)
 // Generic Tools
 router.post('/calAlarm',  currtripinfo.calAlarm)
 router.post('/stub',  currtripinfo.stub)
@@ -49,7 +55,8 @@ router.post('/stub',  currtripinfo.stub)
 router.get('/message/gps/:id',  message.getgeo)
 
 //Pages
-router.get('/', isLoggedIn, page.index)
+// router.get('/', isLoggedIn, page.index)
+router.get('/', isLoggedIn, masterdata.list)
 router.get('/locate', isLoggedIn, page.locate)
 router.get('/myvehicle', isLoggedIn, page.myvehicle)
 router.get('/alarmes', isLoggedIn, page.alarmes)
@@ -58,6 +65,9 @@ router.get('/dashboard', isLoggedIn,  page.main)
 
 // User Management
 router.get('/userlist', isLoggedIn,  users.userlist)
+
+// Zones
+router.get('/zones', isLoggedIn,  zones.list)
 
 // router.get('/login', page.login)
 router.get('/login', function(req, res) {    

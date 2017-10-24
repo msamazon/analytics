@@ -2,15 +2,23 @@ var mongoose  = require('mongoose')
 var Schema    = mongoose.Schema
 // Velocidade Média
 var DO_STAT_M00Schema = new Schema({
-    deviceId: {
+    mapid: {
         type: String,
         index: true
     },    
-    dreceived:  {
-        type: Number,
+    district:  {
+        type: String,
         index: true
     },
-    TotDeslocamento: Number
+    zone:  {
+        type: String,
+        index: true
+    },
+    Risk:  {
+        type: String,
+        index: false
+    },    
+    ReducePoints: Number
 })
 
-module.exports =  mongoose.model('do_stat', DO_STAT_M00Schema)
+module.exports =  mongoose.model('do_stat_m00', DO_STAT_M00Schema)
