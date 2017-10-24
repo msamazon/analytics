@@ -38,7 +38,7 @@ exports.show = function(req, res){
           console.log("Error at show Dongles:", err);
         }
         else {
-          devices = {id: req.params.id}
+          devices = {_id: req.params.id}
           res.render('device_show', {devices: devices});
         }
       });
