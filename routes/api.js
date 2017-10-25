@@ -94,7 +94,7 @@ router.get('/device/delete/:id', isLoggedIn, devices.delete);
 function isLoggedIn(req, res, next) {    
         // if user is authenticated in the session, carry on 
         // console.log('Acessou isAuthenticated:'+ req.isAuthenticated())
-        // if (req.isAuthenticated())
+        if (req.isAuthenticated())
             return next();
     
         // if they aren't redirect them to the home page
