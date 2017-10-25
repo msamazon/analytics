@@ -58,7 +58,7 @@ router.get('/message/gps/:id',  message.getgeo)
 // router.get('/', isLoggedIn, page.index)
 router.get('/', isLoggedIn, masterdata.list)
 router.get('/locate', isLoggedIn, page.locate)
-router.get('/trips', isLoggedIn, page.myvehicle)
+router.get('/trips', isLoggedIn, masterdata.listsimple)
 router.get('/alarmes', isLoggedIn, page.alarmes)
 router.get('/analytics', isLoggedIn, page.analytics)
 router.get('/dashboard', isLoggedIn,  page.main)
@@ -93,8 +93,8 @@ router.get('/device/delete/:id', isLoggedIn, devices.delete);
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {    
         // if user is authenticated in the session, carry on 
-        console.log('Acessou isAuthenticated:'+ req.isAuthenticated())
-        if (req.isAuthenticated())
+        // console.log('Acessou isAuthenticated:'+ req.isAuthenticated())
+        // if (req.isAuthenticated())
             return next();
     
         // if they aren't redirect them to the home page

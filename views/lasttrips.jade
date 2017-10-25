@@ -3,21 +3,58 @@ block content
  main.main
         // Breadcrumb
         ol.breadcrumb
+          li.breadcrumb-item Clientes
           li.breadcrumb-item Veículos
-          li.breadcrumb-item.active Ultimo trajeto
+          li.breadcrumb-item.active Último trajeto
         .container-fluid
-          .animated.fadeIn
-            .row
-              .col-md-12
-                .card
-                  .col-md-4
-                      .card-header
-
-                      .card-body
-
-                  .col-md-8
-                      .card-header
-                        | Último trajeto 
-                      .card-body
-                        .row
-                          #myMap(style='left:15px; width: 74vw; height: 60vh;')
+          #myMap(style='left:1px; width: 100%; height: 100%;')
+            script(type='text/javascript').
+              var map;                              
+              function loadMapScenario() {                    
+                  //map options
+                  var mapOptions = {
+                    credentials: 'Ao6vpD6q5I9xFZiLoO-2tZm5KNPZ2E80Y8pkPfzVeQpDmUqJ3FoYlkLN9nWC6HET',
+                    mapTypeId: Microsoft.Maps.MapTypeId.road,
+                    enableSearchLogo: false,
+                    zoom: 14
+                  };
+                  //map initialization
+                  map = new Microsoft.Maps.Map(document.getElementById('myMap'), mapOptions);                                                        
+                };
+          //- .animated.fadeIn
+            .row              
+                .col-md-12   
+                  .card               
+                    //- .card-header
+                    //-   | Último trajeto 
+                    .card-body
+                      .row
+                        .col-md-3
+                          table.table.table-responsive.table-hover.table-outline.mb-0
+                            thead.thead-default
+                              tr                           
+                                th Veículos                            
+                            tbody
+                              each carro in carros
+                                tr                           
+                                  td
+                                    div #{carro.plate}                                                            
+                          if (pages > 1)
+                            ul.pagination
+                              != createPagination(pages, page) 
+                        .col-md-9
+                          //- #myMap(style='left:1px; width: 74vw; height: 60vh;')
+                          #myMap(style='position:relative;left:1px; width: 100%; height: 100%;')
+                            script(type='text/javascript').
+                              var map;                              
+                              function loadMapScenario() {                    
+                                  //map options
+                                  var mapOptions = {
+                                    credentials: 'Ao6vpD6q5I9xFZiLoO-2tZm5KNPZ2E80Y8pkPfzVeQpDmUqJ3FoYlkLN9nWC6HET',
+                                    mapTypeId: Microsoft.Maps.MapTypeId.road,
+                                    enableSearchLogo: false,
+                                    zoom: 14
+                                  };
+                                  //map initialization
+                                  map = new Microsoft.Maps.Map(document.getElementById('myMap'), mapOptions);                                                        
+                                };

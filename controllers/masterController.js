@@ -35,3 +35,29 @@ exports.list = function(req, res){
         .limit(limit)
         .skip(limit * page);  
  };
+
+ exports.listsimple = function(req, res){
+    console.log('Simple list cars')
+    const page = (req.query.page > 0 ? req.query.page : 1) - 1;
+    const _id = req.query.item;
+    const limit = 10;
+
+    const options = {
+      limit: limit,
+      page: page
+    };
+
+    cars
+        .find({'activeStatus':'yes'}, function(err, carros){
+            cars.count().exec(function(err, count){
+                    res.render('lasttrips',
+                    { title: 'DriveOn', 
+                        carros: carros,
+                        page: page + 1,
+                        pages: Math.ceil(count / limit)}
+                    );
+            });        
+        })
+        .limit(limit)
+        .skip(limit * page);  
+ };
