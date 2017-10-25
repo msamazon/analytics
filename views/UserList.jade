@@ -3,9 +3,8 @@ block content
   main.main
         // Breadcrumb
         ol.breadcrumb
-          li.breadcrumb-item Administração
-          li.breadcrumb-item Dados Mestres
-          li.breadcrumb-item.active Segurados
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item.active Usuários
         .container-fluid
           .animated.fadeIn
             .row
@@ -13,7 +12,7 @@ block content
                   .card
                     .card-header
                       i.fa.fa-align-justify
-                      |  Segurados
+                      |  Usuários
                     .card-body                    
                       table.table.table-striped
                         thead
@@ -21,7 +20,7 @@ block content
                             th Nome
                             th Email
                             th Administrador
-                            th Criado em
+                            //- th Criado em
                             th Ações
                         tbody                                                  
                              each usuario in usuarios
@@ -30,27 +29,11 @@ block content
                                 td #{usuario.email} 
                                 td #{adm = usuario.admin?"Sim":"Não" }
                                 //- td #{formatDate(usuario.created)}
-                                td #{(usuario.created)}
+                                //- td #{(usuario.created)}
                                 td 
                                   a(href='/user/edit/#{usuario.id}') Editar 
                                   span
-                                  a(href='/user/delete/#{usuario.id}') Deletar
-                            div
-                                  p
-                                    a(href='user/create') Novo
+                                  a(href='/user/delete/#{usuario.id}') Deletar                           
                        if (pages > 1)
                         ul.pagination
-                          != createPagination(pages, page)                                    
-                      //- ul.pagination
-                      //-   li.page-item
-                      //-     a.page-link(href='#') Prev
-                      //-   li.page-item.active
-                      //-     a.page-link(href='#') 1
-                      //-   li.page-item
-                      //-     a.page-link(href='#') 2
-                      //-   li.page-item
-                      //-     a.page-link(href='#') 3
-                      //-   li.page-item
-                      //-     a.page-link(href='#') 4
-                      //-   li.page-item
-                      //-     a.page-link(href='#') Next                
+                          != createPagination(pages, page)  

@@ -1,0 +1,23 @@
+extends layout
+block content
+ main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Veículos
+          li.breadcrumb-item.active Ultimo trajeto
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                .card
+                  .col-md-4
+                      .card-header
+
+                      .card-body
+
+                  .col-md-8
+                      .card-header
+                        | Último trajeto 
+                      .card-body
+                        .row
+                          #myMap(style='left:15px; width: 74vw; height: 60vh;')

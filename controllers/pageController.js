@@ -26,10 +26,10 @@ exports.locate = function(req, res) {
 }
 
 exports.myvehicle = function(req, res) {
-  console.log ('myvehicle')
+  console.log ('lasttrips')
   
-  res.render('myvehicle', {
-    title: 'DriveOn Portal | Meu veículo'
+  res.render('lasttrips', {
+    title: 'DriveOn Portal | Último trajeto'
   })
 }
 
