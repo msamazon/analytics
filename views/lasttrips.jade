@@ -10,13 +10,15 @@ block content
           #container(style='position: relative;top: 0; padding-bottom: 56.25%; padding-top: 0; height: 0;  overflow: hidden;') 
             #myMap(style='position: absolute; top: 0px; left: 0px; width: 100%;  height: 100%; z-index:100')
                   script(type='text/javascript').
-                    var map = null;                              
+                    var map = null;    
+                    var p = 0;                          
+                    var pushpin;                    
                     function loadMapScenario() {                    
                         //map options
                         var mapOptions = {
                           credentials: 'Ao6vpD6q5I9xFZiLoO-2tZm5KNPZ2E80Y8pkPfzVeQpDmUqJ3FoYlkLN9nWC6HET',
                           mapTypeId: Microsoft.Maps.MapTypeId.road,
-                          enableSearchLogo: false,
+                          //- enableSearchLogo: false,
                           disableZooming: true,
                           zoom: 14
                         };
@@ -28,7 +30,7 @@ block content
                       };
                     function UpdatePOIData(credentials){
                           map.getCredentials(MakePOIRequest);
-                      }
+                      };
 
                     function MakePOIRequest(credentials) {
                           var bbox = map.getBounds();
@@ -42,7 +44,7 @@ block content
                           //List of Entity types: http://msdn.microsoft.com/en-us/library/hh478191.aspx
 
                           CallRestService(poiRequest);
-                      }  
+                      }; 
                     function POICallback(response) {
                           map.entities.clear();
 
@@ -58,31 +60,35 @@ block content
                                   map.entities.push(pushpin);
                             }
                           }
-                      } 
+                      };
                     function CallRestService(request){
                           var script = document.createElement("script");
                           script.setAttribute("type", "text/javascript");
                           script.setAttribute("src", request);
                           document.body.appendChild(script);
-                      }   
+                      };
+
                     function executeQuery(dongle) {
+                            
                               jQuery.support.cors = true;
                               $.ajax
                               ({
                                 type: "get",
-                                url: "/message/gps/"+dongle,
+                                url: "/message/gps/" + dongle,
                                 dataType: "json",
                                 crossDomain: "true",
                                 contentType: "application/json; charset=UTF-8"                                                             
-                              }).done(function ( data ) {                                
+                              }).done(function ( data ) {    
+                                //- console.log('Data=>'+ data);                            
                                 success(data);
                               });
-                          };  
+                          };
+
                     function success(position) {
                             var geoloc =  position.message.gpsData.split(',');
                             var lati = geoloc[0];
                             var logi = geoloc[1];
-                          
+                            
                             var pos = new Microsoft.Maps.Location(lati, logi);
                             p++;                            
                             if(pushpin){
@@ -104,10 +110,11 @@ block content
                               pushpin = new Microsoft.Maps.Pushpin(pos, pushpinOptions);
 
                               map.entities.push(pushpin);
-                              map.entities.push(callout);
+                              //- map.entities.push(callout);
                             }
+
                              map.setView({center:pos});
-                             reverseGeocode();
+                            //-  reverseGeocode();
                       };        
               #cnttable(style='position: absolute; top:6px; left: 35px;  width:180px;  height:30px;   z-index: 2000;')
                 table.table.table-responsive.table-hover.table-outline.mb-0
@@ -119,44 +126,8 @@ block content
                       tr                           
                         td
                           div                             
-                            button(onclick='executeQuery(#{carro.deviceHex})') #{carro.plate} 
+                            //- button.btn-link(onclick='executeQuery(#{carro.deviceHex})') #{carro.plate}
+                            button.btn-link(onclick='executeQuery("#{carro.deviceHex}")') #{carro.plate}
                 if (pages > 1)
                   ul.pagination
                     != createPagination(pages, page) 
-          //- .animated.fadeIn
-            .row              
-                .col-md-12   
-                  .card               
-                    //- .card-header
-                    //-   | Último trajeto 
-                    .card-body
-                      .row
-                        .col-md-3
-                          table.table.table-responsive.table-hover.table-outline.mb-0
-                            thead.thead-default
-                              tr                           
-                                th Veículos                            
-                            tbody
-                              each carro in carros
-                                tr                           
-                                  td
-                                    div #{carro.plate}                                                            
-                          if (pages > 1)
-                            ul.pagination
-                              != createPagination(pages, page) 
-                        .col-md-9
-                          //- #myMap(style='left:1px; width: 74vw; height: 60vh;')
-                          #myMap(style='position:relative;left:1px; width: 100%; height: 100%;')
-                            script(type='text/javascript').
-                              var map;                              
-                              function loadMapScenario() {                    
-                                  //map options
-                                  var mapOptions = {
-                                    credentials: 'Ao6vpD6q5I9xFZiLoO-2tZm5KNPZ2E80Y8pkPfzVeQpDmUqJ3FoYlkLN9nWC6HET',
-                                    mapTypeId: Microsoft.Maps.MapTypeId.road,
-                                    enableSearchLogo: false,
-                                    zoom: 14
-                                  };
-                                  //map initialization
-                                  map = new Microsoft.Maps.Map(document.getElementById('myMap'), mapOptions);                                                        
-                                };
