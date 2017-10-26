@@ -53,6 +53,7 @@ router.post('/stub',  currtripinfo.stub)
 
 //Locates
 router.get('/message/gps/:id',  message.getgeo)
+router.get('/message/gpslist/:id',  message.getgeolist)
 
 //Pages
 // router.get('/', isLoggedIn, page.index)

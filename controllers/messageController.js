@@ -132,4 +132,36 @@ messageController.GASsum = function(req, res) {
   };  
 
   
+  messageController.getgeolist = function(req, res) {
+    
+      var dongleCode = req.params.id
+      var dbase = new Date().toDateString();
+      console.log('dbase:'+ dbase) 
+      Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'},'dateReceived':{ $regex: /dbase/i }}).sort({$natural:-1}).exec(function (err, message) {
+        
+        if (err) {
+          console.log("Error:", err);
+        }else {
+          var arrayCurrinfo = []
+          for(var i = 0; i < message.length; i++) {
+            console.log('Linhas:'+ i)  
+            var id             = message[i]._id
+            var gpsData        = message[i].gpsData
+            var time           = message[i].time
+            var dateReceived   = message[i].dateReceived
+            var eventcode      = message[i].eventcode
+            var dongleCode     = message[i].dongleCode
+  
+            if (gpsData != undefined) {
+              var message =  { "_id": id, "gpsData": gpsData, "time": time, 
+              "dateReceived": dateReceived, "eventcode": eventcode, "dongleCode": dongleCode }
+  
+              arrayCurrinfo.push(message)
+              res.json(arrayCurrinfo)
+            }
+          }        
+        }
+      })
+    }
+    
 module.exports = messageController
