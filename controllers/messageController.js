@@ -132,7 +132,7 @@ messageController.GASsum = function(req, res) {
   };  
 
   
-  messageController.getgeolist = function(req, res) {
+messageController.getgeolist = function(req, res) {
     
       var dongleCode = req.params.id
       var dbase = new Date().toDateString();
@@ -163,5 +163,62 @@ messageController.GASsum = function(req, res) {
         }
       })
     }
+
+messageController.getAlarm = function(req, res) {
+      
+        var dongleCode = req.params.id
+        var dbase = new Date().toDateString();
+        console.log('dbase:'+ dbase) 
+        Message.find({'dongleCode':dongleCode,'eventcode':'0320','dateReceived':{ $regex: /dbase/i }}).sort({$natural:-1}).exec(function (err, message) {
+          
+          console.log('List Dongles')
+          const page = (req.query.page > 0 ? req.query.page : 1) - 1;
+          const _id = req.query.item;
+          const limit = 10;
+          const options = {
+            limit: limit,
+            page: page
+          };
+      
+          Device
+              .find({}, function(err, devices){
+                  Device.count().exec(function(err, count){
+                          res.render('device_index',
+                          { title: 'DriveOn Portal | Dongles', 
+                              devices: devices,
+                              page: page + 1,
+                              pages: Math.ceil(count / limit)}
+                          );
+                  });        
+              })
+              .limit(limit)
+              .skip(limit * page);  
+              
+              
+          if (err) {
+            console.log("Error:", err);
+          }else {
+            var arrayCurrinfo = []
+            for(var i = 0; i < message.length; i++) {
+              console.log('Linhas:'+ i)  
+              var id             = message[i]._id
+              var gpsData        = message[i].gpsData
+              var time           = message[i].time
+              var dateReceived   = message[i].dateReceived
+              var eventcode      = message[i].eventcode
+              var dongleCode     = message[i].dongleCode
     
+              if (gpsData != undefined) {
+                var message =  { "_id": id, "gpsData": gpsData, "time": time, 
+                "dateReceived": dateReceived, "eventcode": eventcode, "dongleCode": dongleCode }
+    
+                arrayCurrinfo.push(message)
+                res.json(arrayCurrinfo)     
+              }
+            }        
+          }
+        })
+      }    
+
+
 module.exports = messageController

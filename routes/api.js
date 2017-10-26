@@ -60,7 +60,7 @@ router.get('/message/gpslist/:id',  message.getgeolist)
 router.get('/', isLoggedIn, masterdata.list)
 router.get('/locate', isLoggedIn, page.locate)
 router.get('/trips', isLoggedIn, masterdata.listsimple)
-router.get('/alarmes', isLoggedIn, page.alarmes)
+router.get('/alarmes', isLoggedIn, message.getAlarm)
 router.get('/analytics', isLoggedIn, page.analytics)
 router.get('/dashboard', isLoggedIn,  page.main)
 
