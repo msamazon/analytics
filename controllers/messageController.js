@@ -124,9 +124,18 @@ messageController.GASsum = function(req, res) {
   var dongleCode = req.params.id
 
   Message.findOne({'dongleCode':dongleCode,'eventcode':'0120'}).sort({$natural :1}).exec(function (err, message) {  
-        var sumgas = message.currentTripFuelConsumption
+    if (err) {
+      console.log("Error GASsum:", err);
+    }else {
+        console.log('Checkl:'+message)
+        if (message == null){
+          var sumgas = 0         
+        }else{          
+          var sumgas = message.currentTripFuelConsumption  
+        }          
         var message0 = {'total':sumgas}
-              res.json(message0);                     
+        res.json(message0);                     
+    }          
         });        
     
   };  
