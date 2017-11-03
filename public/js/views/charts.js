@@ -6,7 +6,7 @@ $(function (){
     labels : ['Aug 24 2017','Aug 25 2017','Sep 01 2017','Sep 05 2017','Sep 06 2017','Sep 07 2017','Sep 08 2017','Sep 10 2017','Sep 11 2017','Sep 12 2017'],
     datasets : [
       {
-        label: '3WN-16010055',
+        label: '3WN-16010054',
         backgroundColor : 'rgba(220,220,220,0.2)',
         borderColor : 'rgba(220,220,220,1)',
         pointBackgroundColor : 'rgba(220,220,220,1)',
@@ -31,7 +31,7 @@ $(function (){
     labels : ['Sep 01 2017','Sep 02 2017','Sep 03 2017','Sep 04 2017','Sep 05 2017','Sep 06 2017', 'Sep 07 2017', 'Sep 08 2017', 'Sep 09 2017', 'Sep 10 2017', 'Sep 11 2017', 'Sep 12 2017', 'Sep 16 2017'],
     datasets : [
       {
-        label: '3WN-16010055',
+        label: '3WN-16010054',
         backgroundColor : 'rgba(220,220,220,0.5)',
         borderColor : 'rgba(220,220,220,0.8)',
         highlightFill: 'rgba(220,220,220,0.75)',
@@ -84,7 +84,7 @@ $(function (){
     labels: ['Freadas Bruscas', 'Alta Aceleração', 'Alta Velocidade'],
     datasets: [
       {
-        label: '3WN-16010055',
+        label: '3WN-16010054',
         backgroundColor: 'rgba(220,220,220,0.2)',
         borderColor: 'rgba(220,220,220,1)',
         pointBackgroundColor: 'rgba(220,220,220,1)',
@@ -143,7 +143,7 @@ $(function (){
       backgroundColor: [
         '#FF6384'
       ],
-      label: '3WN-16010055' // for legend
+      label: '3WN-16010054' // for legend
     }],
     labels: [
       'DTC'
@@ -164,7 +164,7 @@ var lineChartData = {
   labels : ['Sep 05 2017','Sep 06 2017','Sep 07 2017','Sep 08 2017','Sep 09 2017','Sep 10 2017','Sep 11 2017','Sep 12 2017','Sep 13 2017','Sep 14 2017','Sep 15 2017','Sep 16 2017'],
   datasets : [
     {
-      label: '3WN-16010055',
+      label: '3WN-16010054',
       backgroundColor : 'rgba(120,220,220,0.2)',
       borderColor : 'rgba(220,250,120,1)',
       pointBackgroundColor : 'rgba(220,220,220,1)',
