@@ -3,7 +3,7 @@ $(function (){
 
   var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
   var lineChartData = {
-    labels : ['Aug 24 2017','Aug 25 2017','Sep 01 2017','Sep 05 2017','Sep 06 2017','Sep 07 2017','Sep 08 2017','Sep 10 2017','Sep 11 2017','Sep 12 2017'],
+    labels : ['Nov 03 2017'],
     datasets : [
       {
         label: '3WN-16010054',
@@ -11,7 +11,7 @@ $(function (){
         borderColor : 'rgba(220,220,220,1)',
         pointBackgroundColor : 'rgba(220,220,220,1)',
         pointBorderColor : '#fff',
-        data : [11.6,11.6,6.98,13.84,12.99,13.16,12.95,12.96,13.04,12.98]
+        data : [0]
       }
     ]
   }
@@ -28,7 +28,7 @@ $(function (){
 
   var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
   var barChartData = {
-    labels : ['Sep 01 2017','Sep 02 2017','Sep 03 2017','Sep 04 2017','Sep 05 2017','Sep 06 2017', 'Sep 07 2017', 'Sep 08 2017', 'Sep 09 2017', 'Sep 10 2017', 'Sep 11 2017', 'Sep 12 2017', 'Sep 16 2017'],
+    labels : ['Nov 03 2017'],
     datasets : [
       {
         label: '3WN-16010054',
@@ -36,7 +36,7 @@ $(function (){
         borderColor : 'rgba(220,220,220,0.8)',
         highlightFill: 'rgba(220,220,220,0.75)',
         highlightStroke: 'rgba(220,220,220,1)',
-        data : [246.65,48.26,246.74,243.56,213.43,78.31,82.27,82.08,81.27,83.68,79.84,82.59,84]
+        data : [246.65]
       }
     ]
   }
@@ -161,7 +161,7 @@ $(function (){
 
 
 var lineChartData = {
-  labels : ['Sep 05 2017','Sep 06 2017','Sep 07 2017','Sep 08 2017','Sep 09 2017','Sep 10 2017','Sep 11 2017','Sep 12 2017','Sep 13 2017','Sep 14 2017','Sep 15 2017','Sep 16 2017'],
+  labels : ['Nov 03 2017'],
   datasets : [
     {
       label: '3WN-16010054',
@@ -169,7 +169,7 @@ var lineChartData = {
       borderColor : 'rgba(220,250,120,1)',
       pointBackgroundColor : 'rgba(220,220,220,1)',
       pointBorderColor : '#fff',
-      data : [5.56397,3.54203,1.09216,6.40676,6.12957,13.20612,6.19839,4.78206,0,0,0,4]
+      data : [0]
     }
   ]
 }
