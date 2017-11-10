@@ -40,6 +40,8 @@ router.post('/chartHACCOccur', isLoggedIn, currtripinfo.chartHarshAcc)
 router.post('/cntHBRAKEOccur', isLoggedIn,  currtripinfo.cntHarshBrake)
 router.post('/chartHBRAKEOccur', isLoggedIn,  currtripinfo.chartHarshBrake)
 
+
+
 // From Index Monthly Grid
 router.post('/cntDevConnected', isLoggedIn, devices.cntVehiclesConnecteds)
 router.post('/cntDevDisconnected', isLoggedIn, devices.cntVehiclesDisconnecteds)
@@ -47,9 +49,12 @@ router.post('/cntSOS', isLoggedIn, message.SOSCounter)
 router.post('/cntReb', isLoggedIn, message.GuinchoCounter)
 router.post('/cntMIL', isLoggedIn, message.MILCounter)
 router.post('/sumGAS/:id', isLoggedIn, message.GASsum)
+router.post('/getmotorTemp/:id', isLoggedIn,  message.chartMotorTemp)
 // Generic Tools
 router.post('/calAlarm',  currtripinfo.calAlarm)
 router.post('/stub',  currtripinfo.stub)
+
+
 
 //Locates
 router.get('/message/gps/:id',  message.getgeo)

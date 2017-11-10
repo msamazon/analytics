@@ -1,6 +1,5 @@
 var mongoose = require("mongoose")
 var Message = require("../models/Message")
-
 var messageController = {}
 
 messageController.list = function(req, res) {
@@ -168,7 +167,7 @@ messageController.getgeolist = function(req, res) {
               arrayCurrinfo.push(message)
               res.json(arrayCurrinfo)
             }
-          }        
+          }
         }
       })
     }
@@ -203,5 +202,39 @@ messageController.getAlarm = function(req, res) {
         
       }    
 
+
+messageController.chartMotorTemp = function(req, res) {
+        var dongleCode = req.params.id
+      
+        Message.findOne({'dongleCode':dongleCode,'eventcode':'0120'}).sort({$natural :1}).exec(function (err, message) {  
+            if (err) {
+                console.log("chartMotorTemp Error:", err);
+            }else {
+              var arrayMessage = []
+  
+                    for(var i = 0; i < message.length; i++) {
+                      if (message[i].pid1.noId == '0520'){
+                        var tempera                   = message[i].pid1.dec
+                      }else if(message[i].pid2.noId == '0520'){
+                        var tempera                   = message[i].pid2.dec  
+                      }else if(message[i].pid3.noId == '0520'){
+                        var tempera                   = message[i].pid3.dec
+                      }else if(message[i].pid4.noId == '0520'){
+                        var tempera                   = message[i].pid4.dec
+                      }else if(message[i].pid5.noId == '0520'){
+                        var tempera                   = message[i].pid5.dec
+                      }  
+                      var id                        = message[i]._id
+                      var dreceived                 = message[i].dreceived
+                      // Adjust the calculation from Temperature
+                      tempera = (tempera * 1)-40 
+                      var message0 =  { "_id": id, "dreceived": dreceived, "temperatura": tempera }
+                      arrayMessage.push(message0)
+                    }        
+              
+                    res.json(arrayMessage)
+            }
+          });
+  };  
 
 module.exports = messageController
