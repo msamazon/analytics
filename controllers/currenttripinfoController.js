@@ -206,7 +206,7 @@ currenttripinfoController.cntHarshAcc = function(req, res) {
   DO_CAR_A10.find().exec(function (err, currinfo) {    
           if (err) {
               console.log("cntHarshAcc Error:", err);
-          }else {
+          }else{
               var cntHACC = 0
               // var arrayCurrinfo = []
               // console.log("Retorno do banco:" + currinfo.length)
