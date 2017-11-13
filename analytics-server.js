@@ -14,6 +14,17 @@ var session         = require('express-session')
 var localpass       = require('./lib/passport')(passport)
 var helpers         = require('view-helpers')
 
+// MySQL Scope
+var mysql           = require('mysql');
+var connection      = mysql.createConnection(config.mysqldatabase);
+connection.connect(function(err){
+if(!err) {
+    console.log("MYSQL Database is connected ... nn");
+} else {
+    console.log("Error connecting MYSQL database ... nn");
+}
+});
+
 // Service Port
 var port = process.env.PORT || 8080
 
