@@ -11,7 +11,11 @@ var devices     = require('../controllers/deviceController.js')
 var masterdata  = require('../controllers/masterController')
 var zones  = require('../controllers/zonesController')
 //users
-// router.post('/signup', users.signup)
+
+// router.get('/login', page.login)
+router.get('/login', function(req, res) {    
+    res.render('login', { title: 'DriveOn Portal v1.0', message: req.flash('loginMessage') });
+});
 router.post('/login', function(req, res, next) {
     passport.authenticate('local-login', function(err, user, info) {
         if (err) { return next(err); }
@@ -75,10 +79,7 @@ router.get('/userlist', isLoggedIn,  users.userlist)
 // Zones
 router.get('/zones', isLoggedIn,  zones.list)
 
-// router.get('/login', page.login)
-router.get('/login', function(req, res) {    
-    res.render('login', { title: 'DriveOn Portal', message: req.flash('loginMessage') });
-});
+
 
 // ++++++++++++++++++++++ Devices +++++++++++++++++++++++++++
 // List all dongles
