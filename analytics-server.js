@@ -15,15 +15,15 @@ var localpass       = require('./lib/passport')(passport)
 var helpers         = require('view-helpers')
 
 // MySQL Scope
-// var mysql           = require('mysql');
-// var connection      = mysql.createConnection(config.mysqldatabase);
-// connection.connect(function(err){
-// if(!err) {
-//     console.log("MYSQL Database is connected ... nn");
-// } else {
-//     console.log("Error connecting MYSQL database ... nn");
-// }
-// });
+var mysql           = require('mysql');
+var connection      = mysql.createConnection(config.mysqldatabase);
+connection.connect(function(err){
+if(!err) {
+    console.log("MYSQL Database is connected!");
+} else {
+    console.log("Error connecting MYSQL database.Erro:"+err);
+}
+});
 
 // Service Port
 var port = process.env.PORT || 8080
@@ -33,20 +33,20 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 //MongoDB
-mongoose.Promise = global.Promise
-mongoose.connect(config.database, { useMongoClient: true })
+// mongoose.Promise = global.Promise
+// mongoose.connect(config.database, { useMongoClient: true })
 
-mongoose.connection.on('connected', () => {
-    return console.log('Mongoose conectado')
-})
+// mongoose.connection.on('connected', () => {
+//     return console.log('Mongoose conectado')
+// })
 
-mongoose.connection.on('disconnected', () => {
-    return console.log('Mongoose desconectado')
-})
+// mongoose.connection.on('disconnected', () => {
+//     return console.log('Mongoose desconectado')
+// })
 
-mongoose.connection.on('error', error => {
-    return console.log('Mongoose erro de conexão: ' + error)
-})
+// mongoose.connection.on('error', error => {
+//     return console.log('Mongoose erro de conexão: ' + error)
+// })
 
 //Middlewares
 app.use(bodyParser.json());
