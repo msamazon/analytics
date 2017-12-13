@@ -2,14 +2,14 @@ var mongoose  = require('mongoose')
 var Schema    = mongoose.Schema
 var bcrypt    = require('bcrypt')
 
-var ProfileSchema = new Schema({    
-    userProfile: {
+var AuthoritySchema = new Schema({    
+    userAuthority: {
         type: String,
         unique: true,
         lowercase: true,
         required: true
     },
-    ProfileDescription: String,
+    AuthorityDescription: String,
     activedYN: {
          type: String,
          required: true
@@ -27,6 +27,6 @@ var ProfileSchema = new Schema({
 )
 
 
-var profile = mongoose.model('do_usr_m01', ProfileSchema)
+var authority = mongoose.model('do_usr_m02', AuthoritySchema)
 
-module.exports = profile
+module.exports = authority

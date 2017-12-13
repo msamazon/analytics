@@ -14,11 +14,16 @@ var UserSchema = new Schema({
          type: String,
          required: true
     },
-    created: {
-        type: String,
-        default: Date.now
+    createdBy: {
+        type: String
+    },
+    modifiedBy: {
+        type: String
     },
     admin: Boolean    
+},
+{
+    timestamps:true
 }
 )
 // Validate the password
