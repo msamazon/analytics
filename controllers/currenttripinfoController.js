@@ -172,8 +172,7 @@ currenttripinfoController.sumTripMileage = function(req, res) {
               var message0 =  { "sumcurrentTripMileage": Math.round(sumcurrentTripMileage)  }
               arrayCurrinfo.push(message0)
               // res.json({message:arrayCurrinfo})
-              res.json(message0)              
-
+              res.json(message0) 
           }
   })
  }
