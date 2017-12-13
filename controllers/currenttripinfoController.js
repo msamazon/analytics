@@ -1,13 +1,13 @@
 var mongoose = require("mongoose")
 var DO_CAR_C01 = require("../models/CurrentTripInfo")
-var DO_CAR_A03 = require("../models/do_car_a03")
+// var DO_CAR_A03 = require("../models/do_car_a03")
 var DO_CAR_M00 = require("../models/do_car_m00")
-var DO_CAR_C02 = require("../models/do_car_c02")
-var DO_CAR_C03 = require("../models/do_car_c03")
-var DO_CAR_A10 = require("../models/do_car_a10")
-var DO_CAR_A11 = require("../models/do_car_a11")
+// var DO_CAR_C02 = require("../models/do_car_c02")
+// var DO_CAR_C03 = require("../models/do_car_c03")
+// var DO_CAR_A10 = require("../models/do_car_a10")
+// var DO_CAR_A11 = require("../models/do_car_a11")
 var DO_COM_M00 = require("../models/do_com_m00")
-var DO_STAT_M00 = require("../models/do_stat_m00")
+// var DO_STAT_M00 = require("../models/do_stat_m00")
 
 var currenttripinfoController = {}
 

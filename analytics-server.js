@@ -13,9 +13,9 @@ var cookieParser    = require('cookie-parser')
 var session         = require('express-session')
 var localpass       = require('./lib/passport')(passport)
 var helpers         = require('view-helpers')
-
+var dotenv          = require('dotenv').config()
 // Service Port
-var port = process.env.PORT || 4883
+var port = process.env.PORT || 4884
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -60,5 +60,5 @@ app.use('/', routes)
 
 // Set
 app.listen(port, function () {
-    console.log('Analytics-API listening on port ' + port)
+    console.log(`Analytics-Dashboard listening on ${port}`)
 })

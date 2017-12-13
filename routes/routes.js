@@ -16,7 +16,7 @@ var zones  = require('../controllers/zonesController')
 router.get('/login', function(req, res) {    
     res.render('login', { title: 'DriveOn Portal v1.0', message: req.flash('loginMessage') });
 });
-router.post('/login', function(req, res, next) {
+router.post('/login', function(req, res, next) {    
     passport.authenticate('local-login', function(err, user, info) {
         if (err) { return next(err); }
         if (!user) { return res.render('login', {message: req.flash('loginMessage')}); }

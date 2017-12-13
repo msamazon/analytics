@@ -18,15 +18,14 @@ var UserSchema = new Schema({
         type: String,
         default: Date.now
     },
-    admin: Boolean
+    admin: Boolean    
 }
 )
 // Validate the password
 UserSchema.methods.comparePassword = function(password) {
-    console.log(this.hashpassword)
     return bcrypt.compareSync(password, this.hashpassword)
 }
 
-var user = mongoose.model('UserAnalytics', UserSchema)
+var user = mongoose.model('do_usr_m00', UserSchema)
 
 module.exports = user
