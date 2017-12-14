@@ -146,6 +146,9 @@ exports.save  =   function(req, res){
     
     var user = new User(req.body);      
     
+    var updated = _.merge(thing, req.body, {
+        changedBy: user.email
+      });
     user.save(function(err) {
         if(err) {
           console.log("Error on Device Save:" + err);

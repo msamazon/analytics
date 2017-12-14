@@ -79,8 +79,6 @@ router.get('/dashboard', isLoggedIn,  page.main)
 // Zones
 router.get('/zones', isLoggedIn,  zones.list)
 
-
-
 // ++++++++++++++++++++++ Devices +++++++++++++++++++++++++++
 // List all dongles
 router.get('/devices', isLoggedIn, devices.list);
@@ -101,7 +99,8 @@ router.get('/device/delete/:id', isLoggedIn, devices.delete);
 
 // ++++++++++++++++++++++ Users +++++++++++++++++++++++++++
 // List all Users
-router.get('/users', isLoggedIn, user.list);
+// router.get('/users', isLoggedIn, user.list);
+router.get('/users', user.list);
 // Get single user by id
 router.get('/users/show/:id', isLoggedIn, users.show);
 // Create user
