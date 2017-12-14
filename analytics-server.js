@@ -15,13 +15,13 @@ var localpass       = require('./lib/passport')(passport)
 var helpers         = require('view-helpers')
 var dotenv          = require('dotenv').config()
 var expressValidator= require('express-validator')
-var grappling       = require('grappling-hook');
+// var grappling       = require('grappling-hook');
 var favicon 		= require('serve-favicon');
 require('./lib/passport')(passport);
 // Service Port
 var port = process.env.PORT || 4884
 
-grappling.mixin(app).allowHooks('pre:static', 'pre:bodyparser', 'pre:session', 'pre:logger', 'pre:admin', 'pre:routes', 'pre:render', 'updates', 'signin', 'signout');
+// grappling.mixin(app).allowHooks('pre:static', 'pre:bodyparser', 'pre:session', 'pre:logger', 'pre:admin', 'pre:routes', 'pre:render', 'updates', 'signin', 'signout','login');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -47,12 +47,12 @@ mongoose.connection.on('error', error => {
 app.use(bodyParser.json())
 app.use(expressValidator())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(session({secret: process.env.SECRET, saveUninitialized: true, resave: true,cookie: { maxAge: 60000 }}))
+app.use(session({secret: process.env.SECRET, rolling: true, saveUninitialized: true, resave: true,cookie: { maxAge: 60000 }}))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(cookieParser())
 app.use(flash())
-app.use(helpers('analytics'))
+app.use(helpers('dashboard'))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

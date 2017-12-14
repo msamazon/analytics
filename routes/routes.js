@@ -1,5 +1,4 @@
-module.exports = function(app, passport) {
-    var router      = app.Router()
+module.exports = function(router, passport) {
     var jwt         = require('jsonwebtoken')
     var getToken    = require('../lib/getToken')    
     var message     = require("../controllers/messageController.js")
@@ -9,7 +8,7 @@ module.exports = function(app, passport) {
     var devices     = require('../controllers/deviceController.js')
     var masterdata  = require('../controllers/masterController')
     var zones       = require('../controllers/zonesController')
-    var middleware  = require('./middleware')
+    // var middleware  = require('./middleware')
 
 
 //
