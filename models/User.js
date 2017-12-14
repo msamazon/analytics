@@ -1,6 +1,7 @@
 var mongoose  = require('mongoose'),
     Schema    = mongoose.Schema,
     bcrypt    = require('bcrypt')
+var passportLocalMongoose = require('passport-local-mongoose')
 
 var UserSchema = new Schema({
         fullname: String,
@@ -32,8 +33,7 @@ var UserSchema = new Schema({
 UserSchema.methods.comparePassword = function(pwd) {    
     if(pwd == this.password) {
         return true
-     }
- 
+     } 
      return false
 }
 
@@ -44,6 +44,9 @@ UserSchema.virtual('changedBy').set(function (userId) {
       this.modifiedBy = userId;
     }
   });
+
+
+UserSchema.plugin(passportLocalMongoose)
 
 var user = mongoose.model('do_usr_m00', UserSchema)
 

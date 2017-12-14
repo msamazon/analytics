@@ -1,10 +1,12 @@
 // 'use strict';
-var mongoose        = require("mongoose")
+var mongoose        = require('mongoose')
+var passport        = require('passport')
 var User            = require("../models/User")
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
 var async           = require('run-async')
+
 
 
 exports.signup = function (req, res) {
@@ -70,21 +72,21 @@ exports.list = function(req, res) {
   };
 
 exports.create = function(req, res){    
-    res.render('users/new', { title: 'DriveOn | Instalação de Dongles'});
+    res.render('users/new', { title: 'DriveOn | Novo usuário'});
  };   
  
 exports.show = function(req, res){ 
  if (req.params.id != null || req.params.id != undefined) {      
-    User.findOne({_id: req.params.id}).exec(function (err, devices) {
+    User.findOne({_id: req.params.id}).exec(function (err, user) {
         if (err) {
-          console.log("Error at show Dongles:", err);
+          console.log("Error at show Users:", err);
         } else {
           devices = {_id: req.params.id}
-          res.render('users/show', {devices: devices});
+          res.render('users/show', {users: user});
         }
       });
   } else {    
-    res.render('error/500', {message:'Sem dados a exibir!'});    
+    res.render('errors/500', {message:'Erro interno, favor informar o administrador!'});    
   }
  };    
 
@@ -94,7 +96,7 @@ exports.edit = function(req, res){
           console.log("Error on user dit:", err);
         }
         else {
-          res.render('users/edit', {user_edit: user});
+          res.render('users/edit', {users: user});
         }
       });
  };
@@ -120,8 +122,8 @@ exports.save  =   function(req, res){
       });
     user.save(function(err) {
         if(err) {
-          console.log("Error on Device Save:" + err);
-          res.render('users/new', { title: 'DriveOn | Instalação de Dongles'});
+          console.log("Error on Users Save:" + err);
+          res.render('users/new', { title: 'DriveOn | Usuários'});
         } else {          
           res.redirect("users/show/"+dongle._id);
         }

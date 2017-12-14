@@ -45,14 +45,22 @@ mongoose.connection.on('error', error => {
 })
 
 //Middlewares
-app.use(bodyParser.json())
 app.use(expressValidator())
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(session({secret: process.env.SECRET, rolling: true, saveUninitialized: true, resave: true,cookie: { maxAge: 60000 }}))
+
+app.use(session({
+        secret: process.env.SECRET, 
+        rolling: true, 
+        saveUninitialized: true, 
+        resave:true, 
+        cookie: { maxAge: 60000 }
+        }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(cookieParser())
 app.use(flash())
+
 app.use(helpers('dashboard'))
 app.use(express.static(path.join(__dirname, 'public')))
 
