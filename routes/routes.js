@@ -28,7 +28,7 @@ router.post('/login', function(req, res, next) {
 });
 
 router.get('/logout', users.logout)
-router.get('/users', users.users)
+// router.get('/users', users.users)
 
 //Dashboard
 // Top 1
@@ -74,7 +74,7 @@ router.get('/analytics', isLoggedIn, page.analytics)
 router.get('/dashboard', isLoggedIn,  page.main)
 
 // User Management
-router.get('/userlist', isLoggedIn,  users.userlist)
+// router.get('/userlist', isLoggedIn,  users.userlist)
 
 // Zones
 router.get('/zones', isLoggedIn,  zones.list)
@@ -96,6 +96,24 @@ router.get('/device/edit/:id', isLoggedIn, devices.edit);
 router.post('/device/update/:id', isLoggedIn, devices.update);
 // Delete
 router.get('/device/delete/:id', isLoggedIn, devices.delete);
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+// ++++++++++++++++++++++ Users +++++++++++++++++++++++++++
+// List all Users
+router.get('/users', isLoggedIn, user.list);
+// Get single user by id
+router.get('/users/show/:id', isLoggedIn, users.show);
+// Create user
+router.get('/users/new', isLoggedIn, users.create);
+// Save user
+router.post('/users/save', isLoggedIn, users.save);
+// Edit user
+router.get('/users/edit/:id', isLoggedIn, users.edit);
+// Edit user
+router.post('/users/update/:id', isLoggedIn, users.update);
+// Delete
+router.get('/users/delete/:id', isLoggedIn, users.delete);
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // route middleware to make sure a user is logged in

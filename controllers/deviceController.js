@@ -126,4 +126,4 @@ exports.cntVehiclesDisconnecteds = function(req, res) {
             res.json(message0);                     
       });        
   });
-};  
+ };  

@@ -74,7 +74,7 @@ exports.logout = function(req, res) {
  }
 
 /**
- * List
+ * CRUD
  */ 
 exports.list = function(req, res) {     
     var page = (req.query.page > 0 ? req.query.page : 1) - 1;
@@ -86,11 +86,11 @@ exports.list = function(req, res) {
     };
 
     User
-        .find({}, function(err, usuarios){
+        .find({}, function(err, users){
             User.count().exec(function(err, count){
                     res.render('user/list',
                     { title: 'DriveOn Portal | Usuários', 
-                        usuarios: usuarios,
+                        user_list: users,
                         page: page + 1,
                         pages: Math.ceil(count / limit)}
                     );
@@ -99,3 +99,69 @@ exports.list = function(req, res) {
         .limit(limit)
         .skip(limit * page);   
   };
+
+exports.create = function(req, res){    
+    res.render('users/new', { title: 'DriveOn | Instalação de Dongles'});
+ };   
+ 
+exports.show = function(req, res){ 
+ if (req.params.id != null || req.params.id != undefined) {      
+    User.findOne({_id: req.params.id}).exec(function (err, devices) {
+        if (err) {
+          console.log("Error at show Dongles:", err);
+        } else {
+          devices = {_id: req.params.id}
+          res.render('users/show', {devices: devices});
+        }
+      });
+  } else {    
+    res.render('error/500', {message:'Sem dados a exibir!'});    
+  }
+ };    
+
+exports.edit = function(req, res){    
+    User.findOne({_id: req.params.id}).exec(function (err, user) {
+        if (err) {
+          console.log("Error on user dit:", err);
+        }
+        else {
+          res.render('users/edit', {user_edit: user});
+        }
+      });
+ };
+
+exports.update = function(req, res){
+
+    User.findByIdAndUpdate(req.params.id, { $set: { fullname: req.body.fullname, email: req.body.email,profile: req.body.profile, authority:req.body.authority,isBlocked:req.body.isBlocked }}, 
+                                                    { new: true }, function (err, user) {
+        if (err) {
+          console.log(err);
+          res.render("users/edit", {users: req.body});
+        }
+        res.redirect("/users/show/"+user._id);
+      });
+ };  
+
+exports.save  =   function(req, res){
+    
+    var user = new User(req.body);      
+    
+    user.save(function(err) {
+        if(err) {
+          console.log("Error on Device Save:" + err);
+          res.render('users/new', { title: 'DriveOn | Instalação de Dongles'});
+        } else {          
+          res.redirect("users/show/"+dongle._id);
+        }
+      });
+ };
+
+ exports.delete = function(req, res){    
+    User.remove({_id: req.params.id}, function(err) {
+        if(err) {
+          console.log("Error on User delete:"+ err);
+        } else {          
+          res.redirect("/users");
+        }
+      });
+ };

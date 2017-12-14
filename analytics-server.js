@@ -14,7 +14,7 @@ var session         = require('express-session')
 var localpass       = require('./lib/passport')(passport)
 var helpers         = require('view-helpers')
 var dotenv          = require('dotenv').config()
-var validator       = require('express-validator')
+var expressValidator= require('express-validator')
 // Service Port
 var port = process.env.PORT || 4884
 
