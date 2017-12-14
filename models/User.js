@@ -1,6 +1,8 @@
-var mongoose  = require('mongoose')
-var Schema    = mongoose.Schema
-var bcrypt    = require('bcrypt')
+var mongoose  = require('mongoose'),
+    Schema    = mongoose.Schema,
+    bcrypt    = require('bcrypt')
+var crud      = require('crud'),
+    cm        = require('crud-mongoose')    
 
 var UserSchema = new Schema({
     fullname: String,
@@ -10,7 +12,7 @@ var UserSchema = new Schema({
         lowercase: true,
         required: true
     },
-    hashpassword: {
+    password: {
          type: String,
          required: true
     },
@@ -19,8 +21,7 @@ var UserSchema = new Schema({
     },
     modifiedBy: {
         type: String
-    },
-    admin: Boolean    
+    }        
 },
 {
     timestamps:true
@@ -31,6 +32,36 @@ UserSchema.methods.comparePassword = function(password) {
     return bcrypt.compareSync(password, this.hashpassword)
 }
 
+UserSchema.virtual('changedBy').set(function (userId) {
+    if (this.isNew()) {      
+      this.createdBy = this.modifiedBy = userId;
+    } else {      
+      this.modifiedBy = userId;
+    }
+  });
+
 var user = mongoose.model('do_usr_m00', UserSchema)
+
+// All Users -------------------------------------------------------------------
+
+crud.entity('/users').Create()
+.pipe(cm.createNew(user));
+
+crud.entity('/users').Read()
+.pipe(cm.findAll(user))
+
+crud.entity('/users').Delete()
+  .pipe(cm.removeAll(user));
+
+// One User --------------------------------------------------------------------
+
+crud.entity('/users/:_id').Read()
+.pipe(cm.findOne(user))
+
+crud.entity('/users/:_id').Update()
+.pipe(cm.updateOne(user));
+
+crud.entity('/users/:_id').Delete()
+.pipe(cm.removeOne(user));
 
 module.exports = user

@@ -14,6 +14,7 @@ var session         = require('express-session')
 var localpass       = require('./lib/passport')(passport)
 var helpers         = require('view-helpers')
 var dotenv          = require('dotenv').config()
+var validator       = require('express-validator')
 // Service Port
 var port = process.env.PORT || 4884
 
@@ -39,8 +40,9 @@ mongoose.connection.on('error', error => {
 
 //Middlewares
 app.use(bodyParser.json())
+app.use(expressValidator())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(session({secret: 'driveon', saveUninitialized: true, resave: true,cookie: { maxAge: 60000 }}))
+app.use(session({secret: process.env.SECRET, saveUninitialized: true, resave: true,cookie: { maxAge: 60000 }}))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(cookieParser('driveon'))

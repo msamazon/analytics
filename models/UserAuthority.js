@@ -27,6 +27,14 @@ var AuthoritySchema = new Schema({
 )
 
 
+AuthoritySchema.virtual('changedBy').set(function (userId) {
+    if (this.isNew()) {      
+      this.createdBy = this.modifiedBy = userId;
+    } else {      
+      this.modifiedBy = userId;
+    }
+  });
+
 var authority = mongoose.model('do_usr_m02', AuthoritySchema)
 
 module.exports = authority

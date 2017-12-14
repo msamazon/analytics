@@ -5,6 +5,8 @@ var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
 var async           = require('run-async')
+
+
 exports.logging = function(req, res) {
 
     if(req.body.email && req.body.password) {
@@ -46,7 +48,9 @@ exports.signup = function (req, res) {
     })
     
     user.save(function (err) {
-        if (err) throw err
+        if (err){
+            res.json({success: false, token: token})
+        } 
         
         console.log('MongoDB Salve')
         
@@ -58,12 +62,6 @@ exports.signup = function (req, res) {
     })
  }
 
-exports.users = function(req, res) {
-    console.log ('User List')
-    User.find({}, function(err, users) {
-        res.json({ users: users })
-    })
- }
 
 exports.profile = function(req, res) {
     console.log('profile')
@@ -77,13 +75,12 @@ exports.logout = function(req, res) {
 
 /**
  * List
- */
-// exports.userlist = async(function* (req, res) {  
-exports.userlist = function(req, res) {     
-    const page = (req.query.page > 0 ? req.query.page : 1) - 1;
-    const _id = req.query.item;
-    const limit = 10;
-    const options = {
+ */ 
+exports.list = function(req, res) {     
+    var page = (req.query.page > 0 ? req.query.page : 1) - 1;
+    var _id = req.query.item;
+    var limit = 10;
+    var options = {
       limit: limit,
       page: page
     };
@@ -91,7 +88,7 @@ exports.userlist = function(req, res) {
     User
         .find({}, function(err, usuarios){
             User.count().exec(function(err, count){
-                    res.render('userlist',
+                    res.render('user/list',
                     { title: 'DriveOn Portal | Usuários', 
                         usuarios: usuarios,
                         page: page + 1,

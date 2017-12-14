@@ -26,6 +26,13 @@ var ProfileSchema = new Schema({
 }
 )
 
+ProfileSchema.virtual('changedBy').set(function (userId) {
+    if (this.isNew()) {      
+      this.createdBy = this.modifiedBy = userId;
+    } else {      
+      this.modifiedBy = userId;
+    }
+  });
 
 var profile = mongoose.model('do_usr_m01', ProfileSchema)
 

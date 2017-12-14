@@ -9,8 +9,8 @@ var page        = require('../controllers/pageController.js')
 var currtripinfo = require("../controllers/currenttripinfoController.js")
 var devices     = require('../controllers/deviceController.js')
 var masterdata  = require('../controllers/masterController')
-var zones  = require('../controllers/zonesController')
-//users
+var zones       = require('../controllers/zonesController')
+
 
 // router.get('/login', page.login)
 router.get('/login', function(req, res) {    
@@ -97,6 +97,7 @@ router.post('/device/update/:id', isLoggedIn, devices.update);
 // Delete
 router.get('/device/delete/:id', isLoggedIn, devices.delete);
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {    
         // if user is authenticated in the session, carry on 
