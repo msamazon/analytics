@@ -7,37 +7,6 @@ var config          = require('../lib/config')
 var async           = require('run-async')
 
 
-exports.logging = function(req, res) {
-
-    if(req.body.email && req.body.password) {
-        var _email = req.body.email
-        
-        if (_email == undefined) 
-            console.log('erro')
-        
-        User.findOne({
-            email: _email
-        }, function(err, user) {
-        
-           // if (err) throw err
-        
-            if (!user) {
-                res.json({ success: false, message: 'Authentication failed. User not found.' })
-            }else if (user){
-                var isOk = user.comparePassword(req.body.password)
-                
-                if (isOk) {
-                    var token = jwt.sign(user, config.jwtSecret)
-
-                    res.json({ success: true, token: token })
-                }else {
-                    res.json({ success: false, message: 'Authentication failed. Wrong password.' })
-                }
-            }
-        })
-    }
- }
-
 exports.signup = function (req, res) {
 
     var user = new User({
@@ -70,7 +39,7 @@ exports.profile = function(req, res) {
 exports.logout = function(req, res) {
     console.log('logging out')
     req.logout();
-    res.redirect('/');
+    res.redirect('/');    
  }
 
 /**

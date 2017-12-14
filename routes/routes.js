@@ -9,7 +9,8 @@ module.exports = function(router, passport) {
     var masterdata  = require('../controllers/masterController')
     var zones       = require('../controllers/zonesController')
     // var middleware  = require('./middleware')
-
+    // Session Variable
+    var sess;
 
 //
 // router.pre('render', middleware.flashMessages); Depois checo isso
@@ -29,9 +30,8 @@ router.get('/login', function(req, res) {
 //     })(req, res, next);
 // });
 
-
 router.post('/login', passport.authenticate('local-login', {
-    successRedirect : '/dashboard', // redirect to the secure profile section
+    successRedirect : '/', // redirect to the secure profile section
     failureRedirect : '/login', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
 }),
@@ -42,7 +42,8 @@ function(req, res) {
         req.session.cookie.expires = false;
     }
     res.redirect('/login');
-});
+ });
+
 
 router.get('/logout', users.logout)
 // router.get('/users', users.users)
@@ -75,8 +76,6 @@ router.post('/getmotorTemp/:id', isLoggedIn,  message.chartMotorTemp)
 router.post('/calAlarm',  currtripinfo.calAlarm)
 router.post('/stub',  currtripinfo.stub)
 
-
-
 //Locates
 router.get('/message/gps/:id',  message.getgeo)
 router.get('/message/gpslist/:id',  message.getgeolist)
@@ -88,7 +87,7 @@ router.get('/locate', isLoggedIn, page.locate)
 router.get('/trips', isLoggedIn, masterdata.listsimple)
 router.get('/alarmes', isLoggedIn, message.getAlarm)
 router.get('/analytics', isLoggedIn, page.analytics)
-router.get('/dashboard', isLoggedIn,  page.main)
+// router.get('/dashboard', isLoggedIn,  page.main)
 
 // User Management
 // router.get('/userlist', isLoggedIn,  users.userlist)
@@ -117,7 +116,7 @@ router.get('/device/delete/:id', isLoggedIn, devices.delete);
 // ++++++++++++++++++++++ Users +++++++++++++++++++++++++++
 // List all Users
 // router.get('/users', isLoggedIn, user.list);
-router.get('/users', users.list);
+router.get('/users', isLoggedIn, users.list);
 // Get single user by id
 router.get('/users/show/:id', isLoggedIn, users.show);
 // Create user
