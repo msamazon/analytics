@@ -29,8 +29,8 @@ var UserSchema = new Schema({
 }
 )
 // Validate the password
-UserSchema.methods.comparePassword = function(password) {
-    return bcrypt.compareSync(password, this.hashpassword)
+UserSchema.methods.comparePassword = function(password) {    
+    return bcrypt.compareSync(password, this.password)
 }
 
 UserSchema.virtual('changedBy').set(function (userId) {

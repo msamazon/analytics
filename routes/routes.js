@@ -1,30 +1,48 @@
-var express     = require('express')
-var router      = express.Router()
-var jwt         = require('jsonwebtoken')
-var getToken    = require('../lib/getToken')
-var passport    = require('passport')
-var message     = require("../controllers/messageController.js")
-var users       = require('../controllers/userController.js')
-var page        = require('../controllers/pageController.js')
-var currtripinfo = require("../controllers/currenttripinfoController.js")
-var devices     = require('../controllers/deviceController.js')
-var masterdata  = require('../controllers/masterController')
-var zones       = require('../controllers/zonesController')
+module.exports = function(app, passport) {
+    var router      = app.Router()
+    var jwt         = require('jsonwebtoken')
+    var getToken    = require('../lib/getToken')    
+    var message     = require("../controllers/messageController.js")
+    var users       = require('../controllers/userController.js')
+    var page        = require('../controllers/pageController.js')
+    var currtripinfo = require("../controllers/currenttripinfoController.js")
+    var devices     = require('../controllers/deviceController.js')
+    var masterdata  = require('../controllers/masterController')
+    var zones       = require('../controllers/zonesController')
+    var middleware  = require('./middleware')
 
 
+//
+// router.pre('render', middleware.flashMessages); Depois checo isso
 // router.get('/login', page.login)
 router.get('/login', function(req, res) {    
-    res.render('login', { title: 'DriveOn Portal v1.0', message: req.flash('loginMessage') });
+    res.render('login', { title: 'DriveOn Portal', message: req.flash('loginMessage') });
 });
-router.post('/login', function(req, res, next) {    
-    passport.authenticate('local-login', function(err, user, info) {
-        if (err) { return next(err); }
-        if (!user) { return res.render('login', {message: req.flash('loginMessage')}); }
-        req.logIn(user, function(err) {
-            if (err) { return next(err); }
-            return res.redirect('/');
-        });
-    })(req, res, next);
+// router.post('/login', function(req, res, next) {    
+//     passport.authenticate('local-login', function(err, user, info) {
+//         if (err) { return next(err); }
+        
+//         if (!user) { return res.render('login', {message: req.flash('loginMessage')}); }
+//         req.logIn(user, function(err) {
+//             if (err) { return next(err); }
+//             return res.redirect('/');
+//         });
+//     })(req, res, next);
+// });
+
+
+router.post('/login', passport.authenticate('local-login', {
+    successRedirect : '/dashboard', // redirect to the secure profile section
+    failureRedirect : '/login', // redirect back to the signup page if there is an error
+    failureFlash : true // allow flash messages
+}),
+function(req, res) {
+    if (req.body.remember) {
+        req.session.cookie.maxAge = 1000 * 60 * 30;
+    } else {
+        req.session.cookie.expires = false;
+    }
+    res.redirect('/login');
 });
 
 router.get('/logout', users.logout)
@@ -100,7 +118,7 @@ router.get('/device/delete/:id', isLoggedIn, devices.delete);
 // ++++++++++++++++++++++ Users +++++++++++++++++++++++++++
 // List all Users
 // router.get('/users', isLoggedIn, user.list);
-router.get('/users', user.list);
+router.get('/users', users.list);
 // Get single user by id
 router.get('/users/show/:id', isLoggedIn, users.show);
 // Create user
@@ -114,6 +132,7 @@ router.post('/users/update/:id', isLoggedIn, users.update);
 // Delete
 router.get('/users/delete/:id', isLoggedIn, users.delete);
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+} 
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {    
@@ -123,7 +142,7 @@ function isLoggedIn(req, res, next) {
             return next();
     
         // if they aren't redirect them to the home page
-        res.redirect('/login');
+        res.redirect('/');
     }
 
-module.exports = router
+// module.exports = router

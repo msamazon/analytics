@@ -21,7 +21,7 @@ html(lang='en')
     link(href='css/style.css', rel='stylesheet')
     script(src='bower_components/popper.js/dist/umd/popper.min.js')  
     script(src='bower_components/jquery/dist/jquery.min.js')
-  body.app.flex-row.align-items-center
+  body.app.flex-row.align-items-center(onload="document.getElementById('username').focus();")
     .container
       .row
         .col-md-4.col-md-offset-8
@@ -41,7 +41,7 @@ html(lang='en')
                 .form-group
                   label.col-sm-3.control-label(for='password') Senha
                   .col-sm-9
-                    input#password.form-control(name='password',type='password', placeholder='Senha', required='yes')                
+                    input#password.form-control(name='password',type='password', placeholder='Senha', required='yes', autocomplete='off')               
                 .form-group
                     label.col-sm-3.control-label(for='remember')
                     .col-sm-9

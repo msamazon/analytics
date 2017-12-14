@@ -4,9 +4,9 @@ var app             = express()
 var bodyParser      = require('body-parser')
 var mongoose        = require('mongoose')
 var passport        = require('passport')
-var jwt             = require('jsonwebtoken')
+// var jwt             = require('jsonwebtoken')
 var config          = require('./lib/config')
-var routes          = require('./routes/routes.js')
+// var routes          = require('./routes/routes.js')
 var path            = require('path')
 var flash           = require('req-flash')
 var cookieParser    = require('cookie-parser')
@@ -15,8 +15,13 @@ var localpass       = require('./lib/passport')(passport)
 var helpers         = require('view-helpers')
 var dotenv          = require('dotenv').config()
 var expressValidator= require('express-validator')
+var grappling       = require('grappling-hook');
+var favicon 		= require('serve-favicon');
+require('./lib/passport')(passport);
 // Service Port
 var port = process.env.PORT || 4884
+
+grappling.mixin(app).allowHooks('pre:static', 'pre:bodyparser', 'pre:session', 'pre:logger', 'pre:admin', 'pre:routes', 'pre:render', 'updates', 'signin', 'signout');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -45,11 +50,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(session({secret: process.env.SECRET, saveUninitialized: true, resave: true,cookie: { maxAge: 60000 }}))
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(cookieParser('driveon'))
+app.use(cookieParser())
 app.use(flash())
 app.use(helpers('analytics'))
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // Set Service Scope for Intercharge messages
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*")
@@ -58,8 +64,8 @@ app.use(function(req, res, next) {
 })
 
 // Set Main Route
-app.use('/', routes)
-
+// app.use('/', routes)
+require('./routes/routes.js')(app, passport);
 // Set
 app.listen(port, function () {
     console.log(`Analytics-Dashboard listening on ${port}`)

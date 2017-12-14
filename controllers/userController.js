@@ -88,7 +88,7 @@ exports.list = function(req, res) {
     User
         .find({}, function(err, users){
             User.count().exec(function(err, count){
-                    res.render('user/list',
+                    res.render('users/index',
                     { title: 'DriveOn Portal | Usuários', 
                         user_list: users,
                         page: page + 1,
