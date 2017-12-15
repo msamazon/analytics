@@ -3,7 +3,7 @@ var cars          = require("../models/Vehicles")
 
 
 exports.list = function(req, res){
-    console.log('List cars')
+    
     const page = (req.query.page > 0 ? req.query.page : 1) - 1;
     const _id = req.query.item;
     const limit = 10;
@@ -36,7 +36,7 @@ exports.list = function(req, res){
         .skip(limit * page);  
  };
 
- exports.listsimple = function(req, res){
+exports.listsimple = function(req, res){
     console.log('Simple list cars')
     const page = (req.query.page > 0 ? req.query.page : 1) - 1;
     const _id = req.query.item;

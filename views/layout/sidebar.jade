@@ -44,7 +44,20 @@
                 li.nav-item
                   a.nav-link(href='/users', target='_top')
                     i.icon-user
-                    |  Usuários
+                    |  Usuários               
+                li.nav-item.nav-dropdown
+                  a.nav-link.nav-dropdown-toggle(href='#')
+                    i.icon-control-play
+                    |  Devices
+                  ul.nav-dropdown-items
+                    li.nav-item
+                      a.nav-link(href='/devices/new')
+                        i.icon-organization
+                        |  Instalar
+                    li.nav-item
+                      a.nav-link(href='/devices/update')
+                        i.icon-user
+                        |  Liberar            
                 li.nav-item.nav-dropdown
                   a.nav-link.nav-dropdown-toggle(href='#')
                     i.icon-control-play
@@ -53,4 +66,8 @@
                     li.nav-item
                       a.nav-link(href='/zones')
                         i.icon-organization
-                        |  Zonas de Segurança                
+                        |  Zonas de Segurança   
+                    li.nav-item
+                      a.nav-link(href='/zones')
+                        i.icon-organization
+                        |  Variáveis para Cálculo                    

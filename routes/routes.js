@@ -9,8 +9,7 @@ module.exports = function(router, passport) {
     var masterdata  = require('../controllers/masterController')
     var zones       = require('../controllers/zonesController')
     // var middleware  = require('./middleware')
-    // Session Variable
-    var sess;
+  
 
 //
 // router.pre('render', middleware.flashMessages); Depois checo isso
@@ -18,17 +17,6 @@ module.exports = function(router, passport) {
 router.get('/login', function(req, res) {    
     res.render('login', { title: 'DriveOn Portal', message: req.flash('loginMessage') });
 });
-// router.post('/login', function(req, res, next) {    
-//     passport.authenticate('local-login', function(err, user, info) {
-//         if (err) { return next(err); }
-        
-//         if (!user) { return res.render('login', {message: req.flash('loginMessage')}); }
-//         req.logIn(user, function(err) {
-//             if (err) { return next(err); }
-//             return res.redirect('/');
-//         });
-//     })(req, res, next);
-// });
 
 router.post('/login', passport.authenticate('local-login', {
     successRedirect : '/', // redirect to the secure profile section
@@ -61,7 +49,6 @@ router.post('/chartHACCOccur', isLoggedIn, currtripinfo.chartHarshAcc)
 // Top 4
 router.post('/cntHBRAKEOccur', isLoggedIn,  currtripinfo.cntHarshBrake)
 router.post('/chartHBRAKEOccur', isLoggedIn,  currtripinfo.chartHarshBrake)
-
 
 
 // From Index Monthly Grid
@@ -99,17 +86,17 @@ router.get('/zones', isLoggedIn,  zones.list)
 // List all dongles
 router.get('/devices', isLoggedIn, devices.list);
 // Get single dongle by id
-router.get('/device/show/:id', isLoggedIn, devices.show);
+router.get('/devices/show/:id', isLoggedIn, devices.show);
 // Create dongle
-router.get('/devicecreate', isLoggedIn, devices.create);
+router.get('/devices/new', isLoggedIn, devices.create);
 // Save dongle
-router.post('/device/save', isLoggedIn, devices.save);
+router.post('/devices/save', isLoggedIn, devices.save);
 // Edit dongle
-router.get('/device/edit/:id', isLoggedIn, devices.edit);
+router.get('/devices/edit/:id', isLoggedIn, devices.edit);
 // Edit dongle
-router.post('/device/update/:id', isLoggedIn, devices.update);
+router.post('/devices/update/:id', isLoggedIn, devices.update);
 // Delete
-router.get('/device/delete/:id', isLoggedIn, devices.delete);
+router.get('/devices/delete/:id', isLoggedIn, devices.delete);
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
