@@ -14,11 +14,12 @@ var DO_DEV_M00Schema = new Schema({
     sms_user    : String,
     sms_password: String,
     sms_set_ip  : String,
-    sms_set_port: String,
-    createdAt   : Date,
-    createdBy   : String,
-    updatedAt   : { type: Date, default: Date.now },
+    sms_set_port: String,    
+    createdBy   : String,    
     updatedBy   : String
+},
+{
+    timestamps:true
 })
 
 /**
@@ -32,11 +33,6 @@ DO_DEV_M00Schema.path('name').validate(function (name) {
     if (this.skipValidation()) return true;
     return name.length;
   }, 'Nome não pode estar em branco!');
-
-// DO_DEV_M00Schema.path('actived').validate(function (actived) {
-//     if (this.skipValidation()) return true;
-//     return actived.length;
-//     }, 'Deve ser definido se o dispositivo está ativado ou não.');
 
 DO_DEV_M00Schema.path('firmware').validate(function (firmware) {
     if (this.skipValidation()) return true;
@@ -53,5 +49,14 @@ DO_DEV_M00Schema.path('sms_srv_addr').validate(function (sms_srv_addr) {
     if (this.skipValidation()) return true;
     return sms_srv_addr.length;
     }, 'Favor informar a versão do dispositivo.');     
+
+
+UserSchema.virtual('changedBy').set(function (userId) {
+    if (this.isNew()) {      
+        this.createdBy = this.modifiedBy = userId;
+    } else {      
+        this.modifiedBy = userId;
+    }
+    })
 
 module.exports =  mongoose.model('do_dev_m00', DO_DEV_M00Schema)

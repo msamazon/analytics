@@ -1,5 +1,5 @@
 var mongoose        = require("mongoose")
-var Device          = require("../models/do_dev_m00")
+var Device          = require("../models/Devices")
 
 exports.create = function(req, res){
     console.log('Novos Dongles')
@@ -18,7 +18,7 @@ exports.list = function(req, res){
     Device
         .find({}, function(err, devices){
             Device.count().exec(function(err, count){
-                    res.render('device_index',
+                    res.render('index',
                     { title: 'DriveOn Portal | Dongles', 
                         devices: devices,
                         page: page + 1,
@@ -39,7 +39,7 @@ exports.show = function(req, res){
         }
         else {
           devices = {_id: req.params.id}
-          res.render('device_show', {devices: devices});
+          res.render('show', {devices: devices});
         }
       });
   } else {
@@ -48,7 +48,7 @@ exports.show = function(req, res){
         console.log("Error at show Dongles:", err);
       }
       else {
-        res.render('device_show', {devices: devices});
+        res.render('show', {devices: devices});
       }
     });
   }
@@ -60,7 +60,7 @@ exports.edit = function(req, res){
           console.log("Error on Device dit:", err);
         }
         else {
-          res.render('device_edit', {devices: devices});
+          res.render('edit', {devices: devices});
         }
       });
  };
@@ -75,7 +75,7 @@ exports.update = function(req, res){
           console.log(err);
           res.render("device_edit", {devices: req.body});
         }
-        res.redirect("/device/show/"+devices._id);
+        res.redirect("/devices/show/"+devices._id);
       });
  }; 
 exports.save  =   function(req, res){
@@ -89,7 +89,7 @@ exports.save  =   function(req, res){
           res.render('device_create', { title: 'DriveOn | Instalação de Dongles'});
         } else {
           console.log("Dongle registrado com sucesso.");
-          res.redirect("/device/show/"+dongle._id);
+          res.redirect("/devices/show/"+dongle._id);
         }
       });
  };

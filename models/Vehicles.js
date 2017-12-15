@@ -11,14 +11,23 @@ var DO_CAR_M00Schema = new Schema({
     color       : String,
     state       : String,
     ownerId     : String,
-    activeStatus: String,
-    createdAt   : String,
-    createdBy   : String,
-    updatedAt   : String,
-    updatedBy   : String,
     motor       : String,
     fueltype    : String,
-    manufYear   : String
+    manufYear   : String,
+    activeStatus: String,    
+    createdBy   : String,    
+    updatedBy   : String    
+},
+{
+    timestamps:true
 })
+
+UserSchema.virtual('changedBy').set(function (userId) {
+    if (this.isNew()) {      
+      this.createdBy = this.modifiedBy = userId;
+    } else {      
+      this.modifiedBy = userId;
+    }
+  })
 
 module.exports =  mongoose.model('do_car_m00', DO_CAR_M00Schema)
