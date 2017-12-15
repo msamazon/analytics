@@ -47,9 +47,7 @@ exports.logout = function(req, res) {
 /**
  * CRUD
  */ 
-exports.list = function(req, res) {   
-    console.log('Entrou na user list') ;
-    console.log('show request data:' + req)
+exports.list = function(req, res) {       
     var page = (req.query.page > 0 ? req.query.page : 1) - 1;
     var _id = req.query.item;
     var limit = 10;
@@ -58,12 +56,14 @@ exports.list = function(req, res) {
       page: page
     };
 
+    console.log('user info:'+ req.user)
     User
         .find({}, function(err, users){
             User.count().exec(function(err, count){
                     res.render('users/index',
                     { title: 'DriveOn Portal | Usuários', 
                         user_list: users,
+                        user_info: req.user,
                         page: page + 1,
                         pages: Math.ceil(count / limit)}
                     );

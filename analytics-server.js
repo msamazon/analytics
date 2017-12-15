@@ -56,7 +56,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 //         resave:true, 
 //         cookie: { maxAge: 60000 }
 //         }))
-app.use(session({secret: 'driveonsecret'}))
+app.use(session({secret:'driveonsecret'}))
 app.use(passport.initialize())
 app.use(passport.session())
 

@@ -2,11 +2,13 @@ var util        = require('util')
 module.exports = function(router, passport) {
     var jwt         = require('jsonwebtoken')
     var getToken    = require('../lib/getToken')    
-    var message     = require("../controllers/messageController.js")
     var users       = require('../controllers/userController.js')
-    var page        = require('../controllers/pageController.js')
-    var currtripinfo = require("../controllers/currenttripinfoController.js")
     var devices     = require('../controllers/deviceController.js')
+    var UserProfile = require('../controllers/profileController.js')
+
+    var message     = require("../controllers/messageController.js")
+    var page        = require('../controllers/pageController.js')
+    var currtripinfo = require("../controllers/currenttripinfoController.js")    
     var masterdata  = require('../controllers/masterController')
     var zones       = require('../controllers/zonesController')
     // var middleware  = require('./middleware')
@@ -100,7 +102,7 @@ router.get('/devices/delete/:id', isLoggedIn, devices.delete);
 
 // ++++++++++++++++++++++ Users +++++++++++++++++++++++++++
 // List all Users
-router.get('/users', isLoggedIn, users.list);
+router.get('/users',  users.list);
 // Get single user by id
 router.get('/users/show/:id', isLoggedIn, users.show);
 // Create user
@@ -114,13 +116,31 @@ router.post('/users/update/:id', isLoggedIn, users.update);
 // Delete
 router.get('/users/delete/:id', isLoggedIn, users.delete);
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+// ++++++++++++++++++++++ Profile +++++++++++++++++++++++++++
+// List all Users
+router.get('/profiles',  UserProfile.list);
+// Get single user by id
+router.get('/profiles/show/:id', isLoggedIn, UserProfile.show);
+// Create user
+router.get('/profiles/new', isLoggedIn, UserProfile.create);
+// Save user
+router.post('/profiles/save', isLoggedIn, UserProfile.save);
+// Edit user
+router.get('/profiles/edit/:id', isLoggedIn, UserProfile.edit);
+// Edit user
+router.post('/profiles/update/:id', isLoggedIn, UserProfile.update);
+// Delete
+router.get('/profiles/delete/:id', isLoggedIn, UserProfile.delete);
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 } 
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {    
         // if user is authenticated in the session, carry on 
-        console.log('Acessou isAuthenticated:'+ req.isAuthenticated())
-        console.log('Req data for auth:'+ util.inspect(req))
+        // console.log('Acessou isAuthenticated:'+ req.isAuthenticated())
+        // console.log('Req data for auth:'+ util.inspect(req))
         if (req.isAuthenticated())        
             return next();
     

@@ -19,11 +19,9 @@ exports.list = function(req, res){
       limit: limit,
       page: page
     };
-
-    // console.log('req.user => '+ req.user)
-
+   
     cars
-        .find({'activeStatus':'Y'}, function(err, car){
+        .find({'activeStatus':'Y', 'ownerId': req.user.email}, function(err, car){
             cars.count().exec(function(err, count){
                     res.render('index',
                     { title: 'DriveOn', 

@@ -1,4 +1,5 @@
-extends layout
+extends ../layout/default
+
 block content
   main.main
         // Breadcrumb
@@ -20,14 +21,16 @@ block content
                             th Nome
                             th Email
                             th Administrador
+                            th Bloqueado
                             //- th Criado em
                             th Ações
                         tbody                                                  
-                             each usuario in usuarios
+                             each usuario in user_list
                               tr
                                 td #{usuario.fullname}
                                 td #{usuario.email} 
                                 td #{adm = usuario.admin?"Sim":"Não" }
+                                td #{block = usuario.isBlocked?"Sim":"Não" }
                                 //- td #{formatDate(usuario.created)}
                                 //- td #{(usuario.created)}
                                 td 
