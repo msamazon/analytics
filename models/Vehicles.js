@@ -22,7 +22,7 @@ var DO_CAR_M00Schema = new Schema({
     timestamps:true
 })
 
-UserSchema.virtual('changedBy').set(function (userId) {
+DO_CAR_M00Schema.virtual('changedBy').set(function (userId) {
     if (this.isNew()) {      
       this.createdBy = this.modifiedBy = userId;
     } else {      

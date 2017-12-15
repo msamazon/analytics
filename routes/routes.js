@@ -1,3 +1,4 @@
+var util        = require('util')
 module.exports = function(router, passport) {
     var jwt         = require('jsonwebtoken')
     var getToken    = require('../lib/getToken')    
@@ -9,9 +10,8 @@ module.exports = function(router, passport) {
     var masterdata  = require('../controllers/masterController')
     var zones       = require('../controllers/zonesController')
     // var middleware  = require('./middleware')
-  
+    
 
-//
 // router.pre('render', middleware.flashMessages); Depois checo isso
 // router.get('/login', page.login)
 router.get('/login', function(req, res) {    
@@ -32,9 +32,9 @@ function(req, res) {
     res.redirect('/login');
  });
 
+ router.get('/logout', users.logout)
 
-router.get('/logout', users.logout)
-// router.get('/users', users.users)
+
 
 //Dashboard
 // Top 1
@@ -76,8 +76,6 @@ router.get('/alarmes', isLoggedIn, message.getAlarm)
 router.get('/analytics', isLoggedIn, page.analytics)
 // router.get('/dashboard', isLoggedIn,  page.main)
 
-// User Management
-// router.get('/userlist', isLoggedIn,  users.userlist)
 
 // Zones
 router.get('/zones', isLoggedIn,  zones.list)
@@ -102,7 +100,6 @@ router.get('/devices/delete/:id', isLoggedIn, devices.delete);
 
 // ++++++++++++++++++++++ Users +++++++++++++++++++++++++++
 // List all Users
-// router.get('/users', isLoggedIn, user.list);
 router.get('/users', isLoggedIn, users.list);
 // Get single user by id
 router.get('/users/show/:id', isLoggedIn, users.show);
@@ -122,12 +119,13 @@ router.get('/users/delete/:id', isLoggedIn, users.delete);
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {    
         // if user is authenticated in the session, carry on 
-        // console.log('Acessou isAuthenticated:'+ req.isAuthenticated())
-        if (req.isAuthenticated())
+        console.log('Acessou isAuthenticated:'+ req.isAuthenticated())
+        console.log('Req data for auth:'+ util.inspect(req))
+        if (req.isAuthenticated())        
             return next();
     
         // if they aren't redirect them to the home page
-        res.redirect('/');
+        res.redirect('/login');
     }
 
 // module.exports = router

@@ -20,13 +20,16 @@ exports.list = function(req, res){
       page: page
     };
 
+    // console.log('req.user => '+ req.user)
+
     cars
-        .find({'activeStatus':'yes'}, function(err, carros){
+        .find({'activeStatus':'Y'}, function(err, car){
             cars.count().exec(function(err, count){
                     res.render('index',
                     { title: 'DriveOn', 
                         params:{CurWStart:firstday, CurWEnd:lastday}, 
-                        carros: carros,
+                        carros: car,
+                        user_info: req.user,
                         page: page + 1,
                         pages: Math.ceil(count / limit)}
                     );

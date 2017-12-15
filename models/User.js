@@ -1,6 +1,5 @@
 var mongoose  = require('mongoose'),
-    Schema    = mongoose.Schema,
-    bcrypt    = require('bcrypt')
+    Schema    = mongoose.Schema
 var passportLocalMongoose = require('passport-local-mongoose')
 
 var UserSchema = new Schema({
@@ -17,7 +16,9 @@ var UserSchema = new Schema({
         },
         profile:  [{ type: Schema.Types.ObjectId, ref: 'do_usr_m01' }],
         authority:  [{ type: Schema.Types.ObjectId, ref: 'do_usr_m02' }],
+        gender: String,
         isBlocked: String,
+        avatar: { data: Buffer, contentType: String },
         createdBy: {
             type: String
         },
@@ -29,13 +30,6 @@ var UserSchema = new Schema({
         timestamps:true
     }
 )
-// Validate the password
-UserSchema.methods.comparePassword = function(pwd) {    
-    if(pwd == this.password) {
-        return true
-     } 
-     return false
-}
 
 UserSchema.virtual('changedBy').set(function (userId) {
     if (this.isNew()) {      

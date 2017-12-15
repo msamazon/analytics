@@ -8,8 +8,9 @@ header.app-header.navbar
       ul.nav.navbar-nav.ml-auto
         li.nav-item.dropdown
           a.nav-link.dropdown-toggle.nav-link(data-toggle='dropdown', href='#', role='button', aria-haspopup='true', aria-expanded='false')
-            img.img-avatar(src='img/avatars/5.jpg', alt='monica.adegas@ssp.am.gov.br')
-            span.d-md-down-none Monica Adegas DPTC
+            //- img.img-avatar(src='#{user_info.avatar}', alt='#{user_info.email}')
+            img.img-avatar(src='img/avatars/2.jpg', alt='#{user_info.email}')
+            span.d-md-down-none #{user_info.fullname}
           .dropdown-menu.dropdown-menu-right
             .dropdown-header.text-center
               strong Conta de Usuário

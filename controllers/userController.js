@@ -47,7 +47,9 @@ exports.logout = function(req, res) {
 /**
  * CRUD
  */ 
-exports.list = function(req, res) {     
+exports.list = function(req, res) {   
+    console.log('Entrou na user list') ;
+    console.log('show request data:' + req)
     var page = (req.query.page > 0 ? req.query.page : 1) - 1;
     var _id = req.query.item;
     var limit = 10;

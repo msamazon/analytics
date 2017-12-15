@@ -18,7 +18,7 @@ exports.list = function(req, res){
     Device
         .find({}, function(err, devices){
             Device.count().exec(function(err, count){
-                    res.render('index',
+                    res.render('/devices/index',
                     { title: 'DriveOn Portal | Dongles', 
                         devices: devices,
                         page: page + 1,
@@ -39,7 +39,7 @@ exports.show = function(req, res){
         }
         else {
           devices = {_id: req.params.id}
-          res.render('show', {devices: devices});
+          res.render('/devices/show', {devices: devices});
         }
       });
   } else {
@@ -48,7 +48,7 @@ exports.show = function(req, res){
         console.log("Error at show Dongles:", err);
       }
       else {
-        res.render('show', {devices: devices});
+        res.render('/devices/show', {devices: devices});
       }
     });
   }
@@ -60,7 +60,7 @@ exports.edit = function(req, res){
           console.log("Error on Device dit:", err);
         }
         else {
-          res.render('edit', {devices: devices});
+          res.render('/devices/edit', {devices: devices});
         }
       });
  };

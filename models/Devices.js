@@ -51,7 +51,7 @@ DO_DEV_M00Schema.path('sms_srv_addr').validate(function (sms_srv_addr) {
     }, 'Favor informar a versão do dispositivo.');     
 
 
-UserSchema.virtual('changedBy').set(function (userId) {
+DO_DEV_M00Schema.virtual('changedBy').set(function (userId) {
     if (this.isNew()) {      
         this.createdBy = this.modifiedBy = userId;
     } else {      
