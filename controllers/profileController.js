@@ -1,7 +1,7 @@
 // 'use strict';
 var mongoose        = require('mongoose')
 var passport        = require('passport')
-var Profile         = require("../models/UserProfile")
+var Profile         = require('../models/UserProfile')
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
@@ -49,9 +49,8 @@ exports.show = function(req, res){
   Profile.findOne({_id: req.params.id}).exec(function (err, profile) {
         if (err) {
           console.log("Error at show Users:", err);
-        } else {
-          profileid = {_id: req.params.id}
-          res.render('users/show', {profiles: profileid});
+        } else {          
+          res.render('users/show', {profiles: profile});
         }
       });
   } else {    
@@ -82,21 +81,20 @@ exports.update = function(req, res){
  };  
 
 exports.save  =   function(req, res){
-    
-    var profile = new Profile(req.body);      
-    
-    var updated = _.merge(thing, req.body, {
-        changedBy: user.email
-      });
-      profile.save(function(err) {
-        if(err) {
-          console.log("Error on Profiles Save:" + err);
-          res.render('profiles/new', { title: 'DriveOn | Novo Perfil de Usuário'});
-        } else {          
-          res.redirect("profiles/show/"+profile._id);
-        }
-      });
- };
+    var payload = req.body
+    payload.modifiedBy = req.user
+    console.log('profileController:save:payload=>'+ payload)
+
+    var profile = new Profile(payload)      
+    profile.save(function(err) {
+      if(err) {
+        console.log("Error on Profiles Save:" + err);
+        res.render('profiles/new', { title: 'DriveOn | Novo Perfil de Usuário'});
+      } else {          
+        res.redirect("profiles/show/"+profile._id);
+      }
+    })
+ }
 
  exports.delete = function(req, res){    
     Profile.remove({_id: req.params.id}, function(err) {
@@ -106,4 +104,4 @@ exports.save  =   function(req, res){
           res.redirect("/users");
         }
       });
- };
+  };

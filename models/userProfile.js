@@ -1,6 +1,7 @@
 var mongoose  = require('mongoose')
 var Schema    = mongoose.Schema
 var bcrypt    = require('bcrypt')
+var mongooseLogs = require('mongoose-activitylogs')
 
 var ProfileSchema = new Schema({    
     userProfile: {
@@ -26,13 +27,21 @@ var ProfileSchema = new Schema({
 }
 )
 
-ProfileSchema.virtual('changedBy').set(function (userId) {
-    if (this.isNew()) {      
-      this.createdBy = this.modifiedBy = userId;
-    } else {      
-      this.modifiedBy = userId;
-    }
-  });
+// ProfileSchema.virtual('changedBy').set(function (userId) {
+//     if (this.isNew()) {      
+//       this.createdBy = this.modifiedBy = userId;
+//     } else {      
+//       this.modifiedBy = userId;
+//     }
+//   });
+
+
+ProfileSchema.plugin(mongooseLogs, {
+    schemaName: "profile",
+    createAction: "created",
+    updateAction: "updated",
+    deleteAction: "deleted" 
+ });
 
 var profile = mongoose.model('do_usr_m01', ProfileSchema)
 
