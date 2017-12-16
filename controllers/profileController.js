@@ -19,7 +19,7 @@ exports.list = function(req, res) {
       page: page
     };
 
-    
+
     Profile
         .find({'activedYN':'Y'}, function(err, profiles){
           Profile.count().exec(function(err, count){
@@ -32,7 +32,7 @@ exports.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                    exports.create()
+                    res.render('profiles/new.jade', {title: 'DriveOn | Novo Perfil de Usuário'});
                   }     
             });        
         })
@@ -91,9 +91,9 @@ exports.save  =   function(req, res){
       profile.save(function(err) {
         if(err) {
           console.log("Error on Profiles Save:" + err);
-          res.render('users/new', { title: 'DriveOn | Perfil de Usuário'});
+          res.render('profiles/new', { title: 'DriveOn | Novo Perfil de Usuário'});
         } else {          
-          res.redirect("users/show/"+profile._id);
+          res.redirect("profiles/show/"+profile._id);
         }
       });
  };

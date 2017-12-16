@@ -17,7 +17,7 @@ block content
                       i.fa.fa-edit
                       |  Perfil de Usuário
                     .card-body   
-                      form.form-horizontal(action='/device/save', method='post')
+                      form.form-horizontal(action='/profiles/save', method='post')
                         .form-group
                           label.form-control-label(for='userProfile') Perfil
                           .controls
@@ -33,31 +33,30 @@ block content
                           .controls
                             .col-md-9
                               select#select.form-control-sm(name='activedYN')
-                                option(value='') Selecione
                                 option(value='Y') Sim
-                                option(value='Não') Não
+                                option(value='N') Não
                             //- .input-group
                             //-   input#actived.form-control(size='16', type='text')                       
-                        .form-group
-                          label.form-control-label(for='createdBy') Criado por
-                          .controls
-                            .input-group
-                              input#createdBy.form-control(size='16', type='text')
-                        .form-group
-                          label.form-control-label(for='createdAt') Criado em
-                          .controls
-                            .input-group
-                              input#createdAt.form-control(size='16', type='text')
-                        .form-group
-                          label.form-control-label(for='modifiedBy') Modificado por
-                          .controls
-                            .input-group
-                              input#modifiedBy.form-control(size='16', type='text')
-                        .form-group
-                          label.form-control-label(for='modifiedAt') Modificado em
-                          .controls
-                            .input-group
-                              input#modifiedAt.form-control(size='16', type='text')                        
+                        //- .form-group
+                        //-   label.form-control-label(for='createdBy') Criado por
+                        //-   .controls
+                        //-     .input-group
+                        //-       input#createdBy.form-control(size='16', type='text')
+                        //- .form-group
+                        //-   label.form-control-label(for='createdAt') Criado em
+                        //-   .controls
+                        //-     .input-group
+                        //-       input#createdAt.form-control(size='16', type='text')
+                        //- .form-group
+                        //-   label.form-control-label(for='modifiedBy') Modificado por
+                        //-   .controls
+                        //-     .input-group
+                        //-       input#modifiedBy.form-control(size='16', type='text')
+                        //- .form-group
+                        //-   label.form-control-label(for='modifiedAt') Modificado em
+                        //-   .controls
+                        //-     .input-group
+                        //-       input#modifiedAt.form-control(size='16', type='text')                        
                         .form-actions
                           button.btn.btn-sm.primary(type='submit') Salvar
                           button.btn.btn-sm.secondary(type='button') Cancelar                                                                       

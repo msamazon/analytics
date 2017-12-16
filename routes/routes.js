@@ -27,7 +27,7 @@ router.post('/login', passport.authenticate('local-login', {
 }),
 function(req, res) {
     if (req.body.remember) {
-        req.session.cookie.maxAge = 1000 * 60 * 30;
+        req.session.cookie.maxAge = 1000 * 60 * 60 * 24;
     } else {
         req.session.cookie.expires = false;
     }
@@ -102,7 +102,7 @@ router.get('/devices/delete/:id', isLoggedIn, devices.delete);
 
 // ++++++++++++++++++++++ Users +++++++++++++++++++++++++++
 // List all Users
-router.get('/users',  users.list);
+router.get('/users', isLoggedIn, users.list);
 // Get single user by id
 router.get('/users/show/:id', isLoggedIn, users.show);
 // Create user
@@ -119,7 +119,7 @@ router.get('/users/delete/:id', isLoggedIn, users.delete);
 
 // ++++++++++++++++++++++ Profile +++++++++++++++++++++++++++
 // List all Users
-router.get('/profiles',  UserProfile.list);
+router.get('/profiles', isLoggedIn,  UserProfile.list);
 // Get single user by id
 router.get('/profiles/show/:id', isLoggedIn, UserProfile.show);
 // Create user
