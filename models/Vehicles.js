@@ -1,5 +1,6 @@
 var mongoose  = require('mongoose')
 var Schema    = mongoose.Schema
+var mongooseLogs = require('mongoose-activitylogs')
 
 var DO_CAR_M00Schema = new Schema({
     vehicleId   : String,
@@ -10,24 +11,22 @@ var DO_CAR_M00Schema = new Schema({
     model       : String,
     color       : String,
     state       : String,
-    ownerId     : String,
+    customer    : [{ type: Schema.Types.ObjectId, ref: 'do_cus_m00' }],
     motor       : String,
     fueltype    : String,
     manufYear   : String,
-    activeStatus: String,    
-    createdBy   : String,    
-    updatedBy   : String    
+    active      : Boolean
 },
 {
     timestamps:true
 })
 
-DO_CAR_M00Schema.virtual('changedBy').set(function (userId) {
-    if (this.isNew()) {      
-      this.createdBy = this.modifiedBy = userId;
-    } else {      
-      this.modifiedBy = userId;
-    }
-  })
+DO_CAR_M00Schema.plugin(mongooseLogs, {
+  schemaName: "vehicle",
+  createAction: "created",
+  updateAction: "updated",
+  deleteAction: "deleted" 
+})
+
 
 module.exports =  mongoose.model('do_car_m00', DO_CAR_M00Schema)

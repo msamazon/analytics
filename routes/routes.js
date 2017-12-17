@@ -1,9 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var user = require('../controllers/userController');
+var express         = require('express')
+var router          = express.Router()
+var user            = require('../controllers/userController')
+var masterdata      = require('../controllers/masterController')
 
 // restrict index for logged in user only
-router.get('/', user.home)
+// router.get('/', user.home)
 
 // route to login page
 router.get('/login', user.login);
@@ -13,6 +14,16 @@ router.post('/login', user.doLogin);
 
 // route for logout action
 router.get('/logout', user.logout);
+
+// route to register page
+router.get('/register', user.register);
+
+// route for register action
+router.post('/register', user.doRegister);
+
+
+router.get('/', isLoggedIn, masterdata.list)
+
 
 module.exports = router
 
@@ -143,16 +154,16 @@ module.exports = router
 // // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-// // route middleware to make sure a user is logged in
-// function isLoggedIn(req, res, next) {    
-//         // if user is authenticated in the session, carry on 
-//         // console.log('Acessou isAuthenticated:'+ req.isAuthenticated())
-//         // console.log('Req data for auth:'+ util.inspect(req))
-//         if (req.isAuthenticated())        
-//             return next();
+// route middleware to make sure a user is logged in
+function isLoggedIn(req, res, next) {    
+        // if user is authenticated in the session, carry on 
+        // console.log('Acessou isAuthenticated:'+ req.isAuthenticated())
+        // console.log('Req data for auth:'+ util.inspect(req))
+        if (req.isAuthenticated())        
+            return next();
     
-//         // if they aren't redirect them to the home page
-//         res.redirect('/login');
-//     }
+        // if they aren't redirect them to the home page
+        res.redirect('/login');
+    }
 
 // module.exports = router

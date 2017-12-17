@@ -3,7 +3,8 @@ var cars          = require("../models/Vehicles")
 
 
 exports.list = function(req, res){
-    
+    var baseurl = req.protocol + "://" + req.get('host') + "/"    
+
     const page = (req.query.page > 0 ? req.query.page : 1) - 1;
     const _id = req.query.item;
     const limit = 10;
@@ -19,46 +20,21 @@ exports.list = function(req, res){
       limit: limit,
       page: page
     };
-   
+  
     cars
-        .find({'activeStatus':'Y', 'ownerId': req.user.email}, function(err, car){
+        .find({'active': true, 'ownerId.email': req.user.email}, function(err, car){
             cars.count().exec(function(err, count){
                     res.render('index',
                     { title: 'DriveOn', 
                         params:{CurWStart:firstday, CurWEnd:lastday}, 
                         carros: car,
                         user_info: req.user,
+                        baseuri: baseurl,
                         page: page + 1,
                         pages: Math.ceil(count / limit)}
                     );
             });        
         })
         .limit(limit)
-        .skip(limit * page);  
- };
-
-exports.listsimple = function(req, res){
-    console.log('Simple list cars')
-    const page = (req.query.page > 0 ? req.query.page : 1) - 1;
-    const _id = req.query.item;
-    const limit = 10;
-
-    const options = {
-      limit: limit,
-      page: page
-    };
-
-    cars
-        .find({'activeStatus':'yes'}, function(err, carros){
-            cars.count().exec(function(err, count){
-                    res.render('lasttrips',
-                    { title: 'DriveOn', 
-                        carros: carros,
-                        page: page + 1,
-                        pages: Math.ceil(count / limit)}
-                    );
-            });        
-        })
-        .limit(limit)
-        .skip(limit * page);  
- };
+        .skip(limit * page)
+ }

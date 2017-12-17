@@ -23,8 +23,8 @@ extends index
             i.icon-location-pin
         li.nav-item.dropdown
           a.nav-link.dropdown-toggle.nav-link(data-toggle='dropdown', href='#', role='button', aria-haspopup='true', aria-expanded='false')
-            img.img-avatar(src='img/avatars/6.jpg', alt='admin@driveonauto.com')
-            span.d-md-down-none Viriato
+            img.img-avatar(src='#{baseuri}img/avatars/6.jpg', alt='#{user_info.email}')
+            span.d-md-down-none #{user_info.fullname}
           .dropdown-menu.dropdown-menu-right
             .dropdown-header.text-center
               strong Conta de Usuário

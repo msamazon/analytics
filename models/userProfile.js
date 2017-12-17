@@ -36,7 +36,7 @@ ProfileSchema.plugin(mongooseLogs, {
     createAction: "created",
     updateAction: "updated",
     deleteAction: "deleted" 
- });
+ })
 
 var profile = mongoose.model('do_usr_m01', ProfileSchema)
 

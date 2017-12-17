@@ -17,6 +17,7 @@ var UserSchema = new Schema({
         },
         profile:  [{ type: Schema.Types.ObjectId, ref: 'do_usr_m01' }],
         authority:  [{ type: Schema.Types.ObjectId, ref: 'do_usr_m02' }],
+        customer    : [{ type: Schema.Types.ObjectId, ref: 'do_cus_m00' }],
         gender: String,
         active: Boolean,
         avatar: { data: Buffer, contentType: String },
@@ -55,6 +56,5 @@ UserSchema.plugin(mongooseLogs, {
 
 
 var user = mongoose.model('do_usr_m00', UserSchema)
-
 
 module.exports = user

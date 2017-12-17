@@ -1,5 +1,5 @@
 //Modules
-var pkg             = require('package.json');
+var pkg             = require('./package.json');
 var express         = require('express')
 var app             = express()
 var bodyParser      = require('body-parser')
@@ -56,8 +56,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({
         secret: 'driveonsecret', 
         saveUninitialized: false, 
-        resave:false, 
-        cookie: { maxAge: 1000 * 60 * 60 * 24  }
+        resave:false
         }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -86,11 +85,11 @@ app.use(function(req, res, next) {
 
 // Set Main Route
 app.use('/', require('./routes/routes'))
-app.use('/profile', require('./routes/profiles'))
+app.use('/profiles', require('./routes/profiles'))
 // require('./routes/routes.js')(app, passport);
 
 
 // Set
 app.listen(port, function () {
-    console.log(pkg.name,` listening on ${port}`)
+    console.log(pkg.name,`listening on ${port}`)
 })
