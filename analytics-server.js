@@ -1,4 +1,5 @@
 //Modules
+var pkg             = require('package.json');
 var express         = require('express')
 var app             = express()
 var bodyParser      = require('body-parser')
@@ -91,5 +92,5 @@ app.use('/profile', require('./routes/profiles'))
 
 // Set
 app.listen(port, function () {
-    console.log(`Analytics-Dashboard listening on ${port}`)
+    console.log(pkg.name,` listening on ${port}`)
 })

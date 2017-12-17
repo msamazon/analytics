@@ -37,7 +37,13 @@ var UserSchema = new Schema({
 UserSchema.plugin(passportLocalMongoose,{
     usernameField: 'email',
     attemptsField: 'attempts',
-    lastLoginField: 'lastloginAt'
+    lastLoginField: 'lastloginAt',
+    MissingPasswordError: 'Favor, informar uma senha!',
+    AttemptTooSoonError: 'Acesso do usuário bloqueado.Tente novamente mais tarde.',
+    TooManyAttemptsError: 'Conta bloqueada devido ao excesso de tentativas de login.',
+    IncorrectPasswordError: 'Senha incorreta!',
+    IncorrectUsernameError: 'Email incorreto!',
+    MissingUsernameError: 'Favor informar um email para login!'   
 })
 
 UserSchema.plugin(mongooseLogs, {
