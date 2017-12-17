@@ -1081,7 +1081,7 @@ pre {
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
+  font-size: 1.175rem;
   line-height: 1.25;
   color: #3e515b;
   background-color: #fff;
@@ -1373,7 +1373,7 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
   user-select: none;
   border: 1px solid transparent;
   padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
+  font-size: 1.175rem;
   line-height: 1.25;
   transition: all 0.15s ease-in-out; }
   .btn:focus, .btn:hover {
@@ -1729,7 +1729,7 @@ fieldset[disabled] a.btn {
 
 .btn-sm, .btn-group-sm > .btn {
   padding: 0.25rem 0.5rem;
-  font-size: 0.875rem;
+  font-size: 1.175rem;
   line-height: 1.5; }
 
 .btn-block {
@@ -7262,7 +7262,7 @@ base-chart.chart {
     padding: 0.5rem 1rem;
     margin-right: 0;
     background-color: #fff;
-    background-image: url("../img/logo.png");
+    background-image: url("../img/corner_logo.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 70px auto;
@@ -8720,22 +8720,3 @@ hr.transparent {
     border-right-color: #f0f3f5; }
   *[dir="rtl"].callout-dark {
     border-right-color: #29363d; }
-
-
-iframe.responsive {
-  position: relative;
-  height: 0;
-  overflow: hidden;
-}
-
-iframe.responsive.google-maps {
-   padding-bottom: 90%; /* (450 ÷ 500 = 0.9 = 90%) */
-}
-
-iframe.responsive.video_16_9 {
-  padding-bottom: 56.25%;
-}
-
-iframe.responsive.video_4_3 {
-  padding-bottom: 75%;
-} 

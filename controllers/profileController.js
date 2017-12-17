@@ -50,13 +50,13 @@ exports.show = function(req, res){
         if (err) {
           console.log("Error at show Users:", err);
         } else {          
-          res.render('users/show', {profiles: profile});
+          res.render('profiles/show', {profiles: profile});
         }
       });
   } else {    
     res.render('errors/500', {message:'Erro interno, favor informar o administrador!'});    
   }
- };    
+ }    
 
 exports.edit = function(req, res){    
   Profile.findOne({_id: req.params.id}).exec(function (err, uprofile) {
@@ -82,8 +82,8 @@ exports.update = function(req, res){
 
 exports.save  =   function(req, res){
     var payload = req.body
-    payload.modifiedBy = req.user
-    console.log('profileController:save:payload=>'+ payload)
+    payload.modifiedBy = req.user.email
+    console.log('profileController:save:payload=>'+JSON.stringify(payload))
 
     var profile = new Profile(payload)      
     profile.save(function(err) {
@@ -92,6 +92,7 @@ exports.save  =   function(req, res){
         res.render('profiles/new', { title: 'DriveOn | Novo Perfil de Usuário'});
       } else {          
         res.redirect("profiles/show/"+profile._id);
+        // res.render('profiles/show/'+profile._id);
       }
     })
  }
