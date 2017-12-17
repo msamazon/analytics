@@ -2,6 +2,7 @@ var mongoose  = require('mongoose')
 var Schema    = mongoose.Schema
 var bcrypt    = require('bcrypt')
 var mongooseLogs = require('mongoose-activitylogs')
+var passportLocalMongoose = require('passport-local-mongoose')
 
 var ProfileSchema = new Schema({    
     userProfile: {
@@ -27,13 +28,7 @@ var ProfileSchema = new Schema({
 }
 )
 
-// ProfileSchema.virtual('changedBy').set(function (userId) {
-//     if (this.isNew()) {      
-//       this.createdBy = this.modifiedBy = userId;
-//     } else {      
-//       this.modifiedBy = userId;
-//     }
-//   });
+ProfileSchema.plugin(passportLocalMongoose)
 
 
 ProfileSchema.plugin(mongooseLogs, {

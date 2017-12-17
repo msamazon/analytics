@@ -3,21 +3,22 @@ var express         = require('express')
 var app             = express()
 var bodyParser      = require('body-parser')
 var mongoose        = require('mongoose')
-var passport        = require('passport')
-// var jwt             = require('jsonwebtoken')
 var config          = require('./lib/config')
-// var routes          = require('./routes/routes.js')
 var path            = require('path')
 var flash           = require('req-flash')
 var cookieParser    = require('cookie-parser')
 var session         = require('express-session')
-var localpass       = require('./lib/passport')(passport)
 var helpers         = require('view-helpers')
 var dotenv          = require('dotenv').config()
 var expressValidator= require('express-validator')
 // var grappling       = require('grappling-hook');
-var favicon 		= require('serve-favicon');
-require('./lib/passport')(passport);
+var favicon 		= require('serve-favicon')
+var passport        = require('passport')
+var LocalStrategy   = require('passport-local').Strategy
+// Routes and Subs
+var routes            = require('./routes/routes.js')
+var profiles          = require('./routes/profiles.js')
+
 // Service Port
 var port = process.env.PORT || 4884
 
@@ -47,26 +48,34 @@ mongoose.connection.on('error', error => {
 //Middlewares
 app.use(expressValidator())
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }))
 
-// app.use(session({
-//         secret: 'driveonsecret', 
-//         rolling: true, 
-//         saveUninitialized: true, 
-//         resave:true, 
-//         cookie: { maxAge: 60000 }
-//         }))
-app.use(session({secret:'driveonsecret', resave: false, saveUninitialized: false, cookie: { maxAge: 1000 * 60 * 60 * 24 } }))
+
+// Passport middleware Scope******************************************************************
+app.use(session({
+        secret: 'driveonsecret', 
+        saveUninitialized: false, 
+        resave:false, 
+        cookie: { maxAge: 1000 * 60 * 60 * 24  }
+        }))
 app.use(passport.initialize())
 app.use(passport.session())
 
+// Configure passport-local to use account model for authentication
+var  User = require('./models/User')
+passport.use(User.createStrategy())
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+//*********************************************************************************************
 app.use(cookieParser())
 app.use(flash())
 
 app.use(helpers('dashboard'))
-app.use(express.static(path.join(__dirname, 'public')))
 
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 // Set Service Scope for Intercharge messages
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*")
@@ -75,8 +84,11 @@ app.use(function(req, res, next) {
 })
 
 // Set Main Route
-// app.use('/', routes)
-require('./routes/routes.js')(app, passport);
+app.use('/', require('./routes/routes'))
+app.use('/profile', require('./routes/profiles'))
+// require('./routes/routes.js')(app, passport);
+
+
 // Set
 app.listen(port, function () {
     console.log(`Analytics-Dashboard listening on ${port}`)

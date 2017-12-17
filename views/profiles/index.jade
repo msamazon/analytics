@@ -34,16 +34,17 @@ block content
                               tr
                                 td #{profile.userProfile}
                                 td #{profile.ProfileDescription} 
-                                td #{ativo = profile.activedYN?"Y":"N" }                                
+                                td #{ativo = profile.activedYN=='Y'?'Sim':'Não' }                                
                                 td #{formatDate(profile.createdAt)}
                                 td #{(profile.createdBy)}
                                 td #{formatDate(profile.createdAt)}
                                 td #{(profile.createdBy)}
                                 td 
-                                  a(href='/user/edit/#{profile.id}') Editar 
+                                  a(href='/profiles/edit/#{profile.id}') Editar 
                                   span
-                                  a(href='/user/delete/#{profile.id}') Deletar                           
+                                  a(href='/profiles/delete/#{profile.id}') Deletar                           
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  
-                      button.btn.btn-primary.btn-sm(type='button') Novo
+                      a(href='/profiles/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') Novo

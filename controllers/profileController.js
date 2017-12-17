@@ -40,7 +40,7 @@ exports.list = function(req, res) {
         .skip(limit * page);   
   };
 
-exports.create = function(req, res){    
+exports.create = function(req, res){        
     res.render('profiles/new.jade', { title: 'DriveOn | Novo Perfil de Usuário'});
  };   
  
