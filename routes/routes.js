@@ -24,6 +24,7 @@ router.post('/register', user.doRegister);
 
 router.get('/', isLoggedIn, masterdata.list)
 
+router.get('/trips', isLoggedIn, masterdata.carlist)
 
 module.exports = router
 

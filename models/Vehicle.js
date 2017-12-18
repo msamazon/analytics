@@ -3,11 +3,9 @@ var Schema    = mongoose.Schema
 var mongooseLogs = require('mongoose-activitylogs')
 
 var DO_CAR_M00Schema = new Schema({
-    vehicleId   : String,
-    deviceId    : String,
-    deviceHex   : String,
-    vin         : String,
     plate       : String,
+    device      : { type: Schema.Types.ObjectId, ref: 'do_dev_m00' },    
+    vin         : String,    
     model       : String,
     color       : String,
     state       : String,

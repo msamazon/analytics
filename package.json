@@ -33,6 +33,7 @@
     "jade": "^1.11.0",
     "jsonwebtoken": "^7.4.3",
     "jwt-simple": "^0.5.1",
+    "leaflet": "^1.2.0",
     "lodash": "^4.17.4",
     "mongoose": "^4.11.13",
     "mongoose-activitylogs": "^2.1.15",
