@@ -23,7 +23,7 @@ var LocalStrategy   = require('passport-local').Strategy
 // var users             = require('./routes/users')
 
 // Service Port
-var port = process.env.PORT || 4884
+var port = process.env.PORT ||  4884
 // grappling.mixin(app).allowHooks('pre:static', 'pre:bodyparser', 'pre:session', 'pre:logger', 'pre:admin', 'pre:routes', 'pre:render', 'updates', 'signin', 'signout','login');
 
 // view engine setup
