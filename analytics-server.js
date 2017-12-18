@@ -19,11 +19,10 @@ var LocalStrategy   = require('passport-local').Strategy
 // Routes and Subs
 var routes            = require('./routes/routes.js')
 var profiles          = require('./routes/profiles.js')
+var authorities       = require('./routes/authorities.js')
 
 // Service Port
 var port = process.env.PORT || 4884
-
-
 // grappling.mixin(app).allowHooks('pre:static', 'pre:bodyparser', 'pre:session', 'pre:logger', 'pre:admin', 'pre:routes', 'pre:render', 'updates', 'signin', 'signout','login');
 
 // view engine setup
@@ -91,6 +90,7 @@ app.use(function(req, res, next) {
 // Set Main Route
 app.use('/', require('./routes/routes'))
 app.use('/profiles', require('./routes/profiles'))
+app.use('/authorities', require('./routes/authorities'))
 
 // Set
 app.listen(port, function () {
