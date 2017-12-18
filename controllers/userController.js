@@ -2,6 +2,9 @@
 var mongoose        = require('mongoose')
 var passport        = require('passport')
 var User            = require("../models/User")
+var Profile         = require("../models/UserProfile")
+var Authority       = require("../models/UserAuthority")
+var Customer        = require("../models/Customer")
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
@@ -63,35 +66,87 @@ userController.list = function(req, res) {
     page: page
   };
 
-
   User
-      .find({})
-      .populate('profile')
-      .populate('authority')
-      .populate('customer')
-      .exec (function(err, users){
+      .find({},function(err, users){
         User.count().exec(function(err, count){
             if (count > 0) {
                   res.render('users/index',
-                  { title: 'DriveOn Portal | Usuários', 
+                    { 
+                      title: 'DriveOn Portal | Usuários', 
                       list: users,
                       user_info: req.user,
                       baseuri: baseurl,
                       page: page + 1,
-                      pages: Math.ceil(count / limit)}
-                  );
+                      pages: Math.ceil(count / limit)
+                    }
+                  )
                 }else{
                   res.render('users/new.jade', {title: 'DriveOn | Novo Usuário',baseuri:baseurl});
                 }     
-          });        
+          })        
       })
       .limit(limit)
       .skip(limit * page);   
  } 
 
 userController.create = function(req, res){         
-  var baseurl = req.protocol + "://" + req.get('host') + "/"     
-  res.render('users/new.jade', { title: 'DriveOn | Novo Usuário',baseuri:baseurl});
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+  
+  Profile
+    .find({active: true}).exec(function(err, profile){
+      if (err) {
+        switch (err.code)
+        {
+          case 11000: 
+              req.flash('alert-danger', 'Estes dados já existem no registro de usuarios.')    
+              break;        
+          default: 
+              req.flash('alert-danger', "Erro ao carregar os perfis de usuário:"+ err)  
+              break;
+        }   
+      }else{  
+          Authority
+            .find({active: true}).exec(function(err, authority){
+              if (err) {
+                switch (err.code)
+                {
+                  case 11000: 
+                      req.flash('alert-danger', 'Estes dados já existem no registro de usuarios.')    
+                      break;        
+                  default: 
+                      req.flash('alert-danger', "Erro ao carregar as autoridades de usuário:"+ err)  
+                      break;
+                }   
+              }else{ 
+                  Customer
+                    .find({active: true}).exec(function(err, customer){
+                      if (err) {
+                        switch (err.code)
+                        {
+                          case 11000: 
+                              req.flash('alert-danger', 'Estes dados já existem no registro de usuarios.')    
+                              break;        
+                          default: 
+                              req.flash('alert-danger', "Erro ao carregar as contas:"+ err)  
+                              break;
+                        }   
+                      }else{
+                        res.render('users/new.jade', { title: 'DriveOn | Novo Usuário',
+                            baseuri: baseurl,
+                            profiles: profile,
+                            authorities: authority,
+                            customers: customer
+                          })
+                      } 
+                  })    
+              } 
+          })  
+      }
+    })  
+
+
+
+    
  }   
 
 userController.show = function(req, res){ 

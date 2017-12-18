@@ -20,26 +20,28 @@ block content
                       table.table.table-striped
                         thead
                           tr
+                            th Nome
+                            th e-mail
+                            th Senha
+                            th Genero
                             th Perfil
-                            th Descrição
+                            th Autoridade
                             th Ativo
-                            th Criado em                             
-                            th Modificado em 
-                            th Modificado por
                             th Ações
                         tbody                                                  
                              each profile in list
                               tr
-                                td #{profile.userProfile}
-                                td #{profile.ProfileDescription} 
-                                td #{ativo = profile.active==true?'Sim':'Não' }                                
-                                td #{formatDate(profile.createdAt)}                                
-                                td #{formatDate(profile.updatedAt)}
-                                td #{(profile.modifiedBy)}
+                                td #{profile.fullname}
+                                td #{profile.email}
+                                td #{profile.password}
+                                td #{profile.gender}
+                                td #{profile.profile} 
+                                td #{profile.authority} 
+                                td #{ativo = profile.active==true?'Sim':'Não' }                            
                                 td 
                                   .form-group
-                                    form.form-horizontal(action='/profiles/delete/#{profile.id}', method='post')                                      
-                                      a(href='/profiles/edit/#{profile.id}')
+                                    form.form-horizontal(action='/users/delete/#{profile.id}', method='post')                                      
+                                      a(href='/users/edit/#{profile.id}')
                                         button(type='button', style='background-color:transparent; border-color:transparent;')
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
@@ -48,5 +50,5 @@ block content
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  
-                      a(href='/profiles/new', target='_top')    
+                      a(href='/users/new', target='_top')    
                        button.btn.btn-primary.btn-sm(type='button') Novo

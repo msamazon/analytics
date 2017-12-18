@@ -16,10 +16,11 @@ var expressValidator= require('express-validator')
 var favicon 		= require('serve-favicon')
 var passport        = require('passport')
 var LocalStrategy   = require('passport-local').Strategy
-// Routes and Subs
-var routes            = require('./routes/routes.js')
-var profiles          = require('./routes/profiles.js')
-var authorities       = require('./routes/authorities.js')
+// // Routes and Subs
+// var routes            = require('./routes/routes.js')
+// var profiles          = require('./routes/profiles.js')
+// var authorities       = require('./routes/authorities.js')
+// var users             = require('./routes/users')
 
 // Service Port
 var port = process.env.PORT || 4884
@@ -91,7 +92,8 @@ app.use(function(req, res, next) {
 app.use('/', require('./routes/routes'))
 app.use('/profiles', require('./routes/profiles'))
 app.use('/authorities', require('./routes/authorities'))
-
+app.use('/users', require('./routes/users'))
+app.use('/customers', require('./routes/customers'))
 // Set
 app.listen(port, function () {
     console.log(pkg.name,`listening on ${port}`)
