@@ -5,19 +5,19 @@ var Vehicle = require('../controllers/vehicleController')
 
     // ++++++++++++++++++++++ Profile +++++++++++++++++++++++++++
 // List all Users
-router.get('/',   Vehicle.list);
+router.get('/', isLoggedIn,  Vehicle.list);
 // Get single user by id
-router.get('/show/:id',  Vehicle.show);
+router.get('/show/:id', isLoggedIn, Vehicle.show);
 // Create user
-router.get('/new',  Vehicle.create);
+router.get('/new', isLoggedIn, Vehicle.create);
 // Save user
-router.post('/save',  Vehicle.save);
+router.post('/save', isLoggedIn, Vehicle.save);
 // Edit user
-router.get('/edit/:id',  Vehicle.edit);
+router.get('/edit/:id', isLoggedIn, Vehicle.edit);
 // Edit user
-router.post('/update/:id',  Vehicle.update);
+router.post('/update/:id', isLoggedIn, Vehicle.update);
 // Delete
-router.post('/delete/:id',  Vehicle.delete);
+router.post('/delete/:id', isLoggedIn,  Vehicle.delete);
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

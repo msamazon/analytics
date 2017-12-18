@@ -1,5 +1,5 @@
 var mongoose        = require("mongoose")
-var cars          = require("../models/Vehicles")
+var cars          = require("../models/Vehicle")
 
 
 exports.list = function(req, res){
@@ -60,7 +60,7 @@ exports.list = function(req, res){
     };
   
     cars
-        .find({'active': true, 'ownerId.email': req.user.email}, function(err, car){
+        .find({'active': true}, function(err, car){
             cars.count().exec(function(err, count){
                     res.render('vehicles/lasttrips',
                     { title: 'DriveOn', 

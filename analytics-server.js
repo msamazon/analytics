@@ -94,6 +94,7 @@ app.use('/profiles', require('./routes/profiles'))
 app.use('/authorities', require('./routes/authorities'))
 app.use('/users', require('./routes/users'))
 app.use('/customers', require('./routes/customers'))
+app.use('/vehicles', require('./routes/vehicles'))
 // Set
 app.listen(port, function () {
     console.log(pkg.name,`listening on ${port}`)

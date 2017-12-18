@@ -6,7 +6,7 @@ block content
         ol.breadcrumb
           li.breadcrumb-item Administração
           li.breadcrumb-item Configuração
-          li.breadcrumb-item.active Clientes
+          li.breadcrumb-item.active Veiculos
         .container-fluid
           .animated.fadeIn
             .row
@@ -14,36 +14,38 @@ block content
                   .card
                     .card-header
                       i.fa.fa-align-justify
-                      |  Clientes
+                      |  Veiculos
                     .card-body   
                       != messages()  
                       table.table.table-striped
                         thead
                           tr
-                            th Nome / Razao Social
-                            th eMail
-                            th CPF / CNPJ
-                            th Endereço
-                            th Bairro
-                            th Cidade
+                            th Placa
+                            th Device
+                            th Chassis
+                            th Modelo
+                            th Cor
                             th Estado
+                            th Conta
+                            th Motor
                             th Ativo
                             th Ações
                         tbody                                                  
-                             each customer in list
+                             each vehicle in list
                               tr
-                                td #{customer.fullname}
-                                td #{customer.email} 
-                                td #{customer.businesscode}
-                                td #{customer.address1}                                
-                                td #{customer.district}
-                                td #{customer.city}
-                                td #{customer.province}  
-                                td #{ativo = customer.active==true?'Sim':'Não' }
+                                td #{vehicle.plate}
+                                td #{vehicle.device} 
+                                td #{vehicle.vin}
+                                td #{vehicle.model}                                
+                                td #{vehicle.color}
+                                td #{vehicle.state}
+                                td #{vehicle.customer}
+                                td #{vehicle.motor} 
+                                td #{ativo = vehicle.active==true?'Sim':'Não' }
                                 td 
                                   .form-group
-                                    form.form-horizontal(action='/customers/delete/#{customer.id}', method='post')                                      
-                                      a(href='/customers/edit/#{customer.id}')
+                                    form.form-horizontal(action='/vehicles/delete/#{vehicle.id}', method='post')                                      
+                                      a(href='/vehicles/edit/#{vehicle.id}')
                                         button(type='button', style='background-color:transparent; border-color:transparent;')
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
@@ -52,5 +54,5 @@ block content
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  
-                      a(href='/customers/new', target='_top')    
+                      a(href='/vehicles/new', target='_top')    
                        button.btn.btn-primary.btn-sm(type='button') Novo

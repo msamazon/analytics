@@ -2,7 +2,7 @@ var express         = require('express')
 var router          = express.Router()
 var user            = require('../controllers/userController')
 var masterdata      = require('../controllers/masterController')
-
+var message         = require("../controllers/messageController")
 // restrict index for logged in user only
 // router.get('/', user.home)
 
@@ -25,6 +25,12 @@ router.post('/register', user.doRegister);
 router.get('/', isLoggedIn, masterdata.list)
 
 router.get('/trips', isLoggedIn, masterdata.carlist)
+
+
+
+// //Locates
+router.get('/message/gps/:id',  message.getgeo)
+router.get('/message/gpslist/:id',  message.getgeolist)
 
 module.exports = router
 

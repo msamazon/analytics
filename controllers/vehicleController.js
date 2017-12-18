@@ -19,14 +19,13 @@ exports.list = function(req, res) {
       limit: limit,
       page: page
     };
-
-
+    
     Vehicle
         .find({}, function(err, vehicles){
           Vehicle.count().exec(function(err, count){
               if (count > 0) {
                     res.render('vehicles/index',
-                    { title: 'DriveOn Portal | Perfil de Usuário', 
+                    { title: 'DriveOn Portal | Veiculo', 
                         list: vehicles,
                         user_info: req.user,
                         baseuri: baseurl,
@@ -34,7 +33,7 @@ exports.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                    res.render('vehicles/new.jade', {title: 'DriveOn | Novo Perfil de Usuário',baseuri:baseurl});
+                    res.render('vehicles/new.jade', {title: 'DriveOn | Novo Veiculo',baseuri:baseurl});
                   }     
             });        
         })
@@ -44,7 +43,7 @@ exports.list = function(req, res) {
 
 exports.create = function(req, res){         
     var baseurl = req.protocol + "://" + req.get('host') + "/"     
-    res.render('vehicles/new.jade', { title: 'DriveOn | Novo Perfil de Usuário',baseuri:baseurl});
+    res.render('vehicles/new.jade', { title: 'DriveOn | Novo Veiculo',baseuri:baseurl});
  };   
  
 exports.show = function(req, res){ 
@@ -143,7 +142,7 @@ exports.save  =   function(req, res){
                req.flash('alert-danger', "Erro ao salvar:"+ err)  
                break;
         }        
-        res.render('vehicles/new', { title: 'DriveOn | Novo Perfil de Usuário', baseuri:baseurl})
+        res.render('vehicles/new', { title: 'DriveOn | Novo Veiculo', baseuri:baseurl})
       } else {          
         req.flash('alert-info', 'Dados salvos com sucesso!')  
         res.redirect('/vehicles/show/'+profile._id)

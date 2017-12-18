@@ -6,7 +6,7 @@ block content
         ol.breadcrumb
           li.breadcrumb-item Administração
           li.breadcrumb-item Configurações
-          li.breadcrumb-item.active Clientes
+          li.breadcrumb-item.active Veiculos
         .container-fluid
           .animated.fadeIn
             .row
@@ -14,60 +14,55 @@ block content
                   .card
                     .card-header
                       i.fa.fa-edit
-                      |  Novo Cliente
+                      |  Novo Veiculo
                     .card-body                                              
                       != messages()
-                      form.form-horizontal(action='/customers/save', method='post')
+                      form.form-horizontal(action='/vehicles/save', method='post')
                         .form-group
-                          label.form-control-label(for='fullname') Nome / Razao Social
+                          label.form-control-label(for='plate') Placa
                           .controls
                             .input-group
-                              input#fullname.form-control(name='fullname',size='100', type='text')
+                              input#plate.form-control(name='plate',size='100', type='text')
                         .form-group
-                          label.form-control-label(for='email') eMail
+                          label.form-control-label(for='device') device
                           .controls
                             .input-group
-                              input#email.form-control(name='email',size='100', type='email')
+                              input#device.form-control(name='device',size='100', type='text')
                         .form-group
-                          label.form-control-label(for='businesscode') CPF / CNPJ
+                          label.form-control-label(for='businesscode') vin
                           .controls
                             .input-group
-                              input#businesscode.form-control(name='businesscode',size='20', type='text')
+                              input#vin.form-control(name='vin',size='20', type='text')
                         .form-group
-                          label.form-control-label(for='address1') Endereço
+                          label.form-control-label(for='address1') model
                           .controls
                             .input-group
-                              input#address1.form-control(name='address1',size='100', type='text')
+                              input#model.form-control(name='model',size='100', type='text')
                         .form-group
-                          label.form-control-label(for='address2') Complemento
+                          label.form-control-label(for='address2') color
                           .controls
                             .input-group
-                              input#address2.form-control(name='address2',size='100', type='text')
+                              input#color.form-control(name='color',size='100', type='text')
                         .form-group
-                          label.form-control-label(for='zipcode') CEP
+                          label.form-control-label(for='zipcode') state
                           .controls
                             .input-group
-                              input#zipcode.form-control(name='zipcode',size='16', type='text')
+                              input#state.form-control(name='state',size='16', type='text')
                         .form-group
-                          label.form-control-label(for='district') Bairro
+                          label.form-control-label(for='district') motor
                           .controls
                             .input-group
-                              input#district.form-control(name='district',size='100', type='text')
+                              input#motor.form-control(name='motor',size='100', type='text')
                         .form-group
-                          label.form-control-label(for='city') Cidade
+                          label.form-control-label(for='city') fueltype
                           .controls
                             .input-group
-                              input#city.form-control(name='city',size='16', type='text')                                    
+                              input#fueltype.form-control(name='fueltype',size='16', type='text')                                    
                         .form-group
-                          label.form-control-label(for='province') Estado
+                          label.form-control-label(for='province') manufYear
                           .controls
                             .input-group
-                              input#province.form-control(name='province',size='16', type='text')
-                        .form-group
-                          label.form-control-label(for='country') Pais
-                          .controls
-                            .input-group
-                              input#country.form-control(name='country',size='16', type='text')                                                                   
+                              input#manufYear.form-control(name='manufYear',size='16', type='text')                                                                                          
                         .form-group
                           label.form-control-label(for='activedYN') Ativo?
                           .controls
@@ -79,5 +74,5 @@ block content
                         .form-actions
                           button.btn.btn-sm.primary(type='submit') Salvar
                           span
-                          a(href='/customers') 
+                          a(href='/vehicles') 
                            button.btn.btn-sm.secondary(type='button') Cancelar                                                                       

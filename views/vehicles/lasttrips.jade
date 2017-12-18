@@ -18,7 +18,7 @@ block content
                   'Imagery © <a href="http://mapbox.com">Mapbox</a>',
                   id: 'mapbox.streets'
                 }).addTo(mymap);
-           #cnttable(style='position: absolute; top:6px; left: 35px;  width:180px;  height:30px;   z-index: 2000;')
+           #cnttable(style='position: absolute; top:150px; left: 230px;  width:180px;  height:30px; z-index: 2000;')
                           table.table.table-responsive.table-hover.table-outline.mb-0
                             thead.thead-default
                               tr                           
@@ -29,32 +29,46 @@ block content
                                   td
                                     div                             
                                       //- button.btn-link(onclick='executeQuery(#{carro.deviceHex})') #{carro.plate}
-                                      button.btn-link(onclick='executeQuery("#{carro.deviceHex}","Viatura")') #{carro.plate}
+                                      button.btn-link(onclick='executeQuery("#{carro.device}","Viatura")') #{carro.plate}
                           if (pages > 1)
                             ul.pagination
                               != createPagination(pages, page)     
-        //- .container-fluid
-        //-   .animated.fadeIn
-        //-     .row
-        //-       .col-md-12
-        //-           .card
-        //-             .card-header
-        //-               i.fa.fa-edit
-        //-               |  Clientes - Detalhes
-        //-             .card-body 
-                        //- #mapid(style='height: 180px')              
-                        //- #cnttable(style='position: absolute; top:6px; left: 35px;  width:180px;  height:30px;   z-index: 2000;')
-                        //-   table.table.table-responsive.table-hover.table-outline.mb-0
-                        //-     thead.thead-default
-                        //-       tr                           
-                        //-         th Veículos                            
-                        //-     tbody
-                        //-       each carro in carros
-                        //-         tr                           
-                        //-           td
-                        //-             div                             
-                        //-               //- button.btn-link(onclick='executeQuery(#{carro.deviceHex})') #{carro.plate}
-                        //-               button.btn-link(onclick='executeQuery("#{carro.deviceHex}","Viatura")') #{carro.plate}
-                          if (pages > 1)
-                            ul.pagination
-                              != createPagination(pages, page) 
+script(type='text/javascript').
+
+                         function executeQuery(dongle, plate) {
+                              jQuery.support.cors = true;
+                              $.ajax
+                              ({
+                                type: "get",
+                                url: "/message/gps/" + dongle,
+                                dataType: "json",
+                                crossDomain: "true",
+                                contentType: "application/json; charset=UTF-8"                                                             
+                              }).done(function ( data ) {    
+                                //- console.log('Data=>'+ data);                            
+                                success(data,plate);
+                                //- getPolyline(dongle);
+                              });
+                          };   
+
+                          function success(position, pl) {
+                            var geoloc =  position.message.gpsData.split(',');
+                            var lati = geoloc[0];
+                            var logi = geoloc[1];
+                            
+                            var pos = new Microsoft.Maps.Location(lati, logi);
+                            //- p++;                            
+                            if(pushpin){
+                              pushpin.setLocation(pos);                              
+                            }else{
+                              
+                              var pushpinOptions = {title: pl};
+                              pushpin = new Microsoft.Maps.Pushpin(pos, pushpinOptions);
+
+                              map.entities.push(pushpin);
+                              //- map.entities.push(callout);
+                            }
+
+                             map.setView({center:pos});
+                            //-  reverseGeocode();
+                      };                             

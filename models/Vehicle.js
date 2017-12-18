@@ -4,7 +4,8 @@ var mongooseLogs = require('mongoose-activitylogs')
 
 var DO_CAR_M00Schema = new Schema({
     plate       : String,
-    device      : { type: Schema.Types.ObjectId, ref: 'do_dev_m00' },    
+    // device      : { type: Schema.Types.ObjectId, ref: 'do_dev_m00' },   
+    device      : String, 
     vin         : String,    
     model       : String,
     color       : String,

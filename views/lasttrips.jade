@@ -167,7 +167,7 @@ block content
                         td
                           div                             
                             //- button.btn-link(onclick='executeQuery(#{carro.deviceHex})') #{carro.plate}
-                            button.btn-link(onclick='executeQuery("#{carro.deviceHex}","Viatura")') #{carro.plate}
+                            button.btn-link(onclick='executeQuery("#{carro.device}","Viatura")') #{carro.plate}
                 if (pages > 1)
                   ul.pagination
                     != createPagination(pages, page) 
