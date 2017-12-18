@@ -4,6 +4,7 @@ block content
   main.main
         // Breadcrumb
         ol.breadcrumb
+          li.breadcrumb-item Administração
           li.breadcrumb-item Configurações
           li.breadcrumb-item.active Usuários
         .container-fluid
@@ -14,29 +15,38 @@ block content
                     .card-header
                       i.fa.fa-align-justify
                       |  Usuários
-                    .card-body                    
+                    .card-body   
+                      != messages()  
                       table.table.table-striped
                         thead
                           tr
-                            th Nome
-                            th Email
-                            th Administrador
-                            th Bloqueado
-                            //- th Criado em
+                            th Perfil
+                            th Descrição
+                            th Ativo
+                            th Criado em                             
+                            th Modificado em 
+                            th Modificado por
                             th Ações
                         tbody                                                  
-                             each usuario in user_list
+                             each profile in list
                               tr
-                                td #{usuario.fullname}
-                                td #{usuario.email} 
-                                td #{adm = usuario.admin?"Sim":"Não" }
-                                td #{block = usuario.isBlocked?"Sim":"Não" }
-                                //- td #{formatDate(usuario.created)}
-                                //- td #{(usuario.created)}
+                                td #{profile.userProfile}
+                                td #{profile.ProfileDescription} 
+                                td #{ativo = profile.active==true?'Sim':'Não' }                                
+                                td #{formatDate(profile.createdAt)}                                
+                                td #{formatDate(profile.updatedAt)}
+                                td #{(profile.modifiedBy)}
                                 td 
-                                  a(href='/user/edit/#{usuario.id}') Editar 
-                                  span
-                                  a(href='/user/delete/#{usuario.id}') Deletar                           
+                                  .form-group
+                                    form.form-horizontal(action='/profiles/delete/#{profile.id}', method='post')                                      
+                                      a(href='/profiles/edit/#{profile.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove                                                              
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  
+                      a(href='/profiles/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') Novo

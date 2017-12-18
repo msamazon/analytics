@@ -37,6 +37,7 @@ var UserSchema = new Schema({
 
 UserSchema.plugin(passportLocalMongoose,{
     usernameField: 'email',
+    hashField:'password',
     attemptsField: 'attempts',
     lastLoginField: 'lastloginAt',
     MissingPasswordError: 'Favor, informar uma senha!',
@@ -53,8 +54,7 @@ UserSchema.plugin(mongooseLogs, {
     updateAction: "updated",
     deleteAction: "deleted" 
  });
-
-
+ 
 var user = mongoose.model('do_usr_m00', UserSchema)
 
 module.exports = user

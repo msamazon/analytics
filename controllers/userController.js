@@ -49,6 +49,192 @@ userController.logout = function(req, res) {
   res.redirect('/')
 }
 
+
+/**
+ * CRUD
+ */ 
+userController.list = function(req, res) {   
+  var baseurl = req.protocol + "://" + req.get('host') + "/"    
+  var page = (req.query.page > 0 ? req.query.page : 1) - 1;
+  var _id = req.query.item;
+  var limit = 10;
+  var options = {
+    limit: limit,
+    page: page
+  };
+
+
+  User
+      .find({})
+      .populate('profile')
+      .populate('authority')
+      .populate('customer')
+      .exec (function(err, users){
+        User.count().exec(function(err, count){
+            if (count > 0) {
+                  res.render('users/index',
+                  { title: 'DriveOn Portal | Usuários', 
+                      list: users,
+                      user_info: req.user,
+                      baseuri: baseurl,
+                      page: page + 1,
+                      pages: Math.ceil(count / limit)}
+                  );
+                }else{
+                  res.render('users/new.jade', {title: 'DriveOn | Novo Usuário',baseuri:baseurl});
+                }     
+          });        
+      })
+      .limit(limit)
+      .skip(limit * page);   
+ } 
+
+userController.create = function(req, res){         
+  var baseurl = req.protocol + "://" + req.get('host') + "/"     
+  res.render('users/new.jade', { title: 'DriveOn | Novo Usuário',baseuri:baseurl});
+ }   
+
+userController.show = function(req, res){ 
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+  if (req.params.id != null || req.params.id != undefined) {      
+  User.findOne({_id: req.params.id}).exec(function (err, user) {
+        if (err) {
+          switch (err.code)
+          {
+            case 11000: 
+                req.flash('alert-danger', 'Estes dados já existem no registro de usuarios.')    
+                break;        
+            default: 
+                req.flash('alert-danger', "Erro ao exibir:"+ err)  
+                break;
+          }   
+        } else {     
+          req.flash('alert-info', 'Dados salvos com sucesso!')       
+          res.render('users/show', {users: user, baseuri:baseurl});
+        }
+      });
+  } else {    
+    res.render('errors/500', {message:'Erro interno, favor informar o administrador!'});    
+  }
+ }    
+
+userController.edit = function(req, res){ 
+  var baseurl = req.protocol + "://" + req.get('host') + "/"    
+  User.findOne({_id: req.params.id}).exec(function (err, uuser) {
+        if (err) {
+          switch (err.code)
+          {
+            case 11000: 
+                req.flash('alert-danger', 'Estes dados já existem no registro de usuários.')    
+                break;        
+            default: 
+                req.flash('alert-danger', "Erro ao editar:"+ err)  
+                break;
+          }   
+        } else {          
+          res.render('users/edit', {users: uuser, baseuri:baseurl});
+        }
+      })
+  }
+
+userController.update = function(req, res){  
+  var baseurl = req.protocol + "://" + req.get('host') + "/"    
+  User.findByIdAndUpdate(
+        req.params.id,          
+        { $set: 
+            { 
+              fullname: req.body.fullname, 
+              email: req.body.email, 
+              password: req.body.password, 
+              profile: req.body.profile,
+              authority: req.body.authority,
+              customer: req.body.customer,
+              gender: req.body.gender,
+              active: req.body.active,
+              modifiedBy: req.user.email
+            }
+        }, 
+        { new: true }, 
+ function (err, user) {                                                              
+      if (err) {         
+        switch (err.code)
+        {
+           case 11000: 
+               req.flash('alert-danger', 'Estes dados já existem no registro de perfis.')    
+               break;        
+           default: 
+               req.flash('alert-danger', "Erro ao atualizar:"+ err)  
+               break;
+        }   
+        res.render("users/edit", {users: req.body, baseuri:baseurl})
+      }else{
+        req.flash('alert-info', 'Dados salvos com sucesso!')            
+        res.redirect("/users/show/"+user._id)
+      }
+    })
+  }   
+
+userController.save  =   function(req, res){
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+  // var payload = req.body
+  
+  // if(req.user) {           
+  //   // console.log('Check req.user data:'+ JSON.stringify(req.user))
+  //   payload.modifiedBy = req.user.email
+  // }  
+  
+  var user = new User({ 
+    fullname: req.body.fullname, 
+    email: req.body.email, 
+    password: req.body.password, 
+    profile: req.body.profile,
+    authority: req.body.authority,
+    customer: req.body.customer,
+    gender: req.body.gender,
+    active: req.body.active,
+    modifiedBy: req.user.email
+  })      
+  // user.save(function(err) {
+  User.register(user, req.body.password, function(err, user) {      
+    if(err) {  
+      switch (err.code)
+      {
+         case 11000: 
+             req.flash('alert-danger', 'Estes dados já existem no registro de usuários.')    
+             break;        
+         default: 
+             req.flash('alert-danger', "Erro ao salvar:"+ err)  
+             break;
+      }        
+      res.render('users/new', { title: 'DriveOn | Novo Usuário', baseuri:baseurl})
+    } else {          
+      req.flash('alert-info', 'Dados salvos com sucesso!')  
+      res.redirect('/users/show/'+profile._id)
+    }
+  })
+ }
+
+userController.delete = function(req, res){    
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+  User.remove({_id: req.params.id}, function(err) {
+      if(err) {
+        switch (err.code)
+        {
+          case 11000: 
+              req.flash('alert-danger', 'Estes dados já existem no registro de usuários.')    
+              break;        
+          default: 
+              req.flash('alert-danger', "Erro ao deletar:"+ err)  
+              break;
+        }  
+      } else {    
+        req.flash('alert-info', 'Dados removidos com sucesso!')        
+        res.redirect("/users");
+      }
+    })
+ }
+
+
 module.exports = userController
 
 // exports.signup = function (req, res) {
