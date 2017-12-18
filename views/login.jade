@@ -21,14 +21,14 @@ html(lang='en')
     link(href='css/style.css', rel='stylesheet')
     script(src='bower_components/popper.js/dist/umd/popper.min.js')  
     script(src='bower_components/jquery/dist/jquery.min.js')
-  body.app.flex-row.align-items-center
+  body.app.flex-row.align-items-center(onload="document.getElementById('email').focus();")
     .container
       .row
         .col-md-4.col-md-offset-8
          .panel.panel-default
             .panel-heading
               //- span.glyphicon.glyphicon-lock
-              img.img-fluid(src='img/logo_login.png', border='0', alt='DriveOn Auto')
+              img.img-fluid(src='img/logo_login_driveon.png', border='0', alt='DriveOn Auto')
               //- |  Login
             .panel-body      
               - if (message)
@@ -37,15 +37,20 @@ html(lang='en')
                 .form-group
                   label.col-sm-3.control-label(for='email') E-mail
                   .col-sm-9
-                    input#username.form-control(name='username',type='email', placeholder='Email', required='yes')
+                    input#username.form-control(name='email',type='email', placeholder='E-mail', required='yes')
                 .form-group
                   label.col-sm-3.control-label(for='password') Senha
                   .col-sm-9
-                    input#password.form-control(name='password',type='password', placeholder='Senha', required='yes')                
+                    input#password.form-control(name='password',type='password', placeholder='Senha', required='yes', autocomplete='off')               
+                .form-group
+                    label.col-sm-3.control-label(for='remember')
+                    .col-sm-9
+                      input#remember.checkbox(type='checkbox', checked='checked')
+                      | Lembrar de mim?       
                 .form-group.last
                   .col-sm-offset-3.col-sm-9
-                    button.btn.btn-success.btn-sm(type='submit') Log in
+                    button.btn.btn-success.btn-lg(type='submit') Log in
                     //- button.btn.btn-default.btn-sm(type='reset') Reset
             .panel-footer
               | Powered by  
-              a(href='http://www.driveonauto.com') DriveOn Insurance Intelligence
+              a(href='https://www.driveonauto.com') DriveOn Insurance Intelligence

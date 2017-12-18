@@ -1,0 +1,58 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configuração
+          li.breadcrumb-item.active Veiculos
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Veiculos
+                    .card-body   
+                      != messages()  
+                      table.table.table-striped
+                        thead
+                          tr
+                            th Placa
+                            th Device
+                            th Chassis
+                            th Modelo
+                            th Cor
+                            th Estado
+                            th Conta
+                            th Motor
+                            th Ativo
+                            th Ações
+                        tbody                                                  
+                             each vehicle in list
+                              tr
+                                td #{vehicle.plate}
+                                td #{vehicle.device} 
+                                td #{vehicle.vin}
+                                td #{vehicle.model}                                
+                                td #{vehicle.color}
+                                td #{vehicle.state}
+                                td #{vehicle.customer}
+                                td #{vehicle.motor} 
+                                td #{ativo = vehicle.active==true?'Sim':'Não' }
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/vehicles/delete/#{vehicle.id}', method='post')                                      
+                                      a(href='/vehicles/edit/#{vehicle.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove                                                              
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)  
+                      a(href='/vehicles/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') Novo

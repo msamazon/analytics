@@ -1,0 +1,89 @@
+.sidebar
+        nav.sidebar-nav
+          ul.nav
+            li.nav-item
+              a.nav-link(href='/')
+                i.icon-speedometer
+                |  Dashboard 
+            li.nav-title
+              | Clientes
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-control-start
+                |  Veículos
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='/trips')
+                    i.icon-direction
+                    |  Último trajeto                                
+                li.nav-item
+                  a.nav-link(href='/locate')
+                    i.icon-location-pin
+                    |  Localizar                              
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-star
+                |  Eventos
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='/alarmes')
+                    i.icon-fire
+                    |  Alarmes               
+            li.nav-item
+              a.nav-link(href='/analytics')
+                i.icon-pie-chart
+                |  Analytics
+            li.divider
+            li.nav-title
+              | Administração
+            li.nav-item.nav-dropdown
+              a.nav-link.nav-dropdown-toggle(href='#')
+                i.icon-settings
+                |  Configurações
+              ul.nav-dropdown-items
+                li.nav-item
+                  a.nav-link(href='/users', target='_top')
+                    i.icon-user
+                    |  Usuários  
+                li.nav-item
+                  a.nav-link(href='/customers')
+                    i.icon-user
+                    |  Clientes      
+                li.nav-item
+                  a.nav-link(href='/vehicles')
+                    i.icon-user
+                    |  Veiculos                  
+                li.nav-item.nav-dropdown
+                  a.nav-link.nav-dropdown-toggle(href='#')
+                    i.icon-control-end
+                    |  Devices
+                  ul.nav-dropdown-items
+                    li.nav-item
+                      a.nav-link(href='/devices/new')
+                        i.icon-organization
+                        |  Instalar
+                    li.nav-item
+                      a.nav-link(href='/devices/update')
+                        i.icon-energy
+                        |  Liberar            
+                li.nav-item.nav-dropdown
+                  a.nav-link.nav-dropdown-toggle(href='#')
+                    i.icon-control-start
+                    |  Parâmetros
+                  ul.nav-dropdown-items
+                    li.nav-item
+                      a.nav-link(href='/zones')
+                        i.icon-map
+                        |  Zonas de Segurança   
+                    li.nav-item
+                      a.nav-link(href='/zones')
+                        i.icon-directions
+                        |  Variáveis para Cálculo  
+                    li.nav-item
+                      a.nav-link(href='/profiles')
+                        i.icon-equalizer
+                        |  Perfis
+                    li.nav-item
+                      a.nav-link(href='/authorities')
+                        i.icon-anchor
+                        |  Autoridade    

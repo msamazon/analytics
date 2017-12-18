@@ -1,0 +1,78 @@
+extends ../layout/default
+
+block content
+  main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Administração
+          li.breadcrumb-item Configurações
+          li.breadcrumb-item.active Veiculos
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-edit
+                      |  Novo Veiculo
+                    .card-body                                              
+                      != messages()
+                      form.form-horizontal(action='/vehicles/save', method='post')
+                        .form-group
+                          label.form-control-label(for='plate') Placa
+                          .controls
+                            .input-group
+                              input#plate.form-control(name='plate',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='device') device
+                          .controls
+                            .input-group
+                              input#device.form-control(name='device',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='businesscode') vin
+                          .controls
+                            .input-group
+                              input#vin.form-control(name='vin',size='20', type='text')
+                        .form-group
+                          label.form-control-label(for='address1') model
+                          .controls
+                            .input-group
+                              input#model.form-control(name='model',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='address2') color
+                          .controls
+                            .input-group
+                              input#color.form-control(name='color',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='zipcode') state
+                          .controls
+                            .input-group
+                              input#state.form-control(name='state',size='16', type='text')
+                        .form-group
+                          label.form-control-label(for='district') motor
+                          .controls
+                            .input-group
+                              input#motor.form-control(name='motor',size='100', type='text')
+                        .form-group
+                          label.form-control-label(for='city') fueltype
+                          .controls
+                            .input-group
+                              input#fueltype.form-control(name='fueltype',size='16', type='text')                                    
+                        .form-group
+                          label.form-control-label(for='province') manufYear
+                          .controls
+                            .input-group
+                              input#manufYear.form-control(name='manufYear',size='16', type='text')                                                                                          
+                        .form-group
+                          label.form-control-label(for='activedYN') Ativo?
+                          .controls
+                            //- .col-md-9
+                            .input-group
+                              select#select.form-control-sm(name='active')
+                                option(value='true') Sim
+                                option(value='false') Não                                                   
+                        .form-actions
+                          button.btn.btn-sm.primary(type='submit') Salvar
+                          span
+                          a(href='/vehicles') 
+                           button.btn.btn-sm.secondary(type='button') Cancelar                                                                       

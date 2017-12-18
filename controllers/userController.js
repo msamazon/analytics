@@ -1,101 +1,419 @@
-'use strict';
-
-var mongoose        = require("mongoose")
+// 'use strict';
+var mongoose        = require('mongoose')
+var passport        = require('passport')
 var User            = require("../models/User")
+var Profile         = require("../models/UserProfile")
+var Authority       = require("../models/UserAuthority")
+var Customer        = require("../models/Customer")
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
+var async           = require('run-async')
 
-exports.logging = function(req, res) {
+var userController = {}
 
-    if(req.body.email && req.body.password) {
-        var _email = req.body.email
-        
-        if (_email == undefined) 
-            console.log('erro')
-        
-        User.findOne({
-            email: _email
-        }, function(err, user) {
-        
-           // if (err) throw err
-        
-            if (!user) {
-                res.json({ success: false, message: 'Authentication failed. User not found.' })
-            }else if (user){
-                var isOk = user.comparePassword(req.body.password)
-                
-                if (isOk) {
-                    var token = jwt.sign(user, config.jwtSecret)
+userController.home = function(req, res) {
+  res.render('index', { user : req.user })
+ }
 
-                    res.json({ success: true, token: token })
-                }else {
-                    res.json({ success: false, message: 'Authentication failed. Wrong password.' })
-                }
-            }
-        })
+
+userController.register = function(req, res) {
+  res.render('register')
+ }
+
+userController.doRegister = function(req, res) {
+  User.register(new User({ email : req.body.email, fullname: req.body.fullname, password: req.body.password }), req.body.password, function(err, user) {
+    if (err) {
+      // return res.render('register', { user : user });
+      console.log('Error on User registration:'+ err)
     }
-}
 
-exports.signup = function (req, res) {
+    // passport.authenticate('local')(req, res, function () {
+    //   res.redirect('/');
+    // });
+  })
+ }
 
-    var user = new User({
-        fullname        : req.body.fullname,
-        email           : req.body.email,
-        hashpassword    : bcrypt.hashSync(req.body.password, 10),
-        admin           : false
-    })
-    
-    user.save(function (err) {
-        if (err) throw err
-        
-        console.log('MongoDB Salve')
-        
-        var token = jwt.sign(user, config.jwtSecret)
-        
-        console.log('Make Token')
+userController.login = function(req, res) {
+  res.render('login', {title:'DriveOn'})
+ }
 
-        res.json({success: true, token: token})
-    })
-}
 
-exports.users = function(req, res) {
-    console.log ('User List')
-    User.find({}, function(err, users) {
-        res.json({ users: users })
-    })
-}
+userController.doLogin = function(req, res) {
+  passport.authenticate('local')(req, res, function () {
+    res.redirect('/')
+  })
+ }
 
-exports.profile = function(req, res) {
-    console.log('profile')
-}
-    
-exports.logout = function(req, res) {
-    console.log('logging out')
-    req.logout();
-    res.redirect('/');
-}
+
+userController.logout = function(req, res) {
+  req.logout()
+  res.redirect('/')
+ }
+
 
 /**
- * List
- */
-exports.userlist = async(function* (req, res) {    
-    const page = (req.query.page > 0 ? req.query.page : 1) - 1;
-    const _id = req.query.item;
-    const limit = 30;
-    const options = {
-      limit: limit,
-      page: page
-    };
+ * CRUD
+ */ 
+userController.list = function(req, res) {   
+  var baseurl = req.protocol + "://" + req.get('host') + "/"    
+  var page = (req.query.page > 0 ? req.query.page : 1) - 1;
+  var _id = req.query.item;
+  var limit = 10;
+  var options = {
+    limit: limit,
+    page: page
+  };
 
-    const count = yield User.count();
+  User
+      .find({},function(err, users){
+        User.count().exec(function(err, count){
+            if (count > 0) {
+                  res.render('users/index',
+                    { 
+                      title: 'DriveOn Portal | Usuários', 
+                      list: users,
+                      user_info: req.user,
+                      baseuri: baseurl,
+                      page: page + 1,
+                      pages: Math.ceil(count / limit)
+                    }
+                  )
+                }else{
+                  res.render('users/new.jade', {title: 'DriveOn | Novo Usuário',baseuri:baseurl});
+                }     
+          })        
+      })
+      .limit(limit)
+      .skip(limit * page);   
+ } 
 
-    User.find({}, function(err, usuarios){
-        res.render('userlist',
-                    { title: 'Coral Portal | Usuários', 
-                        usuarios: usuarios,
-                        page: page + 1,
-                        pages: Math.ceil(count / limit)}
-                    );
-    });   
-  });
+userController.create = function(req, res){         
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+  
+  Profile
+    .find({active: true}).exec(function(err, profile){
+      if (err) {
+        switch (err.code)
+        {
+          case 11000: 
+              req.flash('alert-danger', 'Estes dados já existem no registro de usuarios.')    
+              break;        
+          default: 
+              req.flash('alert-danger', "Erro ao carregar os perfis de usuário:"+ err)  
+              break;
+        }   
+      }else{  
+          Authority
+            .find({active: true}).exec(function(err, authority){
+              if (err) {
+                switch (err.code)
+                {
+                  case 11000: 
+                      req.flash('alert-danger', 'Estes dados já existem no registro de usuarios.')    
+                      break;        
+                  default: 
+                      req.flash('alert-danger', "Erro ao carregar as autoridades de usuário:"+ err)  
+                      break;
+                }   
+              }else{ 
+                  Customer
+                    .find({active: true}).exec(function(err, customer){
+                      if (err) {
+                        switch (err.code)
+                        {
+                          case 11000: 
+                              req.flash('alert-danger', 'Estes dados já existem no registro de usuarios.')    
+                              break;        
+                          default: 
+                              req.flash('alert-danger', "Erro ao carregar as contas:"+ err)  
+                              break;
+                        }   
+                      }else{
+                        res.render('users/new.jade', { title: 'DriveOn | Novo Usuário',
+                            baseuri: baseurl,
+                            profiles: profile,
+                            authorities: authority,
+                            customers: customer
+                          })
+                      } 
+                  })    
+              } 
+          })  
+      }
+    })  
+
+
+
+    
+ }   
+
+userController.show = function(req, res){ 
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+  if (req.params.id != null || req.params.id != undefined) {      
+  User.findOne({_id: req.params.id}).exec(function (err, user) {
+        if (err) {
+          switch (err.code)
+          {
+            case 11000: 
+                req.flash('alert-danger', 'Estes dados já existem no registro de usuarios.')    
+                break;        
+            default: 
+                req.flash('alert-danger', "Erro ao exibir:"+ err)  
+                break;
+          }   
+        } else {     
+          req.flash('alert-info', 'Dados salvos com sucesso!')       
+          res.render('users/show', {users: user, baseuri:baseurl});
+        }
+      });
+  } else {    
+    res.render('errors/500', {message:'Erro interno, favor informar o administrador!'});    
+  }
+ }    
+
+userController.edit = function(req, res){ 
+  var baseurl = req.protocol + "://" + req.get('host') + "/"    
+  User.findOne({_id: req.params.id}).exec(function (err, uuser) {
+        if (err) {
+          switch (err.code)
+          {
+            case 11000: 
+                req.flash('alert-danger', 'Estes dados já existem no registro de usuários.')    
+                break;        
+            default: 
+                req.flash('alert-danger', "Erro ao editar:"+ err)  
+                break;
+          }   
+        } else {          
+          res.render('users/edit', {users: uuser, baseuri:baseurl});
+        }
+      })
+  }
+
+userController.update = function(req, res){  
+  var baseurl = req.protocol + "://" + req.get('host') + "/"    
+  User.findByIdAndUpdate(
+        req.params.id,          
+        { $set: 
+            { 
+              fullname: req.body.fullname, 
+              email: req.body.email, 
+              password: req.body.password, 
+              profile: req.body.profile,
+              authority: req.body.authority,
+              customer: req.body.customer,
+              gender: req.body.gender,
+              active: req.body.active,
+              modifiedBy: req.user.email
+            }
+        }, 
+        { new: true }, 
+ function (err, user) {                                                              
+      if (err) {         
+        switch (err.code)
+        {
+           case 11000: 
+               req.flash('alert-danger', 'Estes dados já existem no registro de perfis.')    
+               break;        
+           default: 
+               req.flash('alert-danger', "Erro ao atualizar:"+ err)  
+               break;
+        }   
+        res.render("users/edit", {users: req.body, baseuri:baseurl})
+      }else{
+        req.flash('alert-info', 'Dados salvos com sucesso!')            
+        res.redirect("/users/show/"+user._id)
+      }
+    })
+  }   
+
+userController.save  =   function(req, res){
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+ 
+  var user = new User({ 
+    fullname: req.body.fullname, 
+    email: req.body.email, 
+    password: req.body.password, 
+    profile: req.body.profile,
+    authority: req.body.authority,
+    customer: req.body.customer,
+    gender: req.body.gender,
+    active: req.body.active,
+    modifiedBy: req.user.email
+  })      
+  // user.save(function(err) {
+  User.register(user, req.body.password, function(err, user) {      
+    if(err) {  
+      switch (err.code)
+      {
+         case 11000: 
+             req.flash('alert-danger', 'Estes dados já existem no registro de usuários.')    
+             break;        
+         default: 
+             req.flash('alert-danger', "Erro ao salvar:"+ err)  
+             break;
+      }              
+      userController.create
+    } else {          
+      req.flash('alert-info', 'Dados salvos com sucesso!')  
+      res.redirect('/users/show/'+user._id)
+    }
+   })
+   }
+
+userController.delete = function(req, res){    
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+  User.remove({_id: req.params.id}, function(err) {
+      if(err) {
+        switch (err.code)
+        {
+          case 11000: 
+              req.flash('alert-danger', 'Estes dados já existem no registro de usuários.')    
+              break;        
+          default: 
+              req.flash('alert-danger', "Erro ao deletar:"+ err)  
+              break;
+        }  
+      } else {    
+        req.flash('alert-info', 'Dados removidos com sucesso!')        
+        res.redirect("/users");
+      }
+    })
+ }
+
+
+module.exports = userController
+
+// exports.signup = function (req, res) {
+
+//     var user = new User({
+//         fullname        : req.body.fullname,
+//         email           : req.body.email,
+//         hashpassword    : bcrypt.hashSync(req.body.password, 10),
+//         admin           : false
+//     })
+    
+//     user.save(function (err) {
+//         if (err){
+//             res.json({success: false, token: token})
+//         } 
+        
+//         console.log('MongoDB Salve')
+        
+//         var token = jwt.sign(user, config.jwtSecret)
+        
+//         console.log('Make Token')
+
+//         res.json({success: true, token: token})
+//     })
+//  }
+
+
+// exports.profile = function(req, res) {
+//     console.log('profile')
+//  }
+    
+// exports.logout = function(req, res) {
+//     console.log('logging out')
+//     req.logout();
+//     res.redirect('/');    
+//  }
+
+// /**
+//  * CRUD
+//  */ 
+// exports.list = function(req, res) {       
+//     var page = (req.query.page > 0 ? req.query.page : 1) - 1;
+//     var _id = req.query.item;
+//     var limit = 10;
+//     var options = {
+//       limit: limit,
+//       page: page
+//     };
+
+//     console.log('user info:'+ req.user)
+//     User
+//         .find({}, function(err, users){
+//             User.count().exec(function(err, count){
+//                     res.render('users/index',
+//                     { title: 'DriveOn Portal | Usuários', 
+//                         user_list: users,
+//                         user_info: req.user,
+//                         page: page + 1,
+//                         pages: Math.ceil(count / limit)}
+//                     );
+//             });        
+//         })
+//         .limit(limit)
+//         .skip(limit * page);   
+//   };
+
+// exports.create = function(req, res){    
+//     res.render('users/new', { title: 'DriveOn | Novo usuário'});
+//  };   
+ 
+// exports.show = function(req, res){ 
+//  if (req.params.id != null || req.params.id != undefined) {      
+//     User.findOne({_id: req.params.id}).exec(function (err, user) {
+//         if (err) {
+//           console.log("Error at show Users:", err);
+//         } else {
+//           devices = {_id: req.params.id}
+//           res.render('users/show', {users: user});
+//         }
+//       });
+//   } else {    
+//     res.render('errors/500', {message:'Erro interno, favor informar o administrador!'});    
+//   }
+//  };    
+
+// exports.edit = function(req, res){    
+//     User.findOne({_id: req.params.id}).exec(function (err, user) {
+//         if (err) {
+//           console.log("Error on user dit:", err);
+//         }
+//         else {
+//           res.render('users/edit', {users: user});
+//         }
+//       });
+//  };
+
+// exports.update = function(req, res){
+
+//     User.findByIdAndUpdate(req.params.id, { $set: { fullname: req.body.fullname, email: req.body.email,profile: req.body.profile, authority:req.body.authority,isBlocked:req.body.isBlocked }}, 
+//                                                     { new: true }, function (err, user) {
+//         if (err) {
+//           console.log(err);
+//           res.render("users/edit", {users: req.body});
+//         }
+//         res.redirect("/users/show/"+user._id);
+//       });
+//  };  
+
+// exports.save  =   function(req, res){
+    
+//     var user = new User(req.body);      
+    
+//     var updated = _.merge(thing, req.body, {
+//         changedBy: user.email
+//       });
+//     user.save(function(err) {
+//         if(err) {
+//           console.log("Error on Users Save:" + err);
+//           res.render('users/new', { title: 'DriveOn | Usuários'});
+//         } else {          
+//           res.redirect("users/show/"+dongle._id);
+//         }
+//       });
+//  };
+
+//  exports.delete = function(req, res){    
+//     User.remove({_id: req.params.id}, function(err) {
+//         if(err) {
+//           console.log("Error on User delete:"+ err);
+//         } else {          
+//           res.redirect("/users");
+//         }
+//       });
+//  };

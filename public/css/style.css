@@ -8720,3 +8720,22 @@ hr.transparent {
     border-right-color: #f0f3f5; }
   *[dir="rtl"].callout-dark {
     border-right-color: #29363d; }
+
+
+iframe.responsive {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+}
+
+iframe.responsive.google-maps {
+   padding-bottom: 90%; /* (450 ÷ 500 = 0.9 = 90%) */
+}
+
+iframe.responsive.video_16_9 {
+  padding-bottom: 56.25%;
+}
+
+iframe.responsive.video_4_3 {
+  padding-bottom: 75%;
+} 
