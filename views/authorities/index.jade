@@ -6,7 +6,7 @@ block content
         ol.breadcrumb
           li.breadcrumb-item Configurações
           li.breadcrumb-item Parâmetros
-          li.breadcrumb-item.active Perfil de Usuário
+          li.breadcrumb-item.active Autoridade de Usuário
         .container-fluid
           .animated.fadeIn
             .row
@@ -14,13 +14,13 @@ block content
                   .card
                     .card-header
                       i.fa.fa-align-justify
-                      |  Perfil de usuário
+                      |  Autoridade de usuário
                     .card-body   
                       != messages()  
                       table.table.table-striped
                         thead
                           tr
-                            th Perfil
+                            th Autoridade
                             th Descrição
                             th Ativo
                             th Criado em                             
@@ -28,18 +28,18 @@ block content
                             th Modificado por
                             th Ações
                         tbody                                                  
-                             each profile in list
+                             each authority in list
                               tr
-                                td #{profile.userProfile}
-                                td #{profile.ProfileDescription} 
-                                td #{ativo = profile.active==true?'Sim':'Não' }                                
-                                td #{formatDate(profile.createdAt)}                                
-                                td #{formatDate(profile.updatedAt)}
-                                td #{(profile.modifiedBy)}
+                                td #{authority.userAuthority}
+                                td #{authority.AuthorityDescription} 
+                                td #{ativo = authority.active==true?'Sim':'Não' }                                
+                                td #{formatDate(authority.createdAt)}                                
+                                td #{formatDate(authority.updatedAt)}
+                                td #{(authority.modifiedBy)}
                                 td 
                                   .form-group
-                                    form.form-horizontal(action='/profiles/delete/#{profile.id}', method='post')                                      
-                                      a(href='/profiles/edit/#{profile.id}')
+                                    form.form-horizontal(action='/authorities/delete/#{authority.id}', method='post')                                      
+                                      a(href='/authorities/edit/#{authority.id}')
                                         button(type='button', style='background-color:transparent; border-color:transparent;')
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
@@ -48,5 +48,5 @@ block content
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  
-                      a(href='/profiles/new', target='_top')    
+                      a(href='/authorities/new', target='_top')    
                        button.btn.btn-primary.btn-sm(type='button') Novo

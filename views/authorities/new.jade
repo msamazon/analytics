@@ -7,7 +7,7 @@ block content
           li.breadcrumb-item Administração
           li.breadcrumb-item Configurações
           li.breadcrumb-item Parâmetros
-          li.breadcrumb-item.active Perfil de Usuário
+          li.breadcrumb-item.active Autoridade de Usuário
         .container-fluid
           .animated.fadeIn
             .row
@@ -15,20 +15,20 @@ block content
                   .card
                     .card-header
                       i.fa.fa-edit
-                      |  Perfil de Usuário
+                      |  Autoridade de Usuário
                     .card-body                                              
                       != messages()
-                      form.form-horizontal(action='/profiles/save', method='post')
+                      form.form-horizontal(action='/authorities/save', method='post')
                         .form-group
-                          label.form-control-label(for='userProfile') Perfil
+                          label.form-control-label(for='userAuthority') Autoridade
                           .controls
                             .input-group
-                              input#userProfile.form-control(name='userProfile',size='16', type='text')
+                              input#userAuthority.form-control(name='userAuthority',size='16', type='text')
                         .form-group
-                          label.form-control-label(for='ProfileDescription') Descrição
+                          label.form-control-label(for='AuthorityDescription') Descrição
                           .controls
                             .input-group
-                              input#ProfileDescription.form-control(name='ProfileDescription',size='100', type='text')                                                              
+                              input#AuthorityDescription.form-control(name='AuthorityDescription',size='100', type='text')                                                              
                         .form-group
                           label.form-control-label(for='activedYN') Ativo?
                           .controls
@@ -40,5 +40,5 @@ block content
                         .form-actions
                           button.btn.btn-sm.primary(type='submit') Salvar
                           span
-                          a(href='/profiles') 
+                          a(href='/authorities') 
                            button.btn.btn-sm.secondary(type='button') Cancelar                                                                       
