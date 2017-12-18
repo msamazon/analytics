@@ -32,21 +32,14 @@ block content
                           label.form-control-label(for='password') Senha
                           .controls
                             .input-group
-                              input#password.form-control(name='passwordemail',size='16', type='password')  
+                              input#password.form-control(name='password',size='16', type='password')  
                         .form-group
                           label.form-control-label(for='genderMF') Genero?
                           .controls
                             .input-group
                               select#select.form-control-sm(name='gender')
                                 option(value='M') Masculino
-                                option(value='F') Feminino        
-                        .form-group
-                          label.form-control-label(for='activedYN') Ativo?
-                          .controls
-                            .input-group
-                              select#select.form-control-sm(name='active')
-                                option(value='true') Sim
-                                option(value='false') Não 
+                                option(value='F') Feminino l
                         .form-group
                           label.form-control-label(for='profilelbl') Perfil
                           .controls
@@ -58,7 +51,7 @@ block content
                           label.form-control-label(for='authlbl') Autoridade
                           .controls
                             .input-group
-                              select#select.form-control-sm(name='authotity')
+                              select#select.form-control-sm(name='authority')
                                 each auth in authorities
                                   option(value='#{auth.id}') #{auth.AuthorityDescription}  
                          .form-group
@@ -68,6 +61,13 @@ block content
                               select#select.form-control-sm(name='customer')
                                 each cust in customers
                                   option(value='#{cust.id}') #{cust.fullname}   
+                         .form-group
+                          label.form-control-label(for='activedYN') Ativo?
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='active')
+                                option(value='true') Sim
+                                option(value='false') Não          
                         .form-actions
                           button.btn.btn-sm.primary(type='submit') Salvar
                           span

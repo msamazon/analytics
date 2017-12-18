@@ -12,16 +12,15 @@ var async           = require('run-async')
 
 var userController = {}
 
-// Restrict access to root page
 userController.home = function(req, res) {
   res.render('index', { user : req.user })
-}
+ }
 
-// Go to registration page
+
 userController.register = function(req, res) {
   res.render('register')
-}
-// Post registration
+ }
+
 userController.doRegister = function(req, res) {
   User.register(new User({ email : req.body.email, fullname: req.body.fullname, password: req.body.password }), req.body.password, function(err, user) {
     if (err) {
@@ -32,25 +31,25 @@ userController.doRegister = function(req, res) {
     // passport.authenticate('local')(req, res, function () {
     //   res.redirect('/');
     // });
-  });
-};
+  })
+ }
 
 userController.login = function(req, res) {
   res.render('login', {title:'DriveOn'})
-}
+ }
 
-// Post login
+
 userController.doLogin = function(req, res) {
   passport.authenticate('local')(req, res, function () {
     res.redirect('/')
   })
-}
+ }
 
 
 userController.logout = function(req, res) {
   req.logout()
   res.redirect('/')
-}
+ }
 
 
 /**
@@ -231,13 +230,7 @@ userController.update = function(req, res){
 
 userController.save  =   function(req, res){
   var baseurl = req.protocol + "://" + req.get('host') + "/" 
-  // var payload = req.body
-  
-  // if(req.user) {           
-  //   // console.log('Check req.user data:'+ JSON.stringify(req.user))
-  //   payload.modifiedBy = req.user.email
-  // }  
-  
+ 
   var user = new User({ 
     fullname: req.body.fullname, 
     email: req.body.email, 
@@ -260,14 +253,14 @@ userController.save  =   function(req, res){
          default: 
              req.flash('alert-danger', "Erro ao salvar:"+ err)  
              break;
-      }        
-      res.render('users/new', { title: 'DriveOn | Novo Usuário', baseuri:baseurl})
+      }              
+      userController.create
     } else {          
       req.flash('alert-info', 'Dados salvos com sucesso!')  
-      res.redirect('/users/show/'+profile._id)
+      res.redirect('/users/show/'+user._id)
     }
-  })
- }
+   })
+   }
 
 userController.delete = function(req, res){    
   var baseurl = req.protocol + "://" + req.get('host') + "/" 

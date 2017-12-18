@@ -24,16 +24,10 @@ block content
                             th eMail
                             th CPF / CNPJ
                             th Endereço
-                            th Complemento
-                            th CEP
                             th Bairro
                             th Cidade
                             th Estado
-                            th Pais
                             th Ativo
-                            th Criado em                             
-                            th Modificado em 
-                            th Modificado por
                             th Ações
                         tbody                                                  
                              each customer in list
@@ -41,17 +35,11 @@ block content
                                 td #{customer.fullname}
                                 td #{customer.email} 
                                 td #{customer.businesscode}
-                                td #{customer.address1}
-                                td #{customer.address2}
-                                td #{customer.zipcode}
+                                td #{customer.address1}                                
                                 td #{customer.district}
                                 td #{customer.city}
-                                td #{customer.province}    
-                                td #{customer.country} 
-                                td #{ativo = customer.active==true?'Sim':'Não' }                                
-                                td #{formatDate(customer.createdAt)}                                
-                                td #{formatDate(customer.updatedAt)}
-                                td #{(customer.modifiedBy)}
+                                td #{customer.province}  
+                                td #{ativo = customer.active==true?'Sim':'Não' }
                                 td 
                                   .form-group
                                     form.form-horizontal(action='/customers/delete/#{customer.id}', method='post')                                      

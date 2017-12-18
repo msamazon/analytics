@@ -22,10 +22,10 @@ block content
                           tr
                             th Nome
                             th e-mail
-                            th Senha
                             th Genero
                             th Perfil
-                            th Autoridade
+                            th Autoridade                            
+                            th Conta
                             th Ativo
                             th Ações
                         tbody                                                  
@@ -33,10 +33,10 @@ block content
                               tr
                                 td #{profile.fullname}
                                 td #{profile.email}
-                                td #{profile.password}
-                                td #{profile.gender}
+                                td #{profile.gender=='M'?'Masculino':'Feminino'}
                                 td #{profile.profile} 
-                                td #{profile.authority} 
+                                td #{profile.authority}                                 
+                                td #{profile.customer}
                                 td #{ativo = profile.active==true?'Sim':'Não' }                            
                                 td 
                                   .form-group

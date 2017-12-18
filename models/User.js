@@ -45,7 +45,8 @@ UserSchema.plugin(passportLocalMongoose,{
     TooManyAttemptsError: 'Conta bloqueada devido ao excesso de tentativas de login.',
     IncorrectPasswordError: 'Senha incorreta!',
     IncorrectUsernameError: 'Email incorreto!',
-    MissingUsernameError: 'Favor informar um email para login!'   
+    MissingUsernameError: 'Favor informar um email para login!',
+    UserExistsError:'Estes dados já existem no registro de usuários.'  
 })
 
 UserSchema.plugin(mongooseLogs, {
