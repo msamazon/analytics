@@ -143,16 +143,26 @@ messageController.GASsum = function(req, res) {
 messageController.getgeolist = function(req, res) {
     
       var dongleCode = req.params.id
-      var dbase = new Date().toDateString();
-      console.log('dbase:'+ dbase) 
-      Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'},'dateReceived':{ $regex: /dbase/i }}).sort({$natural:-1}).exec(function (err, message) {
-        
+      
+      var d = new Date(),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+      var dbase = [year, month, day].join('-');
+
+      var dbase = '2017-12-06'
+      console.log('paramentros='+ dongleCode + ' - ' + dbase)
+      // Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'},'dateReceived':{ $regex: /^dbase/ }}).sort({$natural:-1}).exec(function (err, message) {        
+      Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({$natural:-1}).limit(10).exec(function (err, message) {        
+          
         if (err) {
           console.log("Error:", err);
         }else {
           var arrayCurrinfo = []
           for(var i = 0; i < message.length; i++) {
-            console.log('Linhas:'+ i)  
             var id             = message[i]._id
             var gpsData        = message[i].gpsData
             var time           = message[i].time
@@ -160,7 +170,7 @@ messageController.getgeolist = function(req, res) {
             var eventcode      = message[i].eventcode
             var dongleCode     = message[i].dongleCode
   
-            if (gpsData != undefined) {
+            if (gpsData) {
               var message =  { "_id": id, "gpsData": gpsData, "time": time, 
               "dateReceived": dateReceived, "eventcode": eventcode, "dongleCode": dongleCode }
   
@@ -236,5 +246,7 @@ messageController.chartMotorTemp = function(req, res) {
             }
           });
   };  
+
+
 
 module.exports = messageController
