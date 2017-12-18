@@ -33,7 +33,7 @@ userController.doRegister = function(req, res) {
 };
 
 userController.login = function(req, res) {
-  res.render('login')
+  res.render('login', {title:'DriveOn'})
 }
 
 // Post login

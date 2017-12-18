@@ -2,7 +2,6 @@ var mongoose  = require('mongoose')
 var Schema    = mongoose.Schema
 var bcrypt    = require('bcrypt')
 var mongooseLogs = require('mongoose-activitylogs')
-var passportLocalMongoose = require('passport-local-mongoose')
 
 var ProfileSchema = new Schema({    
     userProfile: {
@@ -12,8 +11,8 @@ var ProfileSchema = new Schema({
         required: true
     },
     ProfileDescription: String,
-    activedYN: {
-         type: String,
+    active: {
+         type: Boolean,
          required: true
     },    
     createdBy:{
@@ -27,9 +26,6 @@ var ProfileSchema = new Schema({
     timestamps:true
 }
 )
-
-ProfileSchema.plugin(passportLocalMongoose)
-
 
 ProfileSchema.plugin(mongooseLogs, {
     schemaName: "profile",

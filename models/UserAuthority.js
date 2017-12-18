@@ -1,6 +1,7 @@
 var mongoose  = require('mongoose')
 var Schema    = mongoose.Schema
 var bcrypt    = require('bcrypt')
+var mongooseLogs = require('mongoose-activitylogs')
 
 var AuthoritySchema = new Schema({    
     userAuthority: {
@@ -26,14 +27,13 @@ var AuthoritySchema = new Schema({
 }
 )
 
+AuthoritySchema.plugin(mongooseLogs, {
+    schemaName: "authority",
+    createAction: "created",
+    updateAction: "updated",
+    deleteAction: "deleted" 
+ });
 
-AuthoritySchema.virtual('changedBy').set(function (userId) {
-    if (this.isNew()) {      
-      this.createdBy = this.modifiedBy = userId;
-    } else {      
-      this.modifiedBy = userId;
-    }
-  });
 
 var authority = mongoose.model('do_usr_m02', AuthoritySchema)
 

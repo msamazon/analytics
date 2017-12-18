@@ -24,8 +24,7 @@ block content
                             th Perfil
                             th Descrição
                             th Ativo
-                            th Criado em 
-                            th Criado por
+                            th Criado em                             
                             th Modificado em 
                             th Modificado por
                             th Ações
@@ -34,11 +33,10 @@ block content
                               tr
                                 td #{profile.userProfile}
                                 td #{profile.ProfileDescription} 
-                                td #{ativo = profile.activedYN=='Y'?'Sim':'Não' }                                
-                                td #{formatDate(profile.createdAt)}
-                                td #{(profile.createdBy)}
-                                td #{formatDate(profile.createdAt)}
-                                td #{(profile.createdBy)}
+                                td #{ativo = profile.active==true?'Sim':'Não' }                                
+                                td #{formatDate(profile.createdAt)}                                
+                                td #{formatDate(profile.updatedAt)}
+                                td #{(profile.modifiedBy)}
                                 td 
                                   a(href='/profiles/edit/#{profile.id}') Editar 
                                   span

@@ -22,7 +22,7 @@ exports.list = function(req, res) {
 
 
     Profile
-        .find({'activedYN':'Y'}, function(err, profiles){
+        .find({'active':true}, function(err, profiles){
           Profile.count().exec(function(err, count){
               if (count > 0) {
                     res.render('profiles/index',
@@ -34,7 +34,7 @@ exports.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                    res.render('profiles/new.jade', {title: 'DriveOn | Novo Perfil de Usuário'});
+                    res.render('profiles/new.jade', {title: 'DriveOn | Novo Perfil de Usuário',baseuri:baseurl});
                   }     
             });        
         })
@@ -43,7 +43,7 @@ exports.list = function(req, res) {
   };
 
 exports.create = function(req, res){         
-    var baseurl = req.protocol + "://" + req.get('host') + "/" 
+    var baseurl = req.protocol + "://" + req.get('host') + "/"     
     res.render('profiles/new.jade', { title: 'DriveOn | Novo Perfil de Usuário',baseuri:baseurl});
  };   
  
@@ -52,8 +52,17 @@ exports.show = function(req, res){
  if (req.params.id != null || req.params.id != undefined) {      
   Profile.findOne({_id: req.params.id}).exec(function (err, profile) {
         if (err) {
-          console.log("Error at show Users:", err);
-        } else {          
+          switch (err.code)
+          {
+             case 11000: 
+                 req.flash('alert-danger', 'Estes dados já existem no registro de perfis.')    
+                 break;        
+             default: 
+                 req.flash('alert-danger', "Erro ao exibir:"+ err)  
+                 break;
+          }   
+        } else {     
+          req.flash('alert-info', 'Dados salvos com sucesso!')       
           res.render('profiles/show', {profiles: profile, baseuri:baseurl});
         }
       });
@@ -66,39 +75,77 @@ exports.edit = function(req, res){
   var baseurl = req.protocol + "://" + req.get('host') + "/"    
   Profile.findOne({_id: req.params.id}).exec(function (err, uprofile) {
         if (err) {
-          console.log("Error on user dit:", err);
-        } else {
-          res.render('users/edit', {profiles: uprofile, baseuri:baseurl});
+          switch (err.code)
+          {
+             case 11000: 
+                 req.flash('alert-danger', 'Estes dados já existem no registro de perfis.')    
+                 break;        
+             default: 
+                 req.flash('alert-danger', "Erro ao editar:"+ err)  
+                 break;
+          }   
+        } else {          
+          res.render('profiles/edit', {profiles: uprofile, baseuri:baseurl});
         }
       });
  };
 
-exports.update = function(req, res){
-    var baseurl = req.protocol + "://" + req.get('host') + "/" 
-    Profile.findByIdAndUpdate(req.params.id, { $set: { fullname: req.body.fullname, email: req.body.email,profile: req.body.profile, authority:req.body.authority,isBlocked:req.body.isBlocked }}, 
-                                                    { new: true }, function (err, profile) {
-        if (err) {
-          console.log(err);
-          res.render("users/edit", {profiles: req.body, baseuri:baseurl});
+exports.update = function(req, res){  
+    var baseurl = req.protocol + "://" + req.get('host') + "/"    
+    Profile.findByIdAndUpdate(
+          req.params.id,          
+          { $set: 
+              { 
+                userProfile: req.body.userProfile, 
+                ProfileDescription: req.body.ProfileDescription, 
+                active: req.body.active
+              }
+          }, 
+          { new: true }, 
+   function (err, profile) {                                                      
+        console.log('Error on update =>'+ err)
+        if (err) {         
+          switch (err.code)
+          {
+             case 11000: 
+                 req.flash('alert-danger', 'Estes dados já existem no registro de perfis.')    
+                 break;        
+             default: 
+                 req.flash('alert-danger', "Erro ao atualizar:"+ err)  
+                 break;
+          }   
+          res.render("profiles/edit", {profiles: req.body, baseuri:baseurl})
         }
-        res.redirect("/users/show/"+user._id);
-      });
- };  
+        req.flash('alert-info', 'Dados salvos com sucesso!')  
+        res.redirect("/profiles/show/"+profile.id)
+      })
+ }  
 
 exports.save  =   function(req, res){
     var baseurl = req.protocol + "://" + req.get('host') + "/" 
     var payload = req.body
-    payload.modifiedBy = req.user.email
     
-
+    if(req.user) {           
+      // console.log('Check req.user data:'+ JSON.stringify(req.user))
+      payload.modifiedBy = req.user.email
+    }  
+    
     var profile = new Profile(payload)      
     profile.save(function(err) {
-      if(err) {
-        console.log("Error on Profiles Save:" + err);
-        res.render('profiles/new', { title: 'DriveOn | Novo Perfil de Usuário', baseuri:baseurl});
+      if(err) {  
+        switch (err.code)
+        {
+           case 11000: 
+               req.flash('alert-danger', 'Estes dados já existem no registro de perfis.')    
+               break;        
+           default: 
+               req.flash('alert-danger', "Erro ao salvar:"+ err)  
+               break;
+        }        
+        res.render('profiles/new', { title: 'DriveOn | Novo Perfil de Usuário', baseuri:baseurl})
       } else {          
-        res.redirect("profiles/show/"+profile._id);
-        // res.render('profiles/show/'+profile._id);
+        req.flash('alert-info', 'Dados salvos com sucesso!')  
+        res.redirect('/profiles/show/'+profile._id)
       }
     })
  }
@@ -107,8 +154,17 @@ exports.save  =   function(req, res){
     var baseurl = req.protocol + "://" + req.get('host') + "/" 
     Profile.remove({_id: req.params.id}, function(err) {
         if(err) {
-          console.log("Error on Profile delete:"+ err);
-        } else {          
+          switch (err.code)
+          {
+            case 11000: 
+                req.flash('alert-danger', 'Estes dados já existem no registro de perfis.')    
+                break;        
+            default: 
+                req.flash('alert-danger', "Erro ao deletar:"+ err)  
+                break;
+          }  
+        } else {    
+          req.flash('alert-info', 'Dados removidos com sucesso!')        
           res.redirect("/profiles");
         }
       });

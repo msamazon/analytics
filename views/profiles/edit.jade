@@ -16,25 +16,25 @@ block content
                   .card
                     .card-header
                       i.fa.fa-edit
-                      |  Perdil de Usuário - Detalhes
+                      |  Perdil de Usuário - Edição
                     .card-body   
                       != messages()  
-                      form.form-horizontal
+                      form.form-horizontal(action='/profiles/update/#{profiles.id}', method='post')
                         .form-group
                           label.form-control-label(for='userProfile') Perfil
                           .controls
                             .input-group
-                              input#userProfile.form-control(size='16', type='text', value='#{profiles.userProfile}', readonly=true)                       
+                              input#userProfile.form-control(size='16', type='text', value='#{profiles.userProfile}')                       
                         .form-group
                           label.form-control-label(for='ProfileDescription') Descrição
                           .controls
                             .input-group
-                              input#ProfileDescription.form-control(size='100', type='text', value='#{profiles.ProfileDescription}', readonly=true) 
+                              input#ProfileDescription.form-control(size='100', type='text', value='#{profiles.ProfileDescription}') 
                         .form-group
                           label.col-md-3.form-control-label(for='activedYN') Ativo?
                           .controls
                             .col-md-9
-                              select#active.form-control-sm(name='active', disabled=true)
+                              select#active.form-control-sm(name='active', disabled=false)
                                 option(value='true', selected=profiles.active == true) Sim
                                 option(value='false', selected=profiles.active == false) Não
                         .form-group
@@ -43,15 +43,11 @@ block content
                             .input-group
                               input#createdAt.form-control(size='16', type='text', readonly=true, value='#{profiles.createdAt}')                                                                                                              
                         .form-actions
-                          button.btn.btn-sm.btn-success(type='submit',url='/profiles/edit/#{profiles.id}')
+                          button.btn.btn-sm.btn-success(type='submit')
                             i.fa.fa-edit
-                            |  Editar   
-                          span    
-                          button.btn.btn-sm.btn-primary(type='submit',url='/profiles/delete/#{profiles.id}')
-                            i.fa.fa-delicious
-                            |  Deletar   
-                          span         
-                          a(href='/profiles')                
-                            button.btn.btn-sm.btn-danger(type='button')
+                            |  Atualizar   
+                          span     
+                          a(href='/profiles/show/#{profiles.id}')                                           
+                            button.btn.btn-sm.btn-danger(type='reset')
                               i.fa.fa-ban
                               |  Cancelar                               

@@ -6,7 +6,7 @@ var bodyParser      = require('body-parser')
 var mongoose        = require('mongoose')
 var config          = require('./lib/config')
 var path            = require('path')
-var flash           = require('req-flash')
+
 var cookieParser    = require('cookie-parser')
 var session         = require('express-session')
 var helpers         = require('view-helpers')
@@ -69,8 +69,13 @@ passport.deserializeUser(User.deserializeUser())
 
 //*********************************************************************************************
 app.use(cookieParser())
-app.use(flash())
-
+//*********************************************************************************************
+app.use(require('connect-flash')())
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+//*********************************************************************************************  
 app.use(helpers('dashboard'))
 
 app.use(express.static(path.join(__dirname, 'public')))
@@ -86,8 +91,6 @@ app.use(function(req, res, next) {
 // Set Main Route
 app.use('/', require('./routes/routes'))
 app.use('/profiles', require('./routes/profiles'))
-// require('./routes/routes.js')(app, passport);
-
 
 // Set
 app.listen(port, function () {

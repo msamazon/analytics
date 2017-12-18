@@ -17,7 +17,8 @@ router.get('/edit/:id',  UserProfile.edit);
 // Edit user
 router.post('/update/:id',  UserProfile.update);
 // Delete
-router.get('/delete/:id',  UserProfile.delete);
+router.post('/delete/:id',  UserProfile.delete);
+
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 module.exports = router
