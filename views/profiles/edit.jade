@@ -24,12 +24,12 @@ block content
                           label.form-control-label(for='userProfile') Perfil
                           .controls
                             .input-group
-                              input#userProfile.form-control(size='16', type='text', value='#{profiles.userProfile}')                       
+                              input#userProfile.form-control(name='userProfile',size='16', type='text', value='#{profiles.userProfile}')                       
                         .form-group
                           label.form-control-label(for='ProfileDescription') Descrição
                           .controls
                             .input-group
-                              input#ProfileDescription.form-control(size='100', type='text', value='#{profiles.ProfileDescription}') 
+                              input#ProfileDescription.form-control(name='ProfileDescription',size='100', type='text', value='#{profiles.ProfileDescription}') 
                         .form-group
                           label.col-md-3.form-control-label(for='activedYN') Ativo?
                           .controls
@@ -48,6 +48,6 @@ block content
                             |  Atualizar   
                           span     
                           a(href='/profiles/show/#{profiles.id}')                                           
-                            button.btn.btn-sm.btn-danger(type='reset')
+                            button.btn.btn-sm.btn-danger(type='button')
                               i.fa.fa-ban
                               |  Cancelar                               

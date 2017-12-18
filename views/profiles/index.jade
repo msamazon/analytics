@@ -16,8 +16,7 @@ block content
                       i.fa.fa-align-justify
                       |  Perfil de usuário
                     .card-body   
-                      //- button.btn.btn-primary.btn-sm(type='button') Novo
-                      //- p
+                      != messages()  
                       table.table.table-striped
                         thead
                           tr
@@ -38,9 +37,14 @@ block content
                                 td #{formatDate(profile.updatedAt)}
                                 td #{(profile.modifiedBy)}
                                 td 
-                                  a(href='/profiles/edit/#{profile.id}') Editar 
-                                  span
-                                  a(href='/profiles/delete/#{profile.id}') Deletar                           
+                                  .form-group
+                                    form.form-horizontal(action='/profiles/delete/#{profile.id}', method='post')                                      
+                                      a(href='/profiles/edit/#{profile.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove                                                              
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  

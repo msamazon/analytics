@@ -22,7 +22,7 @@ exports.list = function(req, res) {
 
 
     Profile
-        .find({'active':true}, function(err, profiles){
+        .find({}, function(err, profiles){
           Profile.count().exec(function(err, count){
               if (count > 0) {
                     res.render('profiles/index',
@@ -98,12 +98,12 @@ exports.update = function(req, res){
               { 
                 userProfile: req.body.userProfile, 
                 ProfileDescription: req.body.ProfileDescription, 
-                active: req.body.active
+                active: req.body.active,
+                modifiedBy: req.user.email
               }
           }, 
           { new: true }, 
-   function (err, profile) {                                                      
-        console.log('Error on update =>'+ err)
+   function (err, profile) {                                                              
         if (err) {         
           switch (err.code)
           {
@@ -115,9 +115,10 @@ exports.update = function(req, res){
                  break;
           }   
           res.render("profiles/edit", {profiles: req.body, baseuri:baseurl})
+        }else{
+          req.flash('alert-info', 'Dados salvos com sucesso!')            
+          res.redirect("/profiles/show/"+profile._id)
         }
-        req.flash('alert-info', 'Dados salvos com sucesso!')  
-        res.redirect("/profiles/show/"+profile.id)
       })
  }  
 
