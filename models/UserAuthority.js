@@ -11,8 +11,8 @@ var AuthoritySchema = new Schema({
         required: true
     },
     AuthorityDescription: String,
-    activedYN: {
-         type: String,
+    active: {
+         type: Boolean,
          required: true
     },    
     createdBy:{
