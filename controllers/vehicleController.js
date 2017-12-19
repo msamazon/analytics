@@ -7,10 +7,12 @@ var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
 var async           = require('run-async')
 
+var vehicleController = {}
+
 /**
  * CRUD
  */ 
-exports.list = function(req, res) {   
+ vehicleController.list = function(req, res) {   
     var baseurl = req.protocol + "://" + req.get('host') + "/"    
     var page = (req.query.page > 0 ? req.query.page : 1) - 1;
     var _id = req.query.item;
@@ -21,7 +23,23 @@ exports.list = function(req, res) {
     };
     
     Vehicle
-        .find({}, function(err, vehicles){
+        .find()
+        .populate({
+          path:'device', 
+          select:'device',
+          match:{ active: true },
+          options: { sort: { device: -1 }}
+        })
+        .populate({
+          path:'customer', 
+          select:'fullname',
+          match:{ active: true },
+          options: { sort: { fullname: -1 }}
+        })
+        .limit(limit)
+        .skip(limit * page)
+        .exec(function(err, vehicles){
+          console.log('logo:' + vehicles)
           Vehicle.count().exec(function(err, count){
               if (count > 0) {
                     res.render('vehicles/index',
@@ -35,20 +53,18 @@ exports.list = function(req, res) {
                   }else{
                     res.render('vehicles/new.jade', {title: 'DriveOn | Novo Veiculo',baseuri:baseurl});
                   }     
-            });        
-        })
-        .limit(limit)
-        .skip(limit * page);   
-  };
+            })      
+        })  
+  }
 
-exports.create = function(req, res){         
+ vehicleController.create = function(req, res){         
     var baseurl = req.protocol + "://" + req.get('host') + "/"     
     res.render('vehicles/new.jade', { title: 'DriveOn | Novo Veiculo',baseuri:baseurl});
- };   
+  } 
  
-exports.show = function(req, res){ 
+ vehicleController.show = function(req, res){ 
   var baseurl = req.protocol + "://" + req.get('host') + "/" 
- if (req.params.id != null || req.params.id != undefined) {      
+  if (req.params.id != null || req.params.id != undefined) {      
   Vehicle.findOne({_id: req.params.id}).exec(function (err, profile) {
         if (err) {
           switch (err.code)
@@ -68,9 +84,9 @@ exports.show = function(req, res){
   } else {    
     res.render('errors/500', {message:'Erro interno, favor informar o administrador!'});    
   }
- }    
+  }    
 
-exports.edit = function(req, res){ 
+ vehicleController.edit = function(req, res){ 
   var baseurl = req.protocol + "://" + req.get('host') + "/"    
   Vehicle.findOne({_id: req.params.id}).exec(function (err, uprofile) {
         if (err) {
@@ -86,10 +102,10 @@ exports.edit = function(req, res){
         } else {          
           res.render('vehicles/edit', {vehicles: uprofile, baseuri:baseurl});
         }
-      });
- };
+      })
+  }
 
-exports.update = function(req, res){  
+ vehicleController.update = function(req, res){  
     var baseurl = req.protocol + "://" + req.get('host') + "/"    
     Vehicle.findByIdAndUpdate(
           req.params.id,          
@@ -119,9 +135,9 @@ exports.update = function(req, res){
           res.redirect("/vehicles/show/"+profile._id)
         }
       })
- }  
+  }  
 
-exports.save  =   function(req, res){
+ vehicleController.save  =   function(req, res){
     var baseurl = req.protocol + "://" + req.get('host') + "/" 
     var payload = req.body
     
@@ -148,9 +164,9 @@ exports.save  =   function(req, res){
         res.redirect('/vehicles/show/'+profile._id)
       }
     })
- }
+  }
 
- exports.delete = function(req, res){    
+ vehicleController.delete = function(req, res){    
     var baseurl = req.protocol + "://" + req.get('host') + "/" 
     Vehicle.remove({_id: req.params.id}, function(err) {
         if(err) {
@@ -169,3 +185,5 @@ exports.save  =   function(req, res){
         }
       });
   };
+
+module.exports = vehicleController

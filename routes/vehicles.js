@@ -3,21 +3,21 @@ var router          = require('express').Router()
 
 var Vehicle = require('../controllers/vehicleController')
 
-    // ++++++++++++++++++++++ Profile +++++++++++++++++++++++++++
+// ++++++++++++++++++++++ Vehicle +++++++++++++++++++++++++++
 // List all Users
-router.get('/', isLoggedIn,  Vehicle.list);
+router.get('/', isLoggedIn,  Vehicle.list)
 // Get single user by id
-router.get('/show/:id', isLoggedIn, Vehicle.show);
+router.get('/show/:id', isLoggedIn, Vehicle.show)
 // Create user
-router.get('/new', isLoggedIn, Vehicle.create);
+router.get('/new', isLoggedIn, Vehicle.create)
 // Save user
-router.post('/save', isLoggedIn, Vehicle.save);
+router.post('/save', isLoggedIn, Vehicle.save)
 // Edit user
-router.get('/edit/:id', isLoggedIn, Vehicle.edit);
+router.get('/edit/:id', isLoggedIn, Vehicle.edit)
 // Edit user
-router.post('/update/:id', isLoggedIn, Vehicle.update);
+router.post('/update/:id', isLoggedIn, Vehicle.update)
 // Delete
-router.post('/delete/:id', isLoggedIn,  Vehicle.delete);
+router.post('/delete/:id', isLoggedIn,  Vehicle.delete)
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 

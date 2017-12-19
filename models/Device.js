@@ -13,16 +13,14 @@ var DeviceSchema = new Schema({
     description        : String,
     active     : Boolean,
     firmware    : String,
-    version     : String,
-    sms_settings: {
+    version     : String, 
         sms_srv_addr: String,
         sms_srv_key : String,
         sms_apn     : String,
         sms_user    : String,
         sms_password: String,
         sms_set_ip  : String,
-        sms_set_port: String
-    },        
+        sms_set_port: String,            
     createdBy   : String,    
     updatedBy   : String
 },
@@ -33,25 +31,25 @@ var DeviceSchema = new Schema({
 /**
  * Validations
  */
-DeviceSchema.path('device').validate(function (deviceId) {
-    if (this.skipValidation()) return true;
-    return device.length;
-    }, 'Deve ser informado um ID do dispositivo.');
+// DeviceSchema.path('device').validate(function (deviceId) {
+//     if (this.skipValidation()) return true;
+//     return device.length;
+//     }, 'Deve ser informado um ID do dispositivo.');
 // DeviceSchema.path('description').validate(function (name) {
 //     if (this.skipValidation()) return true;
 //     return name.length;
 //   }, 'Nome não pode estar em branco!');
 
-DeviceSchema.path('firmware').validate(function (firmware) {
-    if (this.skipValidation()) return true;
-    return firmware.length;
-    }, 'Favor informar o firmware do dispositivo.');
+// DeviceSchema.path('firmware').validate(function (firmware) {
+//     if (this.skipValidation()) return true;
+//     return firmware.length;
+//     }, 'Favor informar o firmware do dispositivo.');
 
 
-DeviceSchema.path('version').validate(function (version) {
-    if (this.skipValidation()) return true;
-    return version.length;
-    }, 'Favor informar a versão do dispositivo.');    
+// DeviceSchema.path('version').validate(function (version) {
+//     if (this.skipValidation()) return true;
+//     return version.length;
+//     }, 'Favor informar a versão do dispositivo.');    
 
 // DeviceSchema.path('sms_srv_addr').validate(function (sms_srv_addr) {
 //     if (this.skipValidation()) return true;
