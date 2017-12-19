@@ -40,12 +40,12 @@ exports.list = function(req, res) {
         })
         .limit(limit)
         .skip(limit * page);   
-  };
+}
 
 exports.create = function(req, res){         
     var baseurl = req.protocol + "://" + req.get('host') + "/"     
     res.render('profiles/new.jade', { title: 'DriveOn | Novo Perfil de Usuário',baseuri:baseurl});
- };   
+}   
  
 exports.show = function(req, res){ 
   var baseurl = req.protocol + "://" + req.get('host') + "/" 

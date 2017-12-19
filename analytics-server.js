@@ -16,6 +16,9 @@ var expressValidator= require('express-validator')
 var favicon 		= require('serve-favicon')
 var passport        = require('passport')
 var LocalStrategy   = require('passport-local').Strategy
+
+var api             = require('./routes/api')
+
 // // Routes and Subs
 // var routes            = require('./routes/routes.js')
 // var profiles          = require('./routes/profiles.js')
@@ -88,13 +91,8 @@ app.use(function(req, res, next) {
     next()
 })
 
-// Set Main Route
-app.use('/', require('./routes/routes'))
-app.use('/profiles', require('./routes/profiles'))
-app.use('/authorities', require('./routes/authorities'))
-app.use('/users', require('./routes/users'))
-app.use('/customers', require('./routes/customers'))
-app.use('/vehicles', require('./routes/vehicles'))
+app.use('/api', api);
+
 // Set
 app.listen(port, function () {
     console.log(pkg.name,`listening on ${port}`)

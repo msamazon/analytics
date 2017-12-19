@@ -2,7 +2,7 @@
 var mongoose        = require('mongoose')
 var passport        = require('passport')
 var User            = require('../models/User')
-var Profile         = require('../models/userProfile')
+var Profile         = require('../models/UserProfile')
 var Authority       = require('../models/UserAuthority')
 var Customer        = require('../models/Customer')
 var bcrypt          = require('bcrypt')
@@ -22,7 +22,9 @@ userController.register = function(req, res) {
  }
 
 userController.doRegister = function(req, res) {
-  User.register(new User({ email : req.body.email, fullname: req.body.fullname, password: req.body.password }), req.body.password, function(err, user) {
+  
+  
+  User.register( new User({ email : req.body.email, fullname: req.body.fullname, password: req.body.password }), function(err, user) {
     if (err) {
       // return res.render('register', { user : user });
       console.log('Error on User registration:'+ err)
