@@ -1,7 +1,7 @@
 // 'use strict';
 var mongoose        = require('mongoose')
 var passport        = require('passport')
-var Profile         = require('../models/UserProfile')
+var Profile         = require('../models/userProfile')
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
