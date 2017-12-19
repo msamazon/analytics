@@ -2,6 +2,8 @@
 var mongoose        = require('mongoose')
 var passport        = require('passport')
 var Vehicle         = require('../models/Vehicle')
+var Device          = require('../models/Device')
+var Customer        = require('../models/Customer')
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
@@ -59,7 +61,44 @@ var vehicleController = {}
 
  vehicleController.create = function(req, res){         
     var baseurl = req.protocol + "://" + req.get('host') + "/"     
-    res.render('vehicles/new.jade', { title: 'DriveOn | Novo Veiculo',baseuri:baseurl});
+    
+    Device
+    .find({active: true}).exec(function(err, device){
+      if (err) {
+        switch (err.code)
+        {
+          case 11000: 
+              req.flash('alert-danger', 'Estes dados já existem no registro de devices.')    
+              break;        
+          default: 
+              req.flash('alert-danger', "Erro ao carregar os perfis de devices:"+ err)  
+              break;
+        }   
+      }else{  
+          Customer
+            .find({active: true}).exec(function(err, customer){
+              if (err) {
+                switch (err.code)
+                {
+                  case 11000: 
+                      req.flash('alert-danger', 'Estes dados já existem no registro de usuarios.')    
+                      break;        
+                  default: 
+                      req.flash('alert-danger', "Erro ao carregar as autoridades de usuário:"+ err)  
+                      break;
+                }   
+              }else{                                    
+                        res.render('vehicles/new.jade', { title: 'DriveOn | Novo Veiculo',
+                            baseuri: baseurl,
+                            devices: device,
+                            customers: customer
+                          })
+              } 
+          })  
+      }
+    })  
+
+
   } 
  
  vehicleController.show = function(req, res){ 
@@ -146,8 +185,8 @@ var vehicleController = {}
       payload.modifiedBy = req.user.email
     }  
     
-    var profile = new Vehicle(payload)      
-    profile.save(function(err) {
+    var vehicle = new Vehicle(payload)      
+    vehicle.save(function(err) {
       if(err) {  
         switch (err.code)
         {
@@ -161,7 +200,7 @@ var vehicleController = {}
         res.render('vehicles/new', { title: 'DriveOn | Novo Veiculo', baseuri:baseurl})
       } else {          
         req.flash('alert-info', 'Dados salvos com sucesso!')  
-        res.redirect('/vehicles/show/'+profile._id)
+        res.redirect('/vehicles/show/'+vehicle._id)
       }
     })
   }
