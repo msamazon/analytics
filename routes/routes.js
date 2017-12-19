@@ -3,6 +3,8 @@ var router          = express.Router()
 var user            = require('../controllers/userController')
 var masterdata      = require('../controllers/masterController')
 var message         = require("../controllers/messageController")
+var currtripinfo    = require("../controllers/currenttripinfoController")
+var devices         = require("../controllers/deviceController")
 // restrict index for logged in user only
 // router.get('/', user.home)
 
@@ -23,14 +25,38 @@ router.post('/register', user.doRegister);
 
 
 router.get('/', isLoggedIn, masterdata.list)
-
 router.get('/trips', isLoggedIn, masterdata.carlist)
-
-
 
 // //Locates
 router.get('/message/gps/:id',  message.getgeo)
 router.get('/message/gpslist/:id',  message.getgeolist)
+
+//Dashboard
+// // Top 1
+// router.post('/cntMileageMonth', isLoggedIn, currtripinfo.sumTripMileage)
+// router.post('/chartMileageMonth', isLoggedIn, currtripinfo.chartTripMileage)
+// // Top 2
+// router.post('/cntIdleTime', isLoggedIn,  currtripinfo.sumIdleEngineTime)
+// router.post('/chartIdleTime', isLoggedIn,  currtripinfo.chartIdleEngineTime)
+// // Top 3
+// router.post('/cntHACCOccur', isLoggedIn, currtripinfo.cntHarshAcc)
+// router.post('/chartHACCOccur', isLoggedIn, currtripinfo.chartHarshAcc)
+// // Top 4
+// router.post('/cntHBRAKEOccur', isLoggedIn,  currtripinfo.cntHarshBrake)
+// router.post('/chartHBRAKEOccur', isLoggedIn,  currtripinfo.chartHarshBrake)
+
+
+// / // From Index Monthly Grid
+// router.post('/cntDevConnected', isLoggedIn, devices.cntVehiclesConnecteds)
+// router.post('/cntDevDisconnected', isLoggedIn, devices.cntVehiclesDisconnecteds)
+// router.post('/cntSOS', isLoggedIn, message.SOSCounter)
+// router.post('/cntReb', isLoggedIn, message.GuinchoCounter)
+// router.post('/cntMIL', isLoggedIn, message.MILCounter)
+// router.post('/sumGAS/:id', isLoggedIn, message.GASsum)
+// router.post('/getmotorTemp/:id', isLoggedIn,  message.chartMotorTemp)
+// // Generic Tools
+// router.post('/calAlarm',  currtripinfo.calAlarm)
+// router.post('/stub',  currtripinfo.stub)
 
 module.exports = router
 
@@ -78,36 +104,6 @@ module.exports = router
 
 
 //  router.get('/logout', users.logout)
-
-
-
-// //Dashboard
-// // Top 1
-// router.post('/cntMileageMonth', isLoggedIn, currtripinfo.sumTripMileage)
-// router.post('/chartMileageMonth', isLoggedIn, currtripinfo.chartTripMileage)
-// // Top 2
-// router.post('/cntIdleTime', isLoggedIn,  currtripinfo.sumIdleEngineTime)
-// router.post('/chartIdleTime', isLoggedIn,  currtripinfo.chartIdleEngineTime)
-// // Top 3
-// router.post('/cntHACCOccur', isLoggedIn, currtripinfo.cntHarshAcc)
-// router.post('/chartHACCOccur', isLoggedIn, currtripinfo.chartHarshAcc)
-// // Top 4
-// router.post('/cntHBRAKEOccur', isLoggedIn,  currtripinfo.cntHarshBrake)
-// router.post('/chartHBRAKEOccur', isLoggedIn,  currtripinfo.chartHarshBrake)
-
-
-// // From Index Monthly Grid
-// router.post('/cntDevConnected', isLoggedIn, devices.cntVehiclesConnecteds)
-// router.post('/cntDevDisconnected', isLoggedIn, devices.cntVehiclesDisconnecteds)
-// router.post('/cntSOS', isLoggedIn, message.SOSCounter)
-// router.post('/cntReb', isLoggedIn, message.GuinchoCounter)
-// router.post('/cntMIL', isLoggedIn, message.MILCounter)
-// router.post('/sumGAS/:id', isLoggedIn, message.GASsum)
-// router.post('/getmotorTemp/:id', isLoggedIn,  message.chartMotorTemp)
-// // Generic Tools
-// router.post('/calAlarm',  currtripinfo.calAlarm)
-// router.post('/stub',  currtripinfo.stub)
-
 // //Locates
 // router.get('/message/gps/:id',  message.getgeo)
 // router.get('/message/gpslist/:id',  message.getgeolist)

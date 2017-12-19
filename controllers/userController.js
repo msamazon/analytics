@@ -60,20 +60,38 @@ userController.list = function(req, res) {
   var page = (req.query.page > 0 ? req.query.page : 1) - 1;
   var _id = req.query.item;
   var limit = 10;
-  var options = {
-    limit: limit,
-    page: page
-  };
+  var uinfo = req.user;
+  // var options = {
+  //   limit: limit,
+  //   page: page
+  // };
 
-  User
-      .find({},function(err, users){
-        User.count().exec(function(err, count){
+  User.find().populate({
+        path:'profile', 
+        select:'ProfileDescription',
+        match:{ active: true},
+        options: { sort: { userProfile: -1 }}
+      })
+      .populate({
+        path:'customer', 
+        select:'fullname',
+        match:{ active: true },
+        options: { sort: { fullname: -1 }}
+      })
+      .limit(limit)
+      .skip(limit * page).exec(function(err, users){
+        // console.log('user infoo:'+ users)
+        if(err){          
+          req.flash('alert-danger', 'Erro ao Listar os usuários:'+err)  
+          res.render('errors/500', {message:req.flash});                    
+        }else{
+          User.count().exec(function(err, count){
             if (count > 0) {
                   res.render('users/index',
                     { 
                       title: 'DriveOn Portal | Usuários', 
                       list: users,
-                      user_info: req.user,
+                      user_info: uinfo,
                       baseuri: baseurl,
                       page: page + 1,
                       pages: Math.ceil(count / limit)
@@ -82,10 +100,9 @@ userController.list = function(req, res) {
                 }else{
                   res.render('users/new.jade', {title: 'DriveOn | Novo Usuário',baseuri:baseurl});
                 }     
-          })        
-      })
-      .limit(limit)
-      .skip(limit * page);   
+          })      
+        }         
+      }) 
  } 
 
 userController.create = function(req, res){         
@@ -151,7 +168,28 @@ userController.create = function(req, res){
 userController.show = function(req, res){ 
   var baseurl = req.protocol + "://" + req.get('host') + "/" 
   if (req.params.id != null || req.params.id != undefined) {      
-  User.findOne({_id: req.params.id}).exec(function (err, user) {
+  User
+  .findOne({_id: req.params.id})
+  .populate({
+    path:'profile', 
+    select:'ProfileDescription',
+    match:{ active: true},
+    options: { sort: { userProfile: -1 }}
+  })
+  .populate({
+    path:'authority', 
+    select:'AuthorityDescription',
+    match:{ active: true },
+    options: { sort: { AuthorityDescription: -1 }}
+  })
+  .populate({
+    path:'customer', 
+    select:'fullname',
+    match:{ active: true },
+    options: { sort: { fullname: -1 }}
+  })
+  .exec(function (err, user) {
+    console.log('user='+user)
         if (err) {
           switch (err.code)
           {
@@ -166,7 +204,7 @@ userController.show = function(req, res){
           req.flash('alert-info', 'Dados salvos com sucesso!')       
           res.render('users/show', {users: user, baseuri:baseurl});
         }
-      });
+      })
   } else {    
     res.render('errors/500', {message:'Erro interno, favor informar o administrador!'});    
   }
@@ -175,24 +213,36 @@ userController.show = function(req, res){
 userController.edit = function(req, res){ 
   var baseurl = req.protocol + "://" + req.get('host') + "/"    
   User.findOne({_id: req.params.id}).exec(function (err, uuser) {
-        if (err) {
-          switch (err.code)
-          {
-            case 11000: 
-                req.flash('alert-danger', 'Estes dados já existem no registro de usuários.')    
-                break;        
-            default: 
-                req.flash('alert-danger', "Erro ao editar:"+ err)  
-                break;
-          }   
+        if (err) {          
+            req.flash('alert-danger', "Erro ao editar:"+ err)              
         } else {          
-          res.render('users/edit', {users: uuser, baseuri:baseurl});
+          Profile.find().exec( function (err, profile){
+            if(err){
+              req.flash('alert-danger', "Erro ao obter perfis:"+ err)  
+            }else{
+              Authority.find().exec( function (err, authority){
+               if(err){
+                  req.flash('alert-danger', "Erro ao obter autoridade:"+ err) 
+               } else {
+                  Customer.find().exec( function (err, customer){
+                    if(err){
+                       req.flash('alert-danger', "Erro ao obter autoridade:"+ err) 
+                    } else {
+                    res.render('users/edit', {users: uuser, baseuri:baseurl, profiles:profile, authorities: authority, customers: customer})
+                    }
+                  })
+               }
+              })  
+            }            
+          })
+          
         }
       })
   }
 
 userController.update = function(req, res){  
   var baseurl = req.protocol + "://" + req.get('host') + "/"    
+  var uinfo = req.user
   User.findByIdAndUpdate(
         req.params.id,          
         { $set: 
@@ -205,7 +255,7 @@ userController.update = function(req, res){
               customer: req.body.customer,
               gender: req.body.gender,
               active: req.body.active,
-              modifiedBy: req.user.email
+              modifiedBy: uinfo.email
             }
         }, 
         { new: true }, 
@@ -230,17 +280,21 @@ userController.update = function(req, res){
 
 userController.save  =   function(req, res){
   var baseurl = req.protocol + "://" + req.get('host') + "/" 
- 
+  var ulogin =  ''
+  
+  if (req.user){    
+    ulogin =  req.user.email
+  }
+
   var user = new User({ 
     fullname: req.body.fullname, 
     email: req.body.email, 
-    password: req.body.password, 
     profile: req.body.profile,
     authority: req.body.authority,
     customer: req.body.customer,
     gender: req.body.gender,
     active: req.body.active,
-    modifiedBy: req.user.email
+    modifiedBy: ulogin
   })      
   // user.save(function(err) {
   User.register(user, req.body.password, function(err, user) {      
@@ -266,15 +320,7 @@ userController.delete = function(req, res){
   var baseurl = req.protocol + "://" + req.get('host') + "/" 
   User.remove({_id: req.params.id}, function(err) {
       if(err) {
-        switch (err.code)
-        {
-          case 11000: 
-              req.flash('alert-danger', 'Estes dados já existem no registro de usuários.')    
-              break;        
-          default: 
-              req.flash('alert-danger', "Erro ao deletar:"+ err)  
-              break;
-        }  
+        req.flash('alert-danger', "Erro ao deletar:"+ err)          
       } else {    
         req.flash('alert-info', 'Dados removidos com sucesso!')        
         res.redirect("/users");

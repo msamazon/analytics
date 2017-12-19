@@ -1,129 +1,170 @@
-var mongoose        = require("mongoose")
-var Device          = require("../models/Devices")
+var mongoose        = require('mongoose')
+var Device         = require('../models/Device')
 
-exports.create = function(req, res){
-    console.log('Novos Dongles')
-    res.render('device_create', { title: 'DriveOn | Instalação de Dongles'});
- };   
-exports.list = function(req, res){
-    console.log('List Dongles')
-    const page = (req.query.page > 0 ? req.query.page : 1) - 1;
-    const _id = req.query.item;
-    const limit = 10;
-    const options = {
+var deviceController = {}
+
+/**
+ * CRUD
+ */ 
+exports.list = function(req, res) {   
+    var baseurl = req.protocol + "://" + req.get('host') + "/"    
+    var page = (req.query.page > 0 ? req.query.page : 1) - 1;
+    var _id = req.query.item;
+    var limit = 10;
+    var options = {
       limit: limit,
       page: page
     };
 
+
     Device
-        .find({}, function(err, devices){
-            Device.count().exec(function(err, count){
-                    res.render('/devices/index',
-                    { title: 'DriveOn Portal | Dongles', 
-                        devices: devices,
+        .find({}, function(err, profiles){
+          Device.count().exec(function(err, count){
+              if (count > 0) {
+                    res.render('profiles/index',
+                    { title: 'DriveOn Portal | Perfil de Usuário', 
+                        list: profiles,
+                        user_info: req.user,
+                        baseuri: baseurl,
                         page: page + 1,
                         pages: Math.ceil(count / limit)}
                     );
+                  }else{
+                    res.render('profiles/new.jade', {title: 'DriveOn | Novo Perfil de Usuário',baseuri:baseurl});
+                  }     
             });        
         })
         .limit(limit)
-        .skip(limit * page);  
- };
+        .skip(limit * page);   
+  };
 
-exports.show = function(req, res){
-
-  if (req.params.id != null || req.params.id != undefined) {      
-    Device.findOne({_id: req.params.id}).exec(function (err, devices) {
-        if (err) {
-          console.log("Error at show Dongles:", err);
-        }
-        else {
-          devices = {_id: req.params.id}
-          res.render('/devices/show', {devices: devices});
-        }
-      });
-  } else {
-    Device.findOne({_id: req.params.id}).exec(function (err, devices) {
-      if (err) {
-        console.log("Error at show Dongles:", err);
-      }
-      else {
-        res.render('/devices/show', {devices: devices});
-      }
-    });
-  }
+exports.create = function(req, res){         
+    var baseurl = req.protocol + "://" + req.get('host') + "/"     
+    res.render('profiles/new.jade', { title: 'DriveOn | Novo Perfil de Usuário',baseuri:baseurl});
  };   
-exports.edit = function(req, res){
-    console.log('Device Edit')
-    Device.findOne({_id: req.params.id}).exec(function (err, devices) {
+ 
+exports.show = function(req, res){ 
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+ if (req.params.id != null || req.params.id != undefined) {      
+  Device.findOne({_id: req.params.id}).exec(function (err, profile) {
         if (err) {
-          console.log("Error on Device dit:", err);
+          switch (err.code)
+          {
+             case 11000: 
+                 req.flash('alert-danger', 'Estes dados já existem no registro de perfis.')    
+                 break;        
+             default: 
+                 req.flash('alert-danger', "Erro ao exibir:"+ err)  
+                 break;
+          }   
+        } else {     
+          req.flash('alert-info', 'Dados salvos com sucesso!')       
+          res.render('profiles/show', {profiles: profile, baseuri:baseurl});
         }
-        else {
-          res.render('/devices/edit', {devices: devices});
+      });
+  } else {    
+    res.render('errors/500', {message:'Erro interno, favor informar o administrador!'});    
+  }
+ }    
+
+exports.edit = function(req, res){ 
+  var baseurl = req.protocol + "://" + req.get('host') + "/"    
+  Device.findOne({_id: req.params.id}).exec(function (err, uprofile) {
+        if (err) {
+          switch (err.code)
+          {
+             case 11000: 
+                 req.flash('alert-danger', 'Estes dados já existem no registro de perfis.')    
+                 break;        
+             default: 
+                 req.flash('alert-danger', "Erro ao editar:"+ err)  
+                 break;
+          }   
+        } else {          
+          res.render('profiles/edit', {profiles: uprofile, baseuri:baseurl});
         }
       });
  };
 
-exports.update = function(req, res){
-    console.log('Device update')
-    Device.findByIdAndUpdate(req.params.id, { $set: { name: req.body.name, actived: req.body.actived,firmware: req.body.firmware, version:req.body.version,sms_srv_addr:req.body.sms_srv_addr,
-                                                      sms_srv_key:req.body.sms_srv_key,sms_apn:req.body.sms_apn,sms_user:req.body.sms_user,sms_password:req.body.sms_password,
-                                                      sms_set_ip:req.body.sms_set_ip, sms_set_port:req.body.sms_set_port,  createdAt: req.body.createdAt, createdBy:req.body.createdBy }}, 
-                                                    { new: true }, function (err, devices) {
-        if (err) {
-          console.log(err);
-          res.render("device_edit", {devices: req.body});
+exports.update = function(req, res){  
+    var baseurl = req.protocol + "://" + req.get('host') + "/"    
+    Device.findByIdAndUpdate(
+          req.params.id,          
+          { $set: 
+              { 
+                userProfile: req.body.userProfile, 
+                ProfileDescription: req.body.ProfileDescription, 
+                active: req.body.active,
+                modifiedBy: req.user.email
+              }
+          }, 
+          { new: true }, 
+   function (err, profile) {                                                              
+        if (err) {         
+          switch (err.code)
+          {
+             case 11000: 
+                 req.flash('alert-danger', 'Estes dados já existem no registro de perfis.')    
+                 break;        
+             default: 
+                 req.flash('alert-danger', "Erro ao atualizar:"+ err)  
+                 break;
+          }   
+          res.render("profiles/edit", {profiles: req.body, baseuri:baseurl})
+        }else{
+          req.flash('alert-info', 'Dados salvos com sucesso!')            
+          res.redirect("/profiles/show/"+profile._id)
         }
-        res.redirect("/devices/show/"+devices._id);
-      });
- }; 
+      })
+ }  
+
 exports.save  =   function(req, res){
-    console.log('Device Save, body data:'+ req.body)
-    var dongle = new Device(req.body);   
-    console.log('Dados para salvar=>'+JSON.stringify(dongle));
+    var baseurl = req.protocol + "://" + req.get('host') + "/" 
+    var payload = req.body
     
-    dongle.save(function(err) {
-        if(err) {
-          console.log("Error on Device Save:" + err);
-          res.render('device_create', { title: 'DriveOn | Instalação de Dongles'});
-        } else {
-          console.log("Dongle registrado com sucesso.");
-          res.redirect("/devices/show/"+dongle._id);
-        }
-      });
- };
+    if(req.user) {           
+      // console.log('Check req.user data:'+ JSON.stringify(req.user))
+      payload.modifiedBy = req.user.email
+    }  
+    
+    var profile = new Device(payload)      
+    profile.save(function(err) {
+      if(err) {  
+        switch (err.code)
+        {
+           case 11000: 
+               req.flash('alert-danger', 'Estes dados já existem no registro de perfis.')    
+               break;        
+           default: 
+               req.flash('alert-danger', "Erro ao salvar:"+ err)  
+               break;
+        }        
+        res.render('profiles/new', { title: 'DriveOn | Novo Perfil de Usuário', baseuri:baseurl})
+      } else {          
+        req.flash('alert-info', 'Dados salvos com sucesso!')  
+        res.redirect('/profiles/show/'+profile._id)
+      }
+    })
+ }
 
-exports.delete = function(req, res){
-    console.log('Device delete')
+ exports.delete = function(req, res){    
+    var baseurl = req.protocol + "://" + req.get('host') + "/" 
     Device.remove({_id: req.params.id}, function(err) {
         if(err) {
-          console.log("Error on Device delete:"+ err);
+          switch (err.code)
+          {
+            case 11000: 
+                req.flash('alert-danger', 'Estes dados já existem no registro de perfis.')    
+                break;        
+            default: 
+                req.flash('alert-danger', "Erro ao deletar:"+ err)  
+                break;
+          }  
+        } else {    
+          req.flash('alert-info', 'Dados removidos com sucesso!')        
+          res.redirect("/profiles");
         }
-        else {
-          console.log("Dongle deletado!");
-          res.redirect("/devices");
-        }
-      });
- };
-
-
- exports.cntVehiclesConnecteds = function(req, res) {      
-      Device
-      .find({'activated':'Sim'}, function(err, devices){
-          Device.count().exec(function(err, count){                       
-            var message0 = {'total':count}
-                res.json(message0);                     
-          });        
       });
   };
 
-exports.cntVehiclesDisconnecteds = function(req, res) {      
-  Device
-  .find({'activated':'Não'}, function(err, devices){
-      Device.count().exec(function(err, count){                       
-        var message0 = {'total':count}
-            res.json(message0);                     
-      });        
-  });
- };  
+module.exports = deviceController  

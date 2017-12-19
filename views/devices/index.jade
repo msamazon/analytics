@@ -1,12 +1,12 @@
-extends layout
+extends ../layout/default
+
 block content
   main.main
         // Breadcrumb
         ol.breadcrumb
-          li.breadcrumb-item Administração
           li.breadcrumb-item Configurações
-          li.breadcrumb-item Devices
-          li.breadcrumb-item.active Dongles
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item.active Perfil de Usuário
         .container-fluid
           .animated.fadeIn
             .row
@@ -14,46 +14,39 @@ block content
                   .card
                     .card-header
                       i.fa.fa-align-justify
-                      |  Dongles
-                    .card-body                    
+                      |  Perfil de usuário
+                    .card-body   
+                      != messages()  
                       table.table.table-striped
                         thead
                           tr
-                            th Id    
-                            th HW Hex   
-                            th H/W Id.        
-                            th Ativo     
-                            th Firmware    
-                            th Versão     
-                            th Provedor SMS
-                            th Chave Prov. SMS 
-                            th SMS APN     
-                            th SMS Usuario    
-                            th SMS Senha
-                            th SMS IP  
-                            th SMS Porta
-                            th Criado em   
-                            th Criado por    
+                            th Perfil
+                            th Descrição
+                            th Ativo
+                            th Criado em                             
+                            th Modificado em 
+                            th Modificado por
+                            th Ações
                         tbody                                                  
-                             each device in devices
+                             each profile in list
                               tr
-                                td #{device.name}        
-                                td #{device.actived}
-                                td #{device.firmware}
-                                td #{device.version}
-                                td #{device.sms_srv_addr}
-                                td #{device.sms_srv_key}
-                                td #{device.sms_apn}
-                                td #{device.sms_user}
-                                td #{device.sms_password}
-                                td #{device.sms_set_ip}
-                                td #{device.sms_set_port}
-                                td #{formatDate(device.createdAt)}
-                                td #{device.createdBy}                              
-                                td                                
-                                  a(href='/device/edit/#{device.id}') Editar 
-                                  span
-                                  a(href='/device/delete/#{device.id}') Deletar                            
+                                td #{profile.userProfile}
+                                td #{profile.ProfileDescription} 
+                                td #{ativo = profile.active==true?'Sim':'Não' }                                
+                                td #{formatDate(profile.createdAt)}                                
+                                td #{formatDate(profile.updatedAt)}
+                                td #{(profile.modifiedBy)}
+                                td 
+                                  .form-group
+                                    form.form-horizontal(action='/profiles/delete/#{profile.id}', method='post')                                      
+                                      a(href='/profiles/edit/#{profile.id}')
+                                        button(type='button', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-edit                                                                                                              
+                                      span                                      
+                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                        i.fa.fa-remove                                                              
                        if (pages > 1)
                         ul.pagination
-                          != createPagination(pages, page)                                                                        
+                          != createPagination(pages, page)  
+                      a(href='/profiles/new', target='_top')    
+                       button.btn.btn-primary.btn-sm(type='button') Novo
