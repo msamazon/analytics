@@ -1,10 +1,10 @@
 // 'use strict';
 var mongoose        = require('mongoose')
 var passport        = require('passport')
-var User            = require("../models/User.js")
-var Profile         = require("../models/UserProfile.js")
-var Authority       = require("../models/UserAuthority.js")
-var Customer        = require("../models/Customer.js")
+var User            = require('../models/User')
+var Profile         = require('../models/userProfile')
+var Authority       = require('../models/UserAuthority')
+var Customer        = require('../models/Customer')
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
@@ -22,7 +22,9 @@ userController.register = function(req, res) {
  }
 
 userController.doRegister = function(req, res) {
-  User.register(new User({ email : req.body.email, fullname: req.body.fullname, password: req.body.password }), req.body.password, function(err, user) {
+  
+  
+  User.register( new User({ email : req.body.email, fullname: req.body.fullname, password: req.body.password }), function(err, user) {
     if (err) {
       // return res.render('register', { user : user });
       console.log('Error on User registration:'+ err)

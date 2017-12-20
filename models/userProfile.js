@@ -34,6 +34,5 @@ ProfileSchema.plugin(mongooseLogs, {
     deleteAction: "deleted" 
  })
 
-var profile = mongoose.model('do_usr_m01', ProfileSchema)
 
-module.exports = profile
+module.exports = mongoose.model('do_usr_m01', ProfileSchema)

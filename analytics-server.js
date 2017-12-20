@@ -18,7 +18,7 @@ var passport        = require('passport')
 var LocalStrategy   = require('passport-local').Strategy
 
 // Service Port
-var port = process.env.PORT || 4884
+var port = process.env.PORT ||  4884
 // grappling.mixin(app).allowHooks('pre:static', 'pre:bodyparser', 'pre:session', 'pre:logger', 'pre:admin', 'pre:routes', 'pre:render', 'updates', 'signin', 'signout','login');
 
 // view engine setup
@@ -83,6 +83,7 @@ app.use(function(req, res, next) {
     next()
 })
 
+
 // Set Main Route
 app.use('/', require('./routes/routes'))
 app.use('/profiles', require('./routes/profiles'))
@@ -95,6 +96,8 @@ app.use('/georisks', require('./routes/georisks'))
 app.use('/extclasses', require('./routes/extensiveclass'))
 app.use('/extensivevalues', require('./routes/extensivevalues'))
 app.use('/calcvars', require('./routes/calcvars'))
+
+
 // Set
 app.listen(port, function () {
     console.log(pkg.name,`listening on ${port}`)

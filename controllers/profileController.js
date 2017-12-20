@@ -1,7 +1,7 @@
 // 'use strict';
 var mongoose        = require('mongoose')
 var passport        = require('passport')
-var Profile         = require('../models/UserProfile')
+var Profile         = require('../models/userProfile')
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
@@ -40,12 +40,12 @@ exports.list = function(req, res) {
         })
         .limit(limit)
         .skip(limit * page);   
-  };
+}
 
 exports.create = function(req, res){         
     var baseurl = req.protocol + "://" + req.get('host') + "/"     
     res.render('profiles/new.jade', { title: 'DriveOn | Novo Perfil de Usuário',baseuri:baseurl});
- };   
+}   
  
 exports.show = function(req, res){ 
   var baseurl = req.protocol + "://" + req.get('host') + "/" 
