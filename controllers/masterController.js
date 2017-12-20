@@ -1,6 +1,6 @@
 var mongoose        = require("mongoose")
-var cars          = require("../models/Vehicle")
-
+var cars            = require("../models/Vehicle")
+var User            = require("../models/User")
 
 exports.list = function(req, res){
     var baseurl = req.protocol + "://" + req.get('host') + "/"    
@@ -21,22 +21,28 @@ exports.list = function(req, res){
       page: page
     };
   
-    cars
-        .find({'active': true, 'ownerId.email': req.user.email}, function(err, car){
-            cars.count().exec(function(err, count){
-                    res.render('index',
-                    { title: 'DriveOn', 
-                        params:{CurWStart:firstday, CurWEnd:lastday}, 
-                        carros: car,
-                        user_info: req.user,
-                        baseuri: baseurl,
-                        page: page + 1,
-                        pages: Math.ceil(count / limit)}
-                    );
-            });        
-        })
-        .limit(limit)
-        .skip(limit * page)
+         
+    User
+      .findOne({email:req.user.email}).exec(function(err, user){ 
+          cars
+              .find({customer:user.customer})
+              .limit(limit)
+              .skip(limit * page)
+              .exec(function(err, carss){
+                cars.count().exec(function(err, count){                    
+                          res.render('index',
+                          { title: 'DriveOn Portal',
+                              params:{CurWStart:firstday, CurWEnd:lastday},  
+                              carros: carss,
+                              user_info: req.user,
+                              baseuri: baseurl,
+                              page: page + 1,
+                              pages: Math.ceil(count / limit)}
+                          )
+                           
+                  })      
+              })  
+      })       
  }
 
 
@@ -62,7 +68,7 @@ exports.list = function(req, res){
     cars
         .find({'active': true}, function(err, car){
             cars.count().exec(function(err, count){
-                    res.render('vehicles/lasttrips',
+                    res.render('carss/lasttrips',
                     { title: 'DriveOn', 
                         params:{CurWStart:firstday, CurWEnd:lastday}, 
                         carros: car,

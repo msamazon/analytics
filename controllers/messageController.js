@@ -258,8 +258,7 @@ messageController.chartMotorTemp = function(req, res) {
           });
   };  
 
-
-  messageController.getVoltage = function(req, res) {
+messageController.getVoltage = function(req, res) {
     var baseurl = req.protocol + "://" + req.get('host') + "/" 
     var dongleCode = req.params.id
           
@@ -275,24 +274,24 @@ Device.find({_id:dongleCode}, function(err, dev){
 for(var i = 0; i < dev.length; i++) {
   var dvice = dev[i].device
     Message
-          .find({'dongleCode':dvice,'eventcode':'0120'}).sort({$natural:-1}).exec(function(err, alarme){
+          .find({'dongleCode':dvice,'eventcode':'0120'}).sort({$natural:-1}).limit(1000).exec(function(err, message){
             if (err) {
-              console.log("Error when load voltage:", err);
+              console.log("Error when load voltage:", err)
             }else {
+              // console.log("info:", JSON.stringify( message ))
               var arrayCurrinfo = []
               for(var i = 0; i < message.length; i++) {
                 var id             = message[i]._id
-                var time           = message[i].time
                 var dateReceived   = message[i].dateReceived
                 var voltage        = message[i].voltage
                 var dongleCode     = message[i].dongleCode
       
-                var message =  { "_id": id, "time": time, 
-                  "dateReceived": dateReceived, "voltage": voltage, "dongleCode": dongleCode }
+                var message =  { "_id": id, "dateReceived": dateReceived, "voltage": voltage, "dongleCode": dongleCode }
       
-                  arrayCurrinfo.push(message)
-                  res.json(arrayCurrinfo)
+                  arrayCurrinfo.push(message)                  
                 }
+                console.log("info:", JSON.stringify( arrayCurrinfo ))
+                res.json(arrayCurrinfo)
               }     
           })  
       }       

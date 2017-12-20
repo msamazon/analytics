@@ -9,7 +9,7 @@ block content
           li.breadcrumb-item Analytics 
         .container-fluid
           .animated.fadeIn 
-              form.form-horizontal(action='/refreshbycar', method='post')
+                          
                         .form-group
                             label.form-control-label(for='devicelbl') Veiculo
                             .controls
@@ -49,7 +49,8 @@ block content
                                   crossDomain: "false",
                                   contentType: "application/json; charset=UTF-8"                                                             
                                 }).done(function ( data ) {                                           
-                                      alert(data);                                           
+                                      console.log(JSON.stringify( data ))
+                                                                                  
                                       var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
                                       var lineChartData = {
                                           labels : dongle,
@@ -60,7 +61,7 @@ block content
                                               borderColor : 'rgba(220,220,220,1)',
                                               pointBackgroundColor : 'rgba(220,220,220,1)',
                                               pointBorderColor : '#fff',
-                                              data : maininfo.temperatura
+                                              data : data.voltage
                                             }
                                           ]
                                         }
