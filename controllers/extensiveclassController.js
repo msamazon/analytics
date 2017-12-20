@@ -50,17 +50,17 @@ extensiveclassController.create = function(req, res){
  
 extensiveclassController.show = function(req, res){ 
   var baseurl = req.protocol + "://" + req.get('host') + "/" 
- if (req.params.id != null || req.params.id != undefined) {      
-  ExtensiveClass.findOne({_id: req.params.id}).exec(function (err, device) {
+  if (req.params.id != null || req.params.id != undefined) {      
+    ExtensiveClass.findOne({_id: req.params.id}).exec(function (err, extclass) {
         if (err) {         
           req.flash('alert-danger', "Erro ao exibir:"+ err)                
         } else {     
           req.flash('alert-info', 'Dados salvos com sucesso!')       
-          res.render('extensiveclasses/show', {extensiveclasses: device, baseuri:baseurl});
+          res.render('extensiveclasses/show', {extclasses: extclass, baseuri:baseurl})
         }
-      });
+      })
   } else {    
-    res.render('errors/500', {message:'Erro interno, favor informar o administrador!'});    
+    res.render('errors/500', {message:'Erro interno, favor informar o administrador!'})
   }
  }    
 
@@ -78,7 +78,7 @@ extensiveclassController.edit = function(req, res){
                  break;
           }   
         } else {          
-          res.render('extensiveclasses/edit', {extensiveclasses: uprofile, baseuri:baseurl});
+          res.render('extensiveclasses/edit', {extclasses: uprofile, baseuri:baseurl});
         }
       })
  }
@@ -110,7 +110,7 @@ extensiveclassController.update = function(req, res){
           res.render("extensiveclasses/edit", {extensiveclasses: req.body, baseuri:baseurl})
         }else{
           req.flash('alert-info', 'Dados salvos com sucesso!')            
-          res.redirect("/extensiveclasses/show/"+profile._id)
+          res.redirect("/extclasses/show/"+profile._id)
         }
       })
  }  
@@ -137,10 +137,10 @@ extensiveclassController.save  =   function(req, res){
                req.flash('alert-danger', "Erro ao salvar:"+ err)  
                break;
         }       
-        // res.render('extensiveclasses/new.jade', { title: 'DriveOn | Novo Device',baseuri:baseurl});
+        res.render('extensiveclasses/new.jade', { title: 'DriveOn | Novo Device',baseuri:baseurl});
       } else {          
         req.flash('alert-info', 'Dados salvos com sucesso!')  
-        // res.redirect('/extensiveclasses/show/'+device._id)
+        res.redirect('/extclasses/show/'+device._id)
       }
       res.render('extensiveclasses/new.jade', { title: 'DriveOn | Novo Device',baseuri:baseurl});
     })
@@ -161,7 +161,7 @@ extensiveclassController.delete = function(req, res){
           }  
         } else {    
           req.flash('alert-info', 'Dados removidos com sucesso!')        
-          res.redirect("/extensiveclasses");
+          res.redirect("/extclasses");
         }
       })
   }
