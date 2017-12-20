@@ -4,7 +4,7 @@ var bcrypt    = require('bcrypt')
 var mongooseLogs = require('mongoose-activitylogs')
 
 var ExtensiveValueSchema = new Schema({    
-    values: {
+    value: {
         type: String,
         unique: true,
         lowercase: false,
