@@ -3,7 +3,7 @@ var Schema    = mongoose.Schema
 var bcrypt    = require('bcrypt')
 var mongooseLogs = require('mongoose-activitylogs')
 
-var ExtensiveValuesSchema = new Schema({    
+var ExtensiveValueSchema = new Schema({    
     values: {
         type: String,
         unique: true,
@@ -22,13 +22,13 @@ var ExtensiveValuesSchema = new Schema({
 }
 )
 
-ExtensiveValuesSchema.plugin(mongooseLogs, {
+ExtensiveValueSchema.plugin(mongooseLogs, {
     schemaName: "extensive values",
     createAction: "created",
     updateAction: "updated",
     deleteAction: "deleted" 
  })
 
-var extvalues = mongoose.model('do_sys_m01', ExtensiveValuesSchema)
+var extvalue = mongoose.model('do_sys_m01', ExtensiveValueSchema)
 
-module.exports = extvalues
+module.exports = extvalue
