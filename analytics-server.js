@@ -11,19 +11,11 @@ var cookieParser    = require('cookie-parser')
 var session         = require('express-session')
 var helpers         = require('view-helpers')
 var dotenv          = require('dotenv').config()
-var expressValidator= require('express-validator')
+// var expressValidator= require('express-validator')
 // var grappling       = require('grappling-hook');
 var favicon 		= require('serve-favicon')
 var passport        = require('passport')
 var LocalStrategy   = require('passport-local').Strategy
-
-var api             = require('./routes/api')
-
-// // Routes and Subs
-// var routes            = require('./routes/routes.js')
-// var profiles          = require('./routes/profiles.js')
-// var authorities       = require('./routes/authorities.js')
-// var users             = require('./routes/users')
 
 // Service Port
 var port = process.env.PORT ||  4884
@@ -50,7 +42,7 @@ mongoose.connection.on('error', error => {
 })
 
 //Middlewares
-app.use(expressValidator())
+// app.use(expressValidator())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -91,7 +83,20 @@ app.use(function(req, res, next) {
     next()
 })
 
-app.use('/api', api);
+
+// Set Main Route
+app.use('/', require('./routes/routes'))
+app.use('/profiles', require('./routes/profiles'))
+app.use('/authorities', require('./routes/authorities'))
+app.use('/users', require('./routes/users'))
+app.use('/customers', require('./routes/customers'))
+app.use('/vehicles', require('./routes/vehicles'))
+app.use('/devices', require('./routes/devices'))
+app.use('/georisks', require('./routes/georisks'))
+app.use('/extclasses', require('./routes/extensiveclass'))
+app.use('/extensivevalues', require('./routes/extensivevalues'))
+app.use('/calcvars', require('./routes/calcvars'))
+
 
 // Set
 app.listen(port, function () {

@@ -6,7 +6,7 @@ block content
         ol.breadcrumb
           li.breadcrumb-item Administração
           li.breadcrumb-item Configurações
-          li.breadcrumb-item Clientes
+          li.breadcrumb-item Veículos
           li.breadcrumb-item.active Detalhes
         .container-fluid
           .animated.fadeIn
@@ -15,74 +15,74 @@ block content
                   .card
                     .card-header
                       i.fa.fa-edit
-                      |  Clientes - Detalhes
+                      |  Veículos - Detalhes
                     .card-body   
                       != messages()  
-                      form.form-horizontal(action='/customers/delete/#{customers.id}', method='post') 
+                      form.form-horizontal(action='/vehicles/delete/#{vehicles.id}', method='post')                         
                         .form-group
-                          label.form-control-label(for='fullname') Nome / Razao Social
+                          label.form-control-label(for='plate') Placa
                           .controls
                             .input-group
-                              input#fullname.form-control(name='fullname',size='100', type='text', value='#{customers.fullname}', readonly=true)
+                              input#plate.form-control(name='plate',size='100', type='text', value='#{vehicles.plate}', readonly=true)
                         .form-group
-                          label.form-control-label(for='email') eMail
+                          label.form-control-label(for='plate') Device
                           .controls
                             .input-group
-                              input#email.form-control(name='email',size='100', type='email', value='#{customers.email}', readonly=true)
-                        .form-group
-                          label.form-control-label(for='businesscode') CPF / CNPJ
+                              input#device.form-control(name='device',size='100', type='text', value='#{vehicles.device}', readonly=true) 
+                       .form-group
+                          label.form-control-label(for='plate') Conta
                           .controls
                             .input-group
-                              input#businesscode.form-control(name='businesscode',size='20', type='text', value='#{customers.businesscode}', readonly=true)
+                              input#customer.form-control(name='customer',size='100', type='text', value='#{vehicles.customer}', readonly=true)            
                         .form-group
-                          label.form-control-label(for='address1') Endereço
+                          label.form-control-label(for='businesscode') Chassis
                           .controls
                             .input-group
-                              input#address1.form-control(name='address1',size='100', type='text', value='#{customers.address1}', readonly=true)
+                              input#vin.form-control(name='vin',size='20', type='text', value='#{vehicles.vin}', readonly=true)
                         .form-group
-                          label.form-control-label(for='address2') Complemento
+                          label.form-control-label(for='address1') Modelo
                           .controls
                             .input-group
-                              input#address2.form-control(name='address2',size='100', type='text', value='#{customers.address2}', readonly=true)
+                              input#model.form-control(name='model',size='100', type='text', value='#{vehicles.model}', readonly=true)
                         .form-group
-                          label.form-control-label(for='zipcode') CEP
+                          label.form-control-label(for='address2') Cor
                           .controls
                             .input-group
-                              input#zipcode.form-control(name='zipcode',size='16', type='text', value='#{customers.zipcode}', readonly=true)
+                              input#color.form-control(name='color',size='100', type='text', value='#{vehicles.color}', readonly=true)
                         .form-group
-                          label.form-control-label(for='district') Bairro
+                          label.form-control-label(for='zipcode') Estado
                           .controls
                             .input-group
-                              input#district.form-control(name='district',size='100', type='text', value='#{customers.district}', readonly=true)
+                              input#state.form-control(name='state',size='16', type='text', value='#{vehicles.state}', readonly=true)
                         .form-group
-                          label.form-control-label(for='city') Cidade
+                          label.form-control-label(for='district') Motor
                           .controls
                             .input-group
-                              input#city.form-control(name='city',size='16', type='text', value='#{customers.city}', readonly=true)                                   
+                              input#motor.form-control(name='motor',size='100', type='text', value='#{vehicles.motor}', readonly=true)
                         .form-group
-                          label.form-control-label(for='province') Estado
+                          label.form-control-label(for='city') Combustível
                           .controls
                             .input-group
-                              input#province.form-control(name='province',size='16', type='text', value='#{customers.province}', readonly=true)
+                              input#fueltype.form-control(name='fueltype',size='16', type='text', value='#{vehicles.fueltype}', readonly=true)                                    
                         .form-group
-                          label.form-control-label(for='country') Pais
+                          label.form-control-label(for='province') Ano de Fabricação
                           .controls
                             .input-group
-                              input#country.form-control(name='country',size='16', type='text', value='#{customers.country}', readonly=true)  
+                              input#manufYear.form-control(name='manufYear',size='16', type='text', value='#{vehicles.manufYear}', readonly=true)  
                         .form-group
                           label.col-md-3.form-control-label(for='activedYN') Ativo?
                           .controls
                             .col-md-9
                               select#active.form-control-sm(name='active', disabled=true)
-                                option(value='true', selected=customers.active == true) Sim
-                                option(value='false', selected=customers.active == false) Não
+                                option(value='true', selected=vehicles.active == true) Sim
+                                option(value='false', selected=vehicles.active == false) Não
                         .form-group
                           label.form-control-label(for='createdAt') Criado em
                           .controls
                             .input-group
-                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{customers.createdAt}')                                                                                                              
+                              input#createdAt.form-control(size='16', type='text', readonly=true, value='#{vehicles.createdAt}')                                                                                                              
                         .form-actions                          
-                          a(href='/customers/edit/#{customers.id}') 
+                          a(href='/vehicles/edit/#{vehicles.id}') 
                             button.btn.btn-sm.btn-success(type='button')
                               i.fa.fa-edit
                               |  Editar   
@@ -91,7 +91,7 @@ block content
                             i.fa.fa-delicious
                             |  Deletar   
                           span         
-                          a(href='/customers')                
+                          a(href='/vehicles')                
                             button.btn.btn-sm.btn-info(type='button')
                               i.fa.fa-backward
                               |  Voltar a lista                               

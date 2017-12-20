@@ -423,10 +423,9 @@ function fn_chart01_load(data){
 
       lbl.push(rawDrecv);
       dts.push(cumTot);
-   
    });
   
-  var labels = lbl;
+  // var labels = lbl;  
   var data = {
     labels: labels,
     datasets: [

@@ -16,17 +16,17 @@
                   a.nav-link(href='/trips')
                     i.icon-direction
                     |  Último trajeto                                
-                li.nav-item
-                  a.nav-link(href='/locate')
-                    i.icon-location-pin
-                    |  Localizar                              
+                //- li.nav-item
+                //-   a.nav-link(href='/locate')
+                //-     i.icon-location-pin
+                //-     |  Localizar                              
             li.nav-item.nav-dropdown
               a.nav-link.nav-dropdown-toggle(href='#')
                 i.icon-star
                 |  Eventos
               ul.nav-dropdown-items
                 li.nav-item
-                  a.nav-link(href='/alarmes')
+                  a.nav-link(href='/alarms')
                     i.icon-fire
                     |  Alarmes               
             li.nav-item
@@ -47,36 +47,36 @@
                     |  Usuários  
                 li.nav-item
                   a.nav-link(href='/customers')
-                    i.icon-user
+                    i.icon-people
                     |  Clientes      
                 li.nav-item
                   a.nav-link(href='/vehicles')
-                    i.icon-user
+                    i.icon-energy
                     |  Veiculos                  
                 li.nav-item.nav-dropdown
                   a.nav-link.nav-dropdown-toggle(href='#')
-                    i.icon-control-end
+                    i.icon-compass
                     |  Devices
                   ul.nav-dropdown-items
                     li.nav-item
                       a.nav-link(href='/devices/new')
-                        i.icon-organization
-                        |  Instalar
+                        i.icon-arrow-up-circle
+                        |  Registrar
                     li.nav-item
-                      a.nav-link(href='/devices/update')
-                        i.icon-energy
+                      a.nav-link(href='/devices')
+                        i.icon-refresh
                         |  Liberar            
                 li.nav-item.nav-dropdown
                   a.nav-link.nav-dropdown-toggle(href='#')
-                    i.icon-control-start
+                    i.icon-list
                     |  Parâmetros
                   ul.nav-dropdown-items
                     li.nav-item
-                      a.nav-link(href='/zones')
+                      a.nav-link(href='/georisks')
                         i.icon-map
-                        |  Zonas de Segurança   
+                        |  Zonas de Risco   
                     li.nav-item
-                      a.nav-link(href='/zones')
+                      a.nav-link(href='/calcvars')
                         i.icon-directions
                         |  Variáveis para Cálculo  
                     li.nav-item
@@ -87,3 +87,11 @@
                       a.nav-link(href='/authorities')
                         i.icon-anchor
                         |  Autoridade    
+                    li.nav-item
+                      a.nav-link(href='/extclasses')
+                        i.icon-note
+                        |  Tipos Extensivos     
+                    li.nav-item
+                      a.nav-link(href='/extensivevalues')
+                        i.icon-envelope-open
+                        |  Valores Extensivos      

@@ -1,13 +1,14 @@
 var mongoose = require("mongoose")
 var DO_CAR_C01 = require("../models/CurrentTripInfo")
 // var DO_CAR_A03 = require("../models/do_car_a03")
-var DO_CAR_M00 = require("../models/Vehicles")
+var DO_CAR_M00 = require("../models/Vehicle")
 // var DO_CAR_C02 = require("../models/do_car_c02")
 // var DO_CAR_C03 = require("../models/do_car_c03")
 // var DO_CAR_A10 = require("../models/do_car_a10")
 // var DO_CAR_A11 = require("../models/do_car_a11")
 var DO_COM_M00 = require("../models/do_com_m00")
 // var DO_STAT_M00 = require("../models/do_stat_m00")
+var messsage = require("../models/Message")
 
 var currenttripinfoController = {}
 
@@ -114,21 +115,19 @@ currenttripinfoController.calAlarm = function(req, res) {
 
 // Main Blocks
 currenttripinfoController.sumIdleEngineTime = function(req, res) {
-  
-  console.log('sumIdleEngineTime')
-  var array = []
-  // DO_CAR_A03.find().exec(function (err, info) {
-  //   console.log("info.length %s", info.length)    
-  //   if (err) {
-  //       console.log("sumIdleEngineTime Error:", err);
-  //   }else {
-  //     var sumIdleEngine = 0
-  //     for (var i =0; i < info.length; i++) {
-  //       sumIdleEngine += Number(info[i].Min)
-  //     }
-  //   } 
-  //   res.json({sumIdleTime: sumIdleEngine})
-  // })
+    
+  messsage.find({eventcode:'0320', alarmNo:'Idle Engine'}).exec(function (err, info) {
+    console.log("info.length %s", info.length)    
+    if (err) {
+        console.log("sumIdleEngineTime Error:", err);
+    }else {
+      var sumIdleEngine = 0
+      for (var i =0; i < info.length; i++) {
+        sumIdleEngine += Number(info[i].alarmCurrent)
+      }
+    } 
+    res.json({sumIdleTime: sumIdleEngine})
+  })
 
  }
 
@@ -299,19 +298,17 @@ currenttripinfoController.cntVehiclesConnecteds = function(req, res) {
         console.log("cntVehiclesConnecteds Error:", err);
     }else {
         var cntVEHICLES = 0
-        // var arrayCurrinfo = []
-        // console.log("Retorno do banco:" + currinfo.length)
         if (currinfo.length > 0) {
           cntVEHICLES = currinfo.length
         }
            
         var message0 =  { "cntVEHICLES": cntVEHICLES  }
-
-        res.json(message0)              
-
+        res.json(message0)       
     }
    })
  }
+ 
+
  
  
 

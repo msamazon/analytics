@@ -1,5 +1,6 @@
 var mongoose = require("mongoose")
 var Message = require("../models/Message")
+var Device = require("../models/Device")
 var messageController = {}
 
 messageController.list = function(req, res) {
@@ -143,16 +144,26 @@ messageController.GASsum = function(req, res) {
 messageController.getgeolist = function(req, res) {
     
       var dongleCode = req.params.id
-      var dbase = new Date().toDateString();
-      console.log('dbase:'+ dbase) 
-      Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'},'dateReceived':{ $regex: /dbase/i }}).sort({$natural:-1}).exec(function (err, message) {
-        
+      
+      var d = new Date(),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+      var dbase = [year, month, day].join('-');
+
+      var dbase = '2017-12-06'
+      console.log('paramentros='+ dongleCode + ' - ' + dbase)
+      // Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'},'dateReceived':{ $regex: /^dbase/ }}).sort({$natural:-1}).exec(function (err, message) {        
+      Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({$natural:-1}).limit(10).exec(function (err, message) {        
+          
         if (err) {
           console.log("Error:", err);
         }else {
           var arrayCurrinfo = []
           for(var i = 0; i < message.length; i++) {
-            console.log('Linhas:'+ i)  
             var id             = message[i]._id
             var gpsData        = message[i].gpsData
             var time           = message[i].time
@@ -160,7 +171,7 @@ messageController.getgeolist = function(req, res) {
             var eventcode      = message[i].eventcode
             var dongleCode     = message[i].dongleCode
   
-            if (gpsData != undefined) {
+            if (gpsData) {
               var message =  { "_id": id, "gpsData": gpsData, "time": time, 
               "dateReceived": dateReceived, "eventcode": eventcode, "dongleCode": dongleCode }
   
@@ -173,8 +184,8 @@ messageController.getgeolist = function(req, res) {
     }
 
 messageController.getAlarm = function(req, res) {
-        console.log('List Alarms')
-        var dongleCode = req.params.id
+        var baseurl = req.protocol + "://" + req.get('host') + "/" 
+        var dongleCode = req.body.vehicle
         var dbase = new Date().toDateString();
               
         const page = (req.query.page > 0 ? req.query.page : 1) - 1;
@@ -184,22 +195,32 @@ messageController.getAlarm = function(req, res) {
           limit: limit,
           page: page
         };        
-
+        
+  Device.find({_id:dongleCode}, function(err, dev){        
+    for(var i = 0; i < dev.length; i++) {
+      var dvice = dev[i].device
         Message
-              .find({'dongleCode':dongleCode,'eventcode':'0320','dateReceived':{ $regex: /dbase/i }}, function(err, alarmes){
-                Message.count().exec(function(err, count){
-                          res.render('ealarms',
-                          { title: 'DriveOn Portal | Alarmes', 
-                              alarmes: alarmes,
-                              page: page + 1,
-                              pages: Math.ceil(count / limit)}
-                          );
-                  });        
+              .find({'dongleCode':dvice,'eventname':'alarm'}, function(err, alarme){
+                if(err) {
+                  console.log('err='+err)                  
+                        req.flash('alert-danger', "Erro ao pesquisar alarmes:"+ err)                          
+                } else { 
+                  Message.find({'dongleCode':dvice,'eventname':'alarm'}).count().exec(function(err, count){
+                    console.log('alarme='+alarme)
+                            res.render('vehicles/alarms',
+                            { title: 'DriveOn Portal | Alarmes', 
+                                alarmes: alarme,
+                                page: page + 1,
+                                baseuri: baseurl,
+                                pages: Math.ceil(count / limit)}
+                            )
+                    })   
+                }         
               })
               .limit(limit)
-              .skip(limit * page);               
-        
-        
+              .skip(limit * page)  
+          }       
+        })
       }    
 
 
@@ -236,5 +257,46 @@ messageController.chartMotorTemp = function(req, res) {
             }
           });
   };  
+
+messageController.getVoltage = function(req, res) {
+    var baseurl = req.protocol + "://" + req.get('host') + "/" 
+    var dongleCode = req.params.id
+          
+    const page = (req.query.page > 0 ? req.query.page : 1) - 1;
+    const _id = req.query.item;
+    const limit = 10;
+    const options = {
+      limit: limit,
+      page: page
+    };        
+    
+Device.find({_id:dongleCode}, function(err, dev){        
+for(var i = 0; i < dev.length; i++) {
+  var dvice = dev[i].device
+    Message
+          .find({'dongleCode':dvice,'eventcode':'0120'}).sort({$natural:-1}).limit(1000).exec(function(err, message){
+            if (err) {
+              console.log("Error when load voltage:", err)
+            }else {
+              // console.log("info:", JSON.stringify( message ))
+              var arrayCurrinfo = []
+              for(var i = 0; i < message.length; i++) {
+                var id             = message[i]._id
+                var dateReceived   = message[i].dateReceived
+                var voltage        = message[i].voltage
+                var dongleCode     = message[i].dongleCode
+      
+                var message =  { "_id": id, "dateReceived": dateReceived, "voltage": voltage, "dongleCode": dongleCode }
+      
+                  arrayCurrinfo.push(message)                  
+                }
+                console.log("info:", JSON.stringify( arrayCurrinfo ))
+                res.json(arrayCurrinfo)
+              }     
+          })  
+      }       
+    })
+  } 
+
 
 module.exports = messageController

@@ -1,15 +1,27 @@
-extends layout
+extends layout/default
+
 block content
+ 
  main.main
         // Breadcrumb
         ol.breadcrumb
-          li.breadcrumb-item Meu Cockpit
-          li.breadcrumb-item Analytics          
-          li.breadcrumb-item Veículo[Placa]  
+          li.breadcrumb-item Clientes
+          li.breadcrumb-item Analytics 
         .container-fluid
-          .animated.fadeIn
-                //- .row     
-                //-     iframe(src='https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/5116937845390896/292710492678053/2416752467241978/latest.html', height='420vh', width='1200vw', allowfullscreen='yes', frameborder='0')
+          .animated.fadeIn 
+                          
+                        .form-group
+                            label.form-control-label(for='devicelbl') Veiculo
+                            .controls
+                              .input-group
+                                span.input-group-btn
+                                  button#btnrefresh.btn.btn-primary(type='submit')
+                                    i.fa.fa-search
+                                    |  Search
+                                if list
+                                select#vehicle.form-control(name='vehicle')
+                                    each car in list
+                                      option(value='#{car.device}') #{car.plate}                                       
               .card-columns.cols-2
                 .card
                   .card-header
@@ -21,6 +33,52 @@ block content
                     | Conforme relatado no gráfico acima, o recomendável é ter
                     | um nivel entre 11V a 13V. Qualquer valor abaixo indica desgaste da bateria
                     | e acima representa sobre tensão. Sendo ambos os casos desvios e redução de vida útil da bateria ou falha do alternador.
+                   // Bootstrap and necessary plugins
+                  script(src='#{baseuri}bower_components/jquery/dist/jquery.min.js').
+                  // Plugins and scripts required by all views
+                  script(src='#{baseuri}bower_components/chart.js/dist/Chart.min.js').
+                  script(type='text/javascript').                    
+                      $(document).ready(function(){
+                          $('#btnrefresh').click(function(){                                
+                                var dongle = $('#vehicle').val();                               
+                                 $.ajax
+                                ({
+                                  type: "post",
+                                  url: "/getvoltage/"+dongle,
+                                  dataType: "json",
+                                  crossDomain: "false",
+                                  contentType: "application/json; charset=UTF-8"                                                             
+                                }).done(function ( data ) {                                           
+                                      console.log(JSON.stringify( data ))
+                                                                                  
+                                      var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+                                      var lineChartData = {
+                                          labels : dongle,
+                                          datasets : [
+                                            {
+                                              label: dongle,
+                                              backgroundColor : 'rgba(220,220,220,0.2)',
+                                              borderColor : 'rgba(220,220,220,1)',
+                                              pointBackgroundColor : 'rgba(220,220,220,1)',
+                                              pointBorderColor : '#fff',
+                                              data : data.voltage
+                                            }
+                                          ]
+                                        }
+
+                                      var ctx = document.getElementById('canvas-1');
+                                      var chart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: lineChartData,
+                                        options: {
+                                          responsive: true
+                                        }
+                                      });
+
+                                });
+
+                          });
+                      });
                 .card
                   .card-header
                     | Temperatura do Bloco                    
@@ -55,4 +113,4 @@ block content
                     | DTCs
                   .card-body
                     .chart-wrapper
-                      canvas#canvas-6
+                      canvas#canvas-6                     

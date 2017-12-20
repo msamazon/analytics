@@ -2,15 +2,20 @@
 var mongoose        = require('mongoose')
 var passport        = require('passport')
 var Vehicle         = require('../models/Vehicle')
+var Device          = require('../models/Device')
+var Customer        = require('../models/Customer')
+var User            = require('../models/User')
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
 var async           = require('run-async')
 
+var vehicleController = {}
+
 /**
  * CRUD
  */ 
-exports.list = function(req, res) {   
+ vehicleController.list = function(req, res) {   
     var baseurl = req.protocol + "://" + req.get('host') + "/"    
     var page = (req.query.page > 0 ? req.query.page : 1) - 1;
     var _id = req.query.item;
@@ -21,7 +26,23 @@ exports.list = function(req, res) {
     };
     
     Vehicle
-        .find({}, function(err, vehicles){
+        .find()
+        .populate({
+          path:'device', 
+          select:'device',
+          match:{ active: true },
+          options: { sort: { device: -1 }}
+        })
+        .populate({
+          path:'customer', 
+          select:'fullname',
+          match:{ active: true },
+          options: { sort: { fullname: -1 }}
+        })
+        .limit(limit)
+        .skip(limit * page)
+        .exec(function(err, vehicles){
+          console.log('logo:' + vehicles)
           Vehicle.count().exec(function(err, count){
               if (count > 0) {
                     res.render('vehicles/index',
@@ -35,21 +56,69 @@ exports.list = function(req, res) {
                   }else{
                     res.render('vehicles/new.jade', {title: 'DriveOn | Novo Veiculo',baseuri:baseurl});
                   }     
-            });        
-        })
-        .limit(limit)
-        .skip(limit * page);   
-  };
+            })      
+        })  
+  }
 
-exports.create = function(req, res){         
+ vehicleController.create = function(req, res){         
     var baseurl = req.protocol + "://" + req.get('host') + "/"     
-    res.render('vehicles/new.jade', { title: 'DriveOn | Novo Veiculo',baseuri:baseurl});
- };   
+    
+    Device
+    .find({active: true}).exec(function(err, device){
+      if (err) {
+        switch (err.code)
+        {
+          case 11000: 
+              req.flash('alert-danger', 'Estes dados já existem no registro de devices.')    
+              break;        
+          default: 
+              req.flash('alert-danger', "Erro ao carregar os perfis de devices:"+ err)  
+              break;
+        }   
+      }else{  
+          Customer
+            .find({active: true}).exec(function(err, customer){
+              if (err) {
+                switch (err.code)
+                {
+                  case 11000: 
+                      req.flash('alert-danger', 'Estes dados já existem no registro de usuarios.')    
+                      break;        
+                  default: 
+                      req.flash('alert-danger', "Erro ao carregar as autoridades de usuário:"+ err)  
+                      break;
+                }   
+              }else{                                    
+                        res.render('vehicles/new.jade', { title: 'DriveOn | Novo Veiculo',
+                            baseuri: baseurl,
+                            devices: device,
+                            customers: customer
+                          })
+              } 
+          })  
+      }
+    })  
+
+
+  } 
  
-exports.show = function(req, res){ 
+ vehicleController.show = function(req, res){ 
   var baseurl = req.protocol + "://" + req.get('host') + "/" 
- if (req.params.id != null || req.params.id != undefined) {      
-  Vehicle.findOne({_id: req.params.id}).exec(function (err, profile) {
+  if (req.params.id != null || req.params.id != undefined) {      
+  Vehicle.findOne({_id: req.params.id})
+  .populate({
+    path:'device', 
+    select:'device',
+    match:{ active: true},
+    options: { sort: { device: -1 }}
+  })
+  .populate({
+    path:'customer', 
+    select:'fullname',
+    match:{ active: true },
+    options: { sort: { fullname: -1 }}
+  })
+  .exec(function (err, vehicle) {
         if (err) {
           switch (err.code)
           {
@@ -61,16 +130,17 @@ exports.show = function(req, res){
                  break;
           }   
         } else {     
-          req.flash('alert-info', 'Dados salvos com sucesso!')       
-          res.render('vehicles/show', {vehicles: profile, baseuri:baseurl});
+          req.flash('alert-info', 'Dados salvos com sucesso!')   
+          console.log(vehicle)  
+          res.render('vehicles/show', {vehicles: vehicle, baseuri:baseurl});
         }
       });
   } else {    
     res.render('errors/500', {message:'Erro interno, favor informar o administrador!'});    
   }
- }    
+  }    
 
-exports.edit = function(req, res){ 
+ vehicleController.edit = function(req, res){ 
   var baseurl = req.protocol + "://" + req.get('host') + "/"    
   Vehicle.findOne({_id: req.params.id}).exec(function (err, uprofile) {
         if (err) {
@@ -86,10 +156,10 @@ exports.edit = function(req, res){
         } else {          
           res.render('vehicles/edit', {vehicles: uprofile, baseuri:baseurl});
         }
-      });
- };
+      })
+  }
 
-exports.update = function(req, res){  
+ vehicleController.update = function(req, res){  
     var baseurl = req.protocol + "://" + req.get('host') + "/"    
     Vehicle.findByIdAndUpdate(
           req.params.id,          
@@ -119,9 +189,9 @@ exports.update = function(req, res){
           res.redirect("/vehicles/show/"+profile._id)
         }
       })
- }  
+  }  
 
-exports.save  =   function(req, res){
+ vehicleController.save  =   function(req, res){
     var baseurl = req.protocol + "://" + req.get('host') + "/" 
     var payload = req.body
     
@@ -130,8 +200,8 @@ exports.save  =   function(req, res){
       payload.modifiedBy = req.user.email
     }  
     
-    var profile = new Vehicle(payload)      
-    profile.save(function(err) {
+    var vehicle = new Vehicle(payload)      
+    vehicle.save(function(err) {
       if(err) {  
         switch (err.code)
         {
@@ -145,12 +215,12 @@ exports.save  =   function(req, res){
         res.render('vehicles/new', { title: 'DriveOn | Novo Veiculo', baseuri:baseurl})
       } else {          
         req.flash('alert-info', 'Dados salvos com sucesso!')  
-        res.redirect('/vehicles/show/'+profile._id)
+        res.redirect('/vehicles/show/'+vehicle._id)
       }
     })
- }
+  }
 
- exports.delete = function(req, res){    
+ vehicleController.delete = function(req, res){    
     var baseurl = req.protocol + "://" + req.get('host') + "/" 
     Vehicle.remove({_id: req.params.id}, function(err) {
         if(err) {
@@ -169,3 +239,61 @@ exports.save  =   function(req, res){
         }
       });
   };
+
+
+vehicleController.listbyUser = function(req, res) {   
+    var baseurl = req.protocol + "://" + req.get('host') + "/"    
+    var page = (req.query.page > 0 ? req.query.page : 1) - 1;
+    var _id = req.query.item;
+    var limit = 10;
+     
+    User
+      .findOne({email:req.user.email}).exec(function(err, user){ 
+          Vehicle
+              .find({customer:user.customer})
+              .limit(limit)
+              .skip(limit * page)
+              .exec(function(err, vehicles){
+                Vehicle.count().exec(function(err, count){                    
+                          res.render('vehicles/alarms',
+                          { title: 'DriveOn Portal | Alarmes', 
+                              list: vehicles,
+                              user_info: req.user,
+                              baseuri: baseurl,
+                              page: page + 1,
+                              pages: Math.ceil(count / limit)}
+                          )
+                           
+                  })      
+              })  
+      })        
+  }
+vehicleController.analyticsbyUser = function(req, res) {   
+    var baseurl = req.protocol + "://" + req.get('host') + "/"    
+    var page = (req.query.page > 0 ? req.query.page : 1) - 1;
+    var _id = req.query.item;
+    var limit = 10;
+     
+    User
+      .findOne({email:req.user.email}).exec(function(err, user){ 
+          Vehicle
+              .find({customer:user.customer})
+              .limit(limit)
+              .skip(limit * page)
+              .exec(function(err, vehicles){
+                Vehicle.count().exec(function(err, count){                    
+                          res.render('analytics',
+                          { title: 'DriveOn Portal', 
+                              list: vehicles,
+                              user_info: req.user,
+                              baseuri: baseurl,
+                              page: page + 1,
+                              pages: Math.ceil(count / limit)}
+                          )
+                           
+                  })      
+              })  
+      })        
+  }
+
+module.exports = vehicleController

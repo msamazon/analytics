@@ -1,0 +1,51 @@
+extends ../layout/default
+
+block content
+ main.main
+        // Breadcrumb
+        ol.breadcrumb
+          li.breadcrumb-item Clientes
+          li.breadcrumb-item Eventos
+          li.breadcrumb-item.active Alarmes
+        .container-fluid
+          .animated.fadeIn
+            .row
+              .col-md-12
+                  .card
+                    .card-header
+                      i.fa.fa-align-justify
+                      |  Alarmes
+                    .card-body
+                      != messages()
+                      form.form-horizontal(action='/alarmsbyvehicle', method='post')
+                        .form-group
+                            label.form-control-label(for='devicelbl') Veiculo
+                            .controls
+                              .input-group
+                               if list
+                                select#select.form-control-sm(name='vehicle')
+                                  each car in list
+                                    option(value='#{car.device}') #{car.plate} 
+                        .form-actions
+                          button.btn.btn-sm.btn-success(type='submit')
+                            i.fa.fa-search
+                            |  Pesquisar            
+                        table.table.table-striped
+                          thead
+                            tr
+                              th Data
+                              th Alarme
+                              th Condição
+                              th Valor
+                          tbody
+                           if alarmes
+                            each alarm in alarmes 
+                             tr
+                              td #{alarm.dateReceived}
+                              td #{alarm.alarmNo}                              
+                              td 
+                                span.badge.badge-success #{alarm.alarmTag}
+                              td #{alarm.alarmCurrent} 
+                        if (pages > 1)
+                          ul.pagination
+                            != createPagination(pages, page)
