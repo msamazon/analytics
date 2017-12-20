@@ -35,7 +35,7 @@ georiskController.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                    georiskController.create()
+                    res.render('georisks/new.jade', { title: 'DriveOn | Nova Zona',baseuri:baseurl});
                   }     
             });        
         })        

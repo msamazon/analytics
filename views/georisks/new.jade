@@ -6,8 +6,8 @@ block content
         ol.breadcrumb
           li.breadcrumb-item Administração
           li.breadcrumb-item Configurações
-          li.breadcrumb-item Devices
-          li.breadcrumb-item.active Registrar
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item.active Zonas de Risco
         .container-fluid
           .animated.fadeIn
             .row
@@ -15,15 +15,15 @@ block content
                   .card
                     .card-header
                       i.fa.fa-edit
-                      |  Novo Device
+                      |  Nova Zona de Risco
                     .card-body                                              
                       != messages()
-                      form.form-horizontal(action='/devices/save', method='post')
+                      form.form-horizontal(action='/georisks/save', method='post')
                         .form-group
-                          label.form-control-label(for='devicelbl') Device
+                          label.form-control-label(for='mapid') Map ID
                           .controls
                             .input-group
-                              input#device.form-control(name='device',size='16', type='text')
+                              input#mapid.form-control(name='mapid',size='10', type='text')
                         .form-group
                           label.form-control-label(for='supplier') Fornecedor
                           .controls
@@ -89,5 +89,5 @@ block content
                         .form-actions
                           button.btn.btn-sm.primary(type='submit') Salvar
                           span
-                          a(href='/devices') 
+                          a(href='/georisks') 
                            button.btn.btn-sm.secondary(type='button') Cancelar                                                                       

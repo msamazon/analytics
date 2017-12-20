@@ -35,7 +35,7 @@ deviceController.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                    deviceController.create()
+                    res.render('devices/new.jade', { title: 'DriveOn | Novo Device',baseuri:baseurl});
                   }     
             });        
         })        

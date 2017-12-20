@@ -6,8 +6,8 @@ block content
         ol.breadcrumb
           li.breadcrumb-item Administração
           li.breadcrumb-item Configurações
-          li.breadcrumb-item Devices
-          li.breadcrumb-item.active Liberação
+          li.breadcrumb-item Parâmetros
+          li.breadcrumb-item.active Zonas de Risco
         .container-fluid
           .animated.fadeIn
             .row
@@ -15,32 +15,32 @@ block content
                   .card
                     .card-header
                       i.fa.fa-align-justify
-                      |  Liberação de Devices
+                      |  Zonas de Risco
                     .card-body   
                       != messages()  
                       table.table.table-striped
                         thead
                           tr
-                            th Device
-                            th Descrição
-                            th Ativo
-                            th Criado em                             
-                            th Modificado em 
-                            th Modificado por
+                            th Map Id
+                            th País
+                            th Estado
+                            th Cidade                            
+                            th Bairro
+                            th Zona
                             th Ações
                         tbody                                                  
-                             each device in list
+                             each georisk in list
                               tr
-                                td #{device.device}
-                                td #{device.description} 
-                                td #{ativo = device.active==true?'Sim':'Não' }                                
-                                td #{formatDate(device.createdAt)}                                
-                                td #{formatDate(device.updatedAt)}
-                                td #{(device.modifiedBy)}
+                                td #{georisk.mapid}
+                                td #{georisk.country}
+                                td #{georisk.state}
+                                td #{georisk.city}
+                                td #{georisk.district}
+                                td #{georisk.zone}
                                 td 
                                   .form-group
-                                    form.form-horizontal(action='/devices/delete/#{device.id}', method='post')                                      
-                                      a(href='/devices/edit/#{device.id}')
+                                    form.form-horizontal(action='/georisks/delete/#{georisk.id}', method='post')                                      
+                                      a(href='/georisks/edit/#{georisk.id}')
                                         button(type='button', style='background-color:transparent; border-color:transparent;')
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
@@ -49,5 +49,5 @@ block content
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  
-                      //- a(href='/devices/new', target='_top')    
+                      //- a(href='/georisks/new', target='_top')    
                       //-  button.btn.btn-primary.btn-sm(type='button') Novo

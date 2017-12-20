@@ -25,7 +25,8 @@ var GEORISKSchema = new Schema({
         type: String,
         index: false
     },    
-    points: Number
+    points: Number,
+    active:Boolean
 },
 {
     timestamps:true
@@ -33,7 +34,7 @@ var GEORISKSchema = new Schema({
 )
 
 GEORISKSchema.plugin(mongooseLogs, {
-    schemaName: "vehicle",
+    schemaName: "georisk",
     createAction: "created",
     updateAction: "updated",
     deleteAction: "deleted" 
