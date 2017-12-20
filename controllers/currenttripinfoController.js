@@ -361,6 +361,33 @@ currenttripinfoController.chartHarshBrake = function(req, res) {
   //         }
   // })
  }
+
+ currenttripinfoController.getDurationbyUser = function(req, res) {
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+  var dongleCode = req.params.id
+      
+  messsage.find({eventcode:'0120'}).sort({$natural:-1}).limit(1000).exec(function(err, msg){     
+                      if (err) {
+                          console.log("Error:", err);
+                      }else {
+                          var sumcurrentTripDuration = 0            
+                          var arrayCurrinfo = []
+                          
+                          for(var i = 0; i < msg.length; i++) {                  
+                              var currentTripDuration  = msg[i].currentTripDuration
+                              sumcurrentTripDuration   = sumcurrentTripDuration + currentTripDuration
+                          }   
+                          var message0 =  { "sumcurrentTripDuration": Math.round(sumcurrentTripDuration)  }
+                          arrayCurrinfo.push(message0)
+                          console.log("Retorno:" + arrayCurrinfo)
+                          res.json(message0) 
+                      }          
+  })
+
+
+
+ }
+
 currenttripinfoController.cntVehiclesConnecteds = function(req, res) {  
    DO_DEV_M00.find().exec(function (err, currinfo) {    
     if (err) {

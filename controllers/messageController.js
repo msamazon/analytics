@@ -294,4 +294,41 @@ Device.findOne({_id:dongleCode}, function(err, dev){
   } 
 
 
+  messageController.getDurationbyUser = function(req, res) {
+    var baseurl = req.protocol + "://" + req.get('host') + "/" 
+    var dongleCode = req.params.id
+          
+    const page = (req.query.page > 0 ? req.query.page : 1) - 1;
+    const _id = req.query.item;
+    const limit = 10;
+    const options = {
+      limit: limit,
+      page: page
+    };        
+    
+Device.findOne({_id:dongleCode}, function(err, dev){        
+ 
+  var dvice = dev.device
+    Message.find({dongleCode:dvice, eventcode:'0120'}).sort({$natural:-1}).limit(100).exec(function(err, msg){
+      if (err) {
+          console.log("Error:", err);
+      }else {
+          var sumcurrentTripDuration = 0            
+          var arrayCurrinfo = []
+          
+          for(var i = 0; i < msg.length; i++) {                  
+              var currentTripDuration  = msg[i].currentTripDuration
+              sumcurrentTripDuration   = sumcurrentTripDuration + currentTripDuration
+          }   
+          var message0 =  { "sumcurrentTripDuration": Math.round(sumcurrentTripDuration)  }
+          arrayCurrinfo.push(message0)
+          console.log("Retorno:" + arrayCurrinfo)
+          res.json(message0) 
+      }     
+     })              
+    })
+  } 
+
+
+
 module.exports = messageController

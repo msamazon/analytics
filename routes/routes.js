@@ -33,6 +33,7 @@ router.get('/alarms', isLoggedIn, vehicles.listbyUser)
 router.post('/alarmsbyvehicle', isLoggedIn, message.getAlarm)
 router.get('/analytics', isLoggedIn, vehicles.analyticsbyUser)
 router.post('/getvoltage/:id', isLoggedIn, message.getVoltage)
+router.post('/getDuration/:id', isLoggedIn, message.getDurationbyUser)
 
 // Locates
 router.get('/message/gps/:id',  message.getgeo)
