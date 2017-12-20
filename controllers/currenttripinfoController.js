@@ -180,8 +180,7 @@ currenttripinfoController.sumTripMileage = function(req, res) {
   // })
 
  
- Message.find({eventcode:'0120'}).sort({$natural:-1}).limit(100).exec(function(err, message){
-     
+  messsage.find({eventcode:'0120'}).sort({$natural:-1}).exec(function(err, msg){     
                       if (err) {
                           console.log("Error:", err);
                       }else {
@@ -189,17 +188,15 @@ currenttripinfoController.sumTripMileage = function(req, res) {
             
                           var arrayCurrinfo = []
                           // console.log("Retorno do banco:" + currinfo.length)
-                          for(var i = 0; i < message.length; i++) {
-                  
-                              var currentTripMileage  = message[i].currentTripMileage/1000
+                          for(var i = 0; i < msg.length; i++) {                  
+                              var currentTripMileage  = msg[i].currentTripMileage/1000
                               sumcurrentTripMileage   = sumcurrentTripMileage + currentTripMileage
                           }   
-                          var message0 =  { "sumcurrentTripMileage": Math.round(sumcurrentTripMileage)  }
+                          var message0 =  { "sumcurrentTripMileage": Math.round(sumcurrentTripMileage)/i  }
                           arrayCurrinfo.push(message0)
                           // res.json({message:arrayCurrinfo})
                           res.json(message0) 
-                      }
-          
+                      }          
   })
 
 
@@ -226,6 +223,25 @@ currenttripinfoController.chartTripMileage = function(req, res) {
   //                 res.json(arrayMessage)
   //         }
   // })
+
+  messsage.find({eventcode:'0120'}).sort({$natural:-1}).limit(10).exec(function(err, msg){     
+    if (err) {
+        console.log("Error:", err);
+    }else {
+        var sumcurrentTripMileage = 0
+        var arrayCurrinfo = []
+        for(var i = 0; i < msg.length; i++) {   
+            var id                        = msg[i]._id
+            var dreceived                 = msg[i].dateReceived
+            var TotDeslocamento           = msg[i].currentTripMileage/1000
+            var message0                  = {"_id": id, "dreceived": dreceived, "TotDeslocamento": TotDeslocamento }
+            arrayCurrinfo.push(message0)
+        }        
+        res.json({message:arrayCurrinfo})        
+    }          
+})
+
+
  }
 
 

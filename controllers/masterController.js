@@ -68,7 +68,7 @@ exports.list = function(req, res){
     cars
         .find({'active': true}, function(err, car){
             cars.count().exec(function(err, count){
-                    res.render('carss/lasttrips',
+                    res.render('vehicles/lasttrips',
                     { title: 'DriveOn', 
                         params:{CurWStart:firstday, CurWEnd:lastday}, 
                         carros: car,

@@ -43,7 +43,7 @@ router.get('/message/gpslist/:id',  message.getgeolist)
 // Dashboard
 // Top 1
 router.post('/cntMileageMonth', isLoggedIn, currtripinfo.sumTripMileage)
-// router.post('/chartMileageMonth', isLoggedIn, currtripinfo.chartTripMileage)
+router.post('/chartMileageMonth', isLoggedIn, currtripinfo.chartTripMileage)
 // // Top 2
 // router.post('/cntIdleTime', isLoggedIn,  currtripinfo.sumIdleEngineTime)
 // router.post('/chartIdleTime', isLoggedIn,  currtripinfo.chartIdleEngineTime)
