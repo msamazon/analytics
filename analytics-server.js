@@ -11,7 +11,7 @@ var cookieParser    = require('cookie-parser')
 var session         = require('express-session')
 var helpers         = require('view-helpers')
 var dotenv          = require('dotenv').config()
-var expressValidator= require('express-validator')
+// var expressValidator= require('express-validator')
 // var grappling       = require('grappling-hook');
 var favicon 		= require('serve-favicon')
 var passport        = require('passport')
@@ -42,7 +42,7 @@ mongoose.connection.on('error', error => {
 })
 
 //Middlewares
-app.use(expressValidator())
+// app.use(expressValidator())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
