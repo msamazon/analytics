@@ -249,13 +249,14 @@ userController.edit = function(req, res){
 userController.update = function(req, res){  
   var baseurl = req.protocol + "://" + req.get('host') + "/"    
   var uinfo = req.user
-  User.findByIdAndUpdate(
+  var npwd = req.body.password
+
+   User.findByIdAndUpdate(
         req.params.id,          
         { $set: 
             { 
               fullname: req.body.fullname, 
               email: req.body.email, 
-              password: req.body.password, 
               profile: req.body.profile,
               authority: req.body.authority,
               customer: req.body.customer,
@@ -278,7 +279,19 @@ userController.update = function(req, res){
         }   
         res.render("users/edit", {users: req.body, baseuri:baseurl})
       }else{
-        req.flash('alert-info', 'Dados salvos com sucesso!')            
+        User.findByUsername(user.email).then(function(sanitizedUser){
+          if (sanitizedUser){
+              sanitizedUser.setPassword(npwd, function(){
+                  sanitizedUser.save();
+                  req.flash('alert-info', 'Dados salvos com sucesso!') 
+              })
+          } else {
+              req.flash('alert-danger', 'Falha ao definir o usuario para troca a senha. Favor contactar o Administrado.') 
+          }          
+        },function(err){
+          req.flash('alert-danger', "Erro ao atualizar:"+ err) 
+          res.render("users/edit", {users: req.body, baseuri:baseurl})
+        })
         res.redirect("/users/show/"+user._id)
       }
     })

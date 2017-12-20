@@ -6,7 +6,7 @@ var DO_CAR_M00Schema = new Schema({
     plate       : {
         type: String,
         unique: true,
-        lowercase: true,
+        lowercase: false,
         required: true
     },
     device      : { type: Schema.Types.ObjectId, ref: 'do_dev_m00' }, 

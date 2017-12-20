@@ -55,6 +55,9 @@ UserSchema.plugin(mongooseLogs, {
     updateAction: "updated",
     deleteAction: "deleted" 
  });
+
+ 
+
  
 var user = mongoose.model('do_usr_m00', UserSchema)
 
