@@ -1,6 +1,7 @@
 var mongoose        = require('mongoose')
 var passport        = require('passport')
 var ExtensiveValue       = require('../models/ExtensiveValue')
+var ExtensiveClass       = require('../models/ExtensiveClass')
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
@@ -23,7 +24,16 @@ extensivevalueController.list = function(req, res) {
 
 
     ExtensiveValue
-        .find({}, function(err, extensivevalues){
+        .find()
+        .populate({
+          path:'class', 
+          select:'class',
+          match:{ active: true },
+          options: { sort: { class: -1 }}
+        })
+        .limit(limit)
+        .skip(limit * page)
+        .exec( function(err, extensivevalues){
           ExtensiveValue.count().exec(function(err, count){
               if (count > 0) {
                     res.render('extensivevalues/index',
@@ -35,28 +45,43 @@ extensivevalueController.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                    res.render('extensivevalues/new.jade', { title: 'DriveOn | Novo Valor',baseuri:baseurl});
+                    ExtensiveClass.find({active: true}).exec(function (err, extvalues) { 
+                      // console.log('logo:'+extvalues)
+                      if (err) {         
+                        req.flash('alert-danger', "Erro ao exibir:"+ err)                
+                      } else { 
+                        res.render('extensivevalues/new.jade', { title: 'DriveOn | Novo Valor', extvalueses: extvalues, baseuri:baseurl})
+                      }  
+                     
+                    })  
                   }     
             });        
         })        
-        .limit(limit)
-        .skip(limit * page)
+        
   }
 
-extensivevalueController.create = function(req, res){         
-    var baseurl = req.protocol + "://" + req.get('host') + "/"     
-    res.render('extensivevalues/new.jade', { title: 'DriveOn | Novo Valor',baseuri:baseurl});
+extensivevalueController.create = function(req, res){  
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+  ExtensiveClass.find({active: true}).exec(function (err, extvalues) { 
+    // console.log('logo:'+extvalues)
+    if (err) {         
+      req.flash('alert-danger', "Erro ao exibir:"+ err)                
+    } else { 
+      res.render('extensivevalues/new.jade', { title: 'DriveOn | Novo Valor', extvalueses: extvalues, baseuri:baseurl})
+    }  
+   
+  })  
  }   
  
 extensivevalueController.show = function(req, res){ 
   var baseurl = req.protocol + "://" + req.get('host') + "/" 
   if (req.params.id != null || req.params.id != undefined) {      
-    ExtensiveValue.findOne({_id: req.params.id}).exec(function (err, extclass) {
+    ExtensiveValue.findOne({_id: req.params.id}).exec(function (err, extvalues) {
         if (err) {         
           req.flash('alert-danger', "Erro ao exibir:"+ err)                
         } else {     
           req.flash('alert-info', 'Dados salvos com sucesso!')       
-          res.render('extensivevalues/show', {extclasses: extclass, baseuri:baseurl})
+          res.render('extensivevalues/show', {extvalueses: extvalues, baseuri:baseurl})
         }
       })
   } else {    
@@ -78,7 +103,7 @@ extensivevalueController.edit = function(req, res){
                  break;
           }   
         } else {          
-          res.render('extensivevalues/edit', {extclasses: uprofile, baseuri:baseurl});
+          res.render('extensivevalues/edit', {extvalueses: uprofile, baseuri:baseurl});
         }
       })
  }
@@ -111,7 +136,7 @@ extensivevalueController.update = function(req, res){
           res.render("extensivevalues/edit", {extensivevalues: req.body, baseuri:baseurl})
         }else{
           req.flash('alert-info', 'Dados salvos com sucesso!')            
-          res.redirect("/extclasses/show/"+profile._id)
+          res.redirect("/extvalueses/show/"+profile._id)
         }
       })
  }  
@@ -138,12 +163,28 @@ extensivevalueController.save  =   function(req, res){
                req.flash('alert-danger', "Erro ao salvar:"+ err)  
                break;
         }       
-        res.render('extensivevalues/new.jade', { title: 'DriveOn | Novo Device',baseuri:baseurl});
+        ExtensiveClass.find({active: true}).exec(function (err, extvalues) { 
+          // console.log('logo:'+extvalues)
+          if (err) {         
+            req.flash('alert-danger', "Erro ao exibir:"+ err)                
+          } else { 
+            res.render('extensivevalues/new.jade', { title: 'DriveOn | Novo Valor', extvalueses: extvalues, baseuri:baseurl})
+          }  
+         
+        })  
       } else {          
         req.flash('alert-info', 'Dados salvos com sucesso!')  
-        res.redirect('/extclasses/show/'+device._id)
+        res.redirect('/extvalueses/show/'+device._id)
       }
-      res.render('extensivevalues/new.jade', { title: 'DriveOn | Novo Device',baseuri:baseurl});
+      ExtensiveClass.find({active: true}).exec(function (err, extvalues) { 
+        // console.log('logo:'+extvalues)
+        if (err) {         
+          req.flash('alert-danger', "Erro ao exibir:"+ err)                
+        } else { 
+          res.render('extensivevalues/new.jade', { title: 'DriveOn | Novo Valor', extvalueses: extvalues, baseuri:baseurl})
+        }  
+       
+      })  
     })
  }
 
@@ -162,7 +203,7 @@ extensivevalueController.delete = function(req, res){
           }  
         } else {    
           req.flash('alert-info', 'Dados removidos com sucesso!')        
-          res.redirect("/extclasses");
+          res.redirect("/extvalueses");
         }
       })
   }

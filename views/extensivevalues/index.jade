@@ -4,9 +4,10 @@ block content
   main.main
         // Breadcrumb
         ol.breadcrumb
+          li.breadcrumb-item Administração
           li.breadcrumb-item Configurações
           li.breadcrumb-item Parâmetros
-          li.breadcrumb-item.active Perfil de Usuário
+          li.breadcrumb-item.active Valor Extensivo
         .container-fluid
           .animated.fadeIn
             .row
@@ -14,13 +15,14 @@ block content
                   .card
                     .card-header
                       i.fa.fa-align-justify
-                      |  Perfil de usuário
+                      |  Valor Extensivo
                     .card-body   
                       != messages()  
                       table.table.table-striped
                         thead
                           tr
-                            th Perfil
+                            th Classe
+                            th Valor
                             th Descrição
                             th Ativo
                             th Criado em                             
@@ -30,8 +32,9 @@ block content
                         tbody                                                  
                              each profile in list
                               tr
-                                td #{profile.userProfile}
-                                td #{profile.ProfileDescription} 
+                                td #{profile.class}
+                                td #{profile.value}
+                                td #{profile.description} 
                                 td #{ativo = profile.active==true?'Sim':'Não' }                                
                                 td #{formatDate(profile.createdAt)}                                
                                 td #{formatDate(profile.updatedAt)}
