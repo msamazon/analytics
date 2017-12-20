@@ -3,32 +3,32 @@ var Schema    = mongoose.Schema
 var bcrypt    = require('bcrypt')
 var mongooseLogs = require('mongoose-activitylogs')
 
-var CountriesSchema = new Schema({    
-    isocode: {
+var ExtensiveValuesSchema = new Schema({    
+    values: {
         type: String,
         unique: true,
         lowercase: false,
         required: true
     },
-    name: String,
     description: String,
     active: {
          type: Boolean,
          required: true
-    } 
+    },
+    class: {type: mongoose.Schema.Types.ObjectId, ref: 'do_sys_m00'},
 },
 {
     timestamps:true
 }
 )
 
-CountriesSchema.plugin(mongooseLogs, {
-    schemaName: "countries",
+ExtensiveValuesSchema.plugin(mongooseLogs, {
+    schemaName: "extensive values",
     createAction: "created",
     updateAction: "updated",
     deleteAction: "deleted" 
  })
 
-var countries = mongoose.model('do_sys_m00', CountriesSchema)
+var extvalues = mongoose.model('do_sys_m01', ExtensiveValuesSchema)
 
-module.exports = countries
+module.exports = extvalues

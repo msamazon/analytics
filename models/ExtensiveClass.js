@@ -3,14 +3,13 @@ var Schema    = mongoose.Schema
 var bcrypt    = require('bcrypt')
 var mongooseLogs = require('mongoose-activitylogs')
 
-var LanguagesSchema = new Schema({    
-    isocode: {
+var ExtensiveClassSchema = new Schema({    
+    class: {
         type: String,
         unique: true,
         lowercase: false,
         required: true
     },
-    name: String,
     description: String,
     active: {
          type: Boolean,
@@ -22,13 +21,13 @@ var LanguagesSchema = new Schema({
 }
 )
 
-LanguagesSchema.plugin(mongooseLogs, {
-    schemaName: "language",
+ExtensiveClassSchema.plugin(mongooseLogs, {
+    schemaName: "extensive class",
     createAction: "created",
     updateAction: "updated",
     deleteAction: "deleted" 
  })
 
-var languages = mongoose.model('do_sys_m03', LanguagesSchema)
+var extclass = mongoose.model('do_sys_m00', ExtensiveClassSchema)
 
-module.exports = languages
+module.exports = extclass
