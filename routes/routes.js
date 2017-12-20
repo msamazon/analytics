@@ -45,8 +45,8 @@ router.get('/message/gpslist/:id',  message.getgeolist)
 router.post('/cntMileageMonth', isLoggedIn, currtripinfo.sumTripMileage)
 router.post('/chartMileageMonth', isLoggedIn, currtripinfo.chartTripMileage)
 // // Top 2
-// router.post('/cntIdleTime', isLoggedIn,  currtripinfo.sumIdleEngineTime)
-// router.post('/chartIdleTime', isLoggedIn,  currtripinfo.chartIdleEngineTime)
+router.post('/cntIdleTime', isLoggedIn,  currtripinfo.sumIdleEngineTime)
+router.post('/chartIdleTime', isLoggedIn,  currtripinfo.chartIdleEngineTime)
 // // Top 3
 // router.post('/cntHACCOccur', isLoggedIn, currtripinfo.cntHarshAcc)
 // router.post('/chartHACCOccur', isLoggedIn, currtripinfo.chartHarshAcc)

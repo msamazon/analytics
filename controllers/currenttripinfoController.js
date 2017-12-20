@@ -122,8 +122,8 @@ currenttripinfoController.sumIdleEngineTime = function(req, res) {
         console.log("sumIdleEngineTime Error:", err);
     }else {
       var sumIdleEngine = 0
-      for (var i =0; i < info.length; i++) {
-        sumIdleEngine += Number(info[i].alarmCurrent)
+      for (var i =0; i < info.length; i++) {       
+        sumIdleEngine += parseInt(info[i].alarmCurrent,'16')
       }
     } 
     res.json({sumIdleTime: sumIdleEngine})
@@ -133,23 +133,23 @@ currenttripinfoController.sumIdleEngineTime = function(req, res) {
 
 currenttripinfoController.chartIdleEngineTime = function(req, res) {
   
-  console.log('chartIdleEngineTime')
-  var array = []
-  // DO_CAR_A03.find().exec(function (err, currinfo) {
-  //   if (err) {
-  //       console.log("chartIdleEngineTime Error:", err);
-  //   }else {
-  //     var arrayMessage = []      
-  //     for(var i = 0; i < currinfo.length; i++) {
-  //       var id                        = currinfo[i]._id
-  //       var Data                      = currinfo[i].Data
-  //       var Min                       = currinfo[i].Min
-  //       var message0 =  { "_id": id, "Data": Data, "Min": Min }
-  //       arrayMessage.push(message0)
-  //     }   
-  //     res.json(arrayMessage)
-  //   } 
-  // })
+ 
+    messsage.find({eventcode:'0320', alarmNo:'Idle Engine'}).exec(function (err, info) {
+    console.log("info.length %s", info.length)    
+    if (err) {
+        console.log("sumIdleEngineTime Error:", err);
+    }else {
+         var arrayCurrinfo = []
+        for(var i = 0; i < info.length; i++) {   
+            var id                        = info[i]._id
+            var dreceived                 = info[i].dateReceived
+            var Min                       = parseInt(info[i].alarmCurrent,'16')
+            var message0                  = {"_id": id, "dreceived": dreceived, "Min": Min }
+            arrayCurrinfo.push(message0)
+        }               
+    } 
+    res.json({sumIdleTime: arrayCurrinfo})
+  })
 
  }
 
@@ -180,7 +180,7 @@ currenttripinfoController.sumTripMileage = function(req, res) {
   // })
 
  
-  messsage.find({eventcode:'0120'}).sort({$natural:-1}).exec(function(err, msg){     
+  messsage.find({eventcode:'0120'}).sort({$natural:-1}).limit(1000).exec(function(err, msg){     
                       if (err) {
                           console.log("Error:", err);
                       }else {

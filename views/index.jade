@@ -109,7 +109,100 @@ block content
                                   data: data,
                                   options: options
                                 });  
-                          });     
+                          });  
+
+
+                          //- Motor Ocioso
+                          $.ajax
+                            ({
+                              type: "post",
+                              url: "/cntIdleTime",
+                              dataType: "json",
+                              crossDomain: "false",
+                              contentType: "application/json; charset=UTF-8"                                                             
+                            }).done(function ( data ) {                               
+                              if ( data ) {
+                                    retrnCnt = data.sumIdleTime + ' Minutos';
+                              } else {
+                                    retrnCnt ='0 Minutos'; 
+                              }  
+                              $('#SumIdleEngine').html(retrnCnt);    
+                            });
+                             $.ajax
+                                ({
+                                  type: "post",
+                                  url: "/chartIdleTime",
+                                  dataType: "json",
+                                  crossDomain: "false",
+                                  contentType: "application/json; charset=UTF-8"                                                             
+                                }).done(function ( data ) {       
+                                  var lbl = []      
+                                  var dts = []
+                                  console.log ( data.sumIdleTime )
+                                  $.each(data.sumIdleTime, function(index, value) {      //Cards with Charts
+                                    var rawDrecv = value.dreceived
+                                    var cumTot   = value.Min
+                                    lbl.push(rawDrecv);
+                                    dts.push(cumTot);                                  
+                                  });
+
+                                  var data = {
+                                    labels: lbl,
+                                    datasets: [
+                                      {
+                                        label: 'Motor Ocioso',
+                                        backgroundColor: $.brandInfo,
+                                        borderColor: 'rgba(255,255,255,.55)',
+                                        data: dts
+                                      },
+                                    ]
+                                  };
+                                  var options = {
+                                    maintainAspectRatio: false,
+                                    legend: {
+                                      display: false
+                                    },
+                                    scales: {
+                                      xAxes: [{
+                                        gridLines: {
+                                          color: 'transparent',
+                                          zeroLineColor: 'transparent'
+                                        },
+                                        ticks: {
+                                          fontSize: 2,
+                                          fontColor: 'transparent',
+                                        }
+
+                                      }],
+                                      yAxes: [{
+                                        display: false,
+                                        ticks: {
+                                          display: false,
+                                          min: Math.min.apply(Math, data.datasets[0].data) - 5,
+                                          max: Math.max.apply(Math, data.datasets[0].data) + 5,
+                                        }
+                                      }],
+                                    },
+                                    elements: {
+                                      line: {
+                                        tension: 0.00001,
+                                        borderWidth: 1
+                                      },
+                                      point: {
+                                        radius: 4,
+                                        hitRadius: 10,
+                                        hoverRadius: 4,
+                                      },
+                                    }
+                                  };
+                                  var ctx = $('#card-chart2');
+                                  var cardChart2 = new Chart(ctx, {
+                                    type: 'line',
+                                    data: data,
+                                    options: options
+                                  });
+                                });  
+
                       })              
               .col-sm-6.col-lg-3
                 .card.text-white.bg-info
@@ -118,21 +211,7 @@ block content
                       #SumIdleEngine 
                     p Motor Ocioso
                   .chart-wrapper.px-3(style='height:70px;')
-                    canvas#card-chart2.chart(height='70')  
-                  script(type='text/javascript'). 
-                    $(document).ready(function(){ 
-                          $.ajax
-                          ({
-                            type: "post",
-                            url: "/cntMileageMonth",
-                            dataType: "json",
-                            crossDomain: "false",
-                            contentType: "application/json; charset=UTF-8"                                                             
-                          }).done(function ( data ) {  
-                            retrnCnt = data.sumcurrentTripMileage + ' Km';
-                            $('#SumCurMileage').html(retrnCnt);    
-                          });
-                    })                
+                    canvas#card-chart2.chart(height='70')                                  
               .col-sm-6.col-lg-3
                 .card.text-white.bg-warning
                   .card-body.pb-0                  
