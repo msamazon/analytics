@@ -31,10 +31,14 @@ router.get('/trips', isLoggedIn, masterdata.carlist)
 
 router.get('/alarms', isLoggedIn, vehicles.listbyUser)
 router.post('/alarmsbyvehicle', isLoggedIn, message.getAlarm)
+router.get('/analytics', isLoggedIn, vehicles.analyticsbyUser)
+router.post('/getvoltage/:id', isLoggedIn, message.getVoltage)
 
-// //Locates
+// Locates
 router.get('/message/gps/:id',  message.getgeo)
 router.get('/message/gpslist/:id',  message.getgeolist)
+
+
 
 //Dashboard
 // // Top 1

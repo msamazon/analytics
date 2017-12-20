@@ -268,7 +268,32 @@ vehicleController.listbyUser = function(req, res) {
               })  
       })        
   }
-
-
+vehicleController.analyticsbyUser = function(req, res) {   
+    var baseurl = req.protocol + "://" + req.get('host') + "/"    
+    var page = (req.query.page > 0 ? req.query.page : 1) - 1;
+    var _id = req.query.item;
+    var limit = 10;
+     
+    User
+      .findOne({email:req.user.email}).exec(function(err, user){ 
+          Vehicle
+              .find({customer:user.customer})
+              .limit(limit)
+              .skip(limit * page)
+              .exec(function(err, vehicles){
+                Vehicle.count().exec(function(err, count){                    
+                          res.render('analytics',
+                          { title: 'DriveOn Portal', 
+                              list: vehicles,
+                              user_info: req.user,
+                              baseuri: baseurl,
+                              page: page + 1,
+                              pages: Math.ceil(count / limit)}
+                          )
+                           
+                  })      
+              })  
+      })        
+  }
 
 module.exports = vehicleController

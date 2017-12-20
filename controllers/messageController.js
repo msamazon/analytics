@@ -259,5 +259,45 @@ messageController.chartMotorTemp = function(req, res) {
   };  
 
 
+  messageController.getVoltage = function(req, res) {
+    var baseurl = req.protocol + "://" + req.get('host') + "/" 
+    var dongleCode = req.params.id
+          
+    const page = (req.query.page > 0 ? req.query.page : 1) - 1;
+    const _id = req.query.item;
+    const limit = 10;
+    const options = {
+      limit: limit,
+      page: page
+    };        
+    
+Device.find({_id:dongleCode}, function(err, dev){        
+for(var i = 0; i < dev.length; i++) {
+  var dvice = dev[i].device
+    Message
+          .find({'dongleCode':dvice,'eventcode':'0120'}).sort({$natural:-1}).exec(function(err, alarme){
+            if (err) {
+              console.log("Error when load voltage:", err);
+            }else {
+              var arrayCurrinfo = []
+              for(var i = 0; i < message.length; i++) {
+                var id             = message[i]._id
+                var time           = message[i].time
+                var dateReceived   = message[i].dateReceived
+                var voltage        = message[i].voltage
+                var dongleCode     = message[i].dongleCode
+      
+                var message =  { "_id": id, "time": time, 
+                  "dateReceived": dateReceived, "voltage": voltage, "dongleCode": dongleCode }
+      
+                  arrayCurrinfo.push(message)
+                  res.json(arrayCurrinfo)
+                }
+              }     
+          })  
+      }       
+    })
+  } 
+
 
 module.exports = messageController
