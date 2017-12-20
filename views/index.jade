@@ -353,6 +353,39 @@ block content
                                 });   
                          });  
 
+                        
+                          $.ajax
+                          ({
+                            type: "post",
+                            url: "/cntDevConnected",
+                            dataType: "json",
+                            crossDomain: "false",
+                            contentType: "application/json; charset=UTF-8"                                                             
+                          }).done(function ( data ) {  
+                            if ( data.total ) {                                   
+                                    retrnCnt = data.total
+                              } else {
+                                    retrnCnt ='0'; 
+                              } 
+                            $('#VehicleON').html(retrnCnt);    
+                          });
+
+                            $.ajax
+                            ({
+                              type: "post",
+                              url: "/cntDevDisconnected",
+                              dataType: "json",
+                              crossDomain: "false",
+                              contentType: "application/json; charset=UTF-8"                                                             
+                            }).done(function ( data ) { 
+                               
+                              if ( data.total ) {                                   
+                                    retrnCnt = data.total
+                              } else {
+                                    retrnCnt ='0'; 
+                              } 
+                              $('#VehicleOFF').html(retrnCnt);    
+                            });
                          $.ajax
                           ({
                             type: "post",
@@ -415,7 +448,8 @@ block content
                               } else {
                                     retrnCnt ='0'; 
                               } 
-                              retrnCnt = parseInt(data.total) * 0.1;
+                              retrnCnt = Math.round(parseInt(data.total) * 0.1,2);
+                             
                               $('#SumFuel').html(retrnCnt);    
                             });
                       })              

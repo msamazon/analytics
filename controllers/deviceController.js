@@ -179,10 +179,12 @@ deviceController.delete = function(req, res){
 
 deviceController.cntVehiclesConnecteds = function(req, res){
   // to be implemented asap, need business rule
+  res.json({total:0})
   }
 
 deviceController.cntVehiclesDisconnecteds = function(req, res){
     // to be implemented asap, need business rule
+    res.json({total:0})
     }
 
 module.exports = deviceController  
