@@ -4,9 +4,10 @@ block content
   main.main
         // Breadcrumb
         ol.breadcrumb
+          li.breadcrumb-item Administração
           li.breadcrumb-item Configurações
           li.breadcrumb-item Parâmetros
-          li.breadcrumb-item.active Perfil de Usuário
+          li.breadcrumb-item.active Tipos Extensivos
         .container-fluid
           .animated.fadeIn
             .row
@@ -14,13 +15,13 @@ block content
                   .card
                     .card-header
                       i.fa.fa-align-justify
-                      |  Perfil de usuário
+                      |  Tipos Extensivos
                     .card-body   
                       != messages()  
                       table.table.table-striped
                         thead
                           tr
-                            th Perfil
+                            th Classe
                             th Descrição
                             th Ativo
                             th Criado em                             
@@ -28,18 +29,18 @@ block content
                             th Modificado por
                             th Ações
                         tbody                                                  
-                             each profile in list
+                             each classes in list
                               tr
-                                td #{profile.userProfile}
-                                td #{profile.ProfileDescription} 
-                                td #{ativo = profile.active==true?'Sim':'Não' }                                
-                                td #{formatDate(profile.createdAt)}                                
-                                td #{formatDate(profile.updatedAt)}
-                                td #{(profile.modifiedBy)}
+                                td #{classes.class}
+                                td #{classes.description} 
+                                td #{ativo = classes.active==true?'Sim':'Não' }                                
+                                td #{formatDate(classes.createdAt)}                                
+                                td #{formatDate(classes.updatedAt)}
+                                td #{(classes.modifiedBy)}
                                 td 
                                   .form-group
-                                    form.form-horizontal(action='/profiles/delete/#{profile.id}', method='post')                                      
-                                      a(href='/profiles/edit/#{profile.id}')
+                                    form.form-horizontal(action='/extclasses/delete/#{classes.id}', method='post')                                      
+                                      a(href='/extclasses/edit/#{classes.id}')
                                         button(type='button', style='background-color:transparent; border-color:transparent;')
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
@@ -48,5 +49,5 @@ block content
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  
-                      a(href='/profiles/new', target='_top')    
+                      a(href='/extclasses/new', target='_top')    
                        button.btn.btn-primary.btn-sm(type='button') Novo

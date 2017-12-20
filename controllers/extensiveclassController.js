@@ -89,19 +89,9 @@ extensiveclassController.update = function(req, res){
           req.params.id,          
           { $set: 
               { 
-                device 	:req.body.device,
-                supplier   :req.body.supplier,
+                class 	:req.body.class,
                 description :req.body.description,
-                active     :req.body.active,
-                firmware    :req.body.firmware,
-                version     :req.body.version, 
-                sms_srv_addr:req.body.sms_srv_addr,
-                sms_srv_key :req.body.sms_srv_key,
-                sms_apn     :req.body.sms_apn,
-                sms_user    :req.body.sms_user,
-                sms_password:req.body.sms_password,
-                sms_set_ip  :req.body.sms_set_ip,
-                sms_set_port:req.body.sms_set_port,
+                active     :req.body.active,               
                 modifiedBy: req.user.email
               }
           }, 
@@ -132,7 +122,6 @@ extensiveclassController.save  =   function(req, res){
     if(req.user) {           
       // console.log('Check req.user data:'+ JSON.stringify(req.user))
       payload.modifiedBy = req.user.email
-      payload.active = false
     }  
     
     var device = new ExtensiveClass(payload)      
