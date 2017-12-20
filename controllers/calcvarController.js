@@ -19,7 +19,8 @@ exports.list = function(req, res) {
       limit: limit,
       page: page
     };
-
+    var clclogic = Calcvar.schema.path('calctype').enumValues; 
+    var vlrlogic = Calcvar.schema.path('valtype').enumValues;  
 
     Calcvar
         .find({}, function(err, calcvars){
@@ -33,8 +34,8 @@ exports.list = function(req, res) {
                         page: page + 1,
                         pages: Math.ceil(count / limit)}
                     );
-                  }else{
-                    res.render('calcvars/new.jade', {title: 'DriveOn | Nova Variável para Cálculo',baseuri:baseurl});
+                  }else{                    
+                    res.render('calcvars/new.jade', {title: 'DriveOn | Nova Variável para Cálculo', calctypes:clclogic, valtypes:vlrlogic, baseuri:baseurl});
                   }     
             });        
         })
@@ -43,8 +44,11 @@ exports.list = function(req, res) {
   };
 
 exports.create = function(req, res){         
-    var baseurl = req.protocol + "://" + req.get('host') + "/"     
-    res.render('calcvars/new.jade', { title: 'DriveOn | Nova Variável para Cálculo',baseuri:baseurl});
+    var baseurl = req.protocol + "://" + req.get('host') + "/"   
+    var clclogic = Calcvar.schema.path('calctype').enumValues
+    var vlrlogic = Calcvar.schema.path('valtype').enumValues
+
+    res.render('calcvars/new.jade', { title: 'DriveOn | Nova Variável para Cálculo', calctypes:clclogic, valtypes:vlrlogic, baseuri:baseurl})
  };   
  
 exports.show = function(req, res){ 
@@ -62,8 +66,11 @@ exports.show = function(req, res){
                  break;
           }   
         } else {     
+          var clclogic = Calcvar.schema.path('calctype').enumValues
+          var vlrlogic = Calcvar.schema.path('valtype').enumValues
+
           req.flash('alert-info', 'Dados salvos com sucesso!')       
-          res.render('calcvars/show', {calcvars: profile, baseuri:baseurl});
+          res.render('calcvars/show', {calcvars: profile, calctypes:clclogic, valtypes:vlrlogic, baseuri:baseurl});
         }
       });
   } else {    
@@ -84,8 +91,10 @@ exports.edit = function(req, res){
                  req.flash('alert-danger', "Erro ao editar:"+ err)  
                  break;
           }   
-        } else {          
-          res.render('calcvars/edit', {calcvars: uprofile, baseuri:baseurl});
+        } else {    
+          var clclogic = Calcvar.schema.path('calctype').enumValues
+          var vlrlogic = Calcvar.schema.path('valtype').enumValues      
+          res.render('calcvars/edit', {calcvars: uprofile, calctypes:clclogic, valtypes:vlrlogic, baseuri:baseurl})
         }
       });
  };
@@ -96,9 +105,14 @@ exports.update = function(req, res){
           req.params.id,          
           { $set: 
               { 
-                userProfile: req.body.userProfile, 
-                ProfileDescription: req.body.ProfileDescription, 
+                item: req.body.item, 
+                description: req.body.description, 
                 active: req.body.active,
+                calctype: req.body.calctype,
+                valtype: req.body.valtype,
+                defaultvalue: req.body.defaultvalue,
+                minvalue: req.body.minvalue,
+                maxvalue: req.body.maxvalue,
                 modifiedBy: req.user.email
               }
           }, 
@@ -114,7 +128,9 @@ exports.update = function(req, res){
                  req.flash('alert-danger', "Erro ao atualizar:"+ err)  
                  break;
           }   
-          res.render("calcvars/edit", {calcvars: req.body, baseuri:baseurl})
+          var clclogic = Calcvar.schema.path('calctype').enumValues
+          var vlrlogic = Calcvar.schema.path('valtype').enumValues      
+          res.render('calcvars/edit', {calcvars: uprofile, calctypes:clclogic, valtypes:vlrlogic, baseuri:baseurl})
         }else{
           req.flash('alert-info', 'Dados salvos com sucesso!')            
           res.redirect("/calcvars/show/"+profile._id)
@@ -132,6 +148,7 @@ exports.save  =   function(req, res){
     }  
     
     var profile = new Calcvar(payload)      
+    //  console.log('Check profile data:'+ JSON.stringify(profile))
     profile.save(function(err) {
       if(err) {  
         switch (err.code)
@@ -143,7 +160,10 @@ exports.save  =   function(req, res){
                req.flash('alert-danger', "Erro ao salvar:"+ err)  
                break;
         }        
-        res.render('calcvars/new', { title: 'DriveOn | Novo Variáveis para Cálculo', baseuri:baseurl})
+        var clclogic = Calcvar.schema.path('calctype').enumValues
+        var vlrlogic = Calcvar.schema.path('valtype').enumValues
+    
+        res.render('calcvars/new.jade', { title: 'DriveOn | Nova Variável para Cálculo', calctypes:clclogic, valtypes:vlrlogic, baseuri:baseurl})
       } else {          
         req.flash('alert-info', 'Dados salvos com sucesso!')  
         res.redirect('/calcvars/show/'+profile._id)
@@ -151,7 +171,7 @@ exports.save  =   function(req, res){
     })
  }
 
- exports.delete = function(req, res){    
+exports.delete = function(req, res){    
     var baseurl = req.protocol + "://" + req.get('host') + "/" 
     Calcvar.remove({_id: req.params.id}, function(err) {
         if(err) {
@@ -168,5 +188,5 @@ exports.save  =   function(req, res){
           req.flash('alert-info', 'Dados removidos com sucesso!')        
           res.redirect("/calcvars");
         }
-      });
-  };
+      })
+  }

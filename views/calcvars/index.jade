@@ -21,7 +21,7 @@ block content
                       table.table.table-striped
                         thead
                           tr
-                            th Perfil
+                            th Item
                             th Descrição
                             th Ativo
                             th Criado em                             
@@ -29,18 +29,18 @@ block content
                             th Modificado por
                             th Ações
                         tbody                                                  
-                             each profile in list
+                             each calcvars in list
                               tr
-                                td #{profile.userProfile}
-                                td #{profile.ProfileDescription} 
-                                td #{ativo = profile.active==true?'Sim':'Não' }                                
-                                td #{formatDate(profile.createdAt)}                                
-                                td #{formatDate(profile.updatedAt)}
-                                td #{(profile.modifiedBy)}
+                                td #{calcvars.item}
+                                td #{calcvars.description} 
+                                td #{ativo = calcvars.active==true?'Sim':'Não' }                                
+                                td #{formatDate(calcvars.createdAt)}                                
+                                td #{formatDate(calcvars.updatedAt)}
+                                td #{(calcvars.modifiedBy)}
                                 td 
                                   .form-group
-                                    form.form-horizontal(action='/profiles/delete/#{profile.id}', method='post')                                      
-                                      a(href='/profiles/edit/#{profile.id}')
+                                    form.form-horizontal(action='/calcvars/delete/#{calcvars.id}', method='post')                                      
+                                      a(href='/calcvars/edit/#{calcvars.id}')
                                         button(type='button', style='background-color:transparent; border-color:transparent;')
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
@@ -49,5 +49,5 @@ block content
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  
-                      a(href='/profiles/new', target='_top')    
+                      a(href='/calcvars/new', target='_top')    
                        button.btn.btn-primary.btn-sm(type='button') Novo

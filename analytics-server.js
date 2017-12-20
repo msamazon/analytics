@@ -94,7 +94,7 @@ app.use('/devices', require('./routes/devices'))
 app.use('/georisks', require('./routes/georisks'))
 app.use('/extclasses', require('./routes/extensiveclass'))
 app.use('/extensivevalues', require('./routes/extensivevalues'))
-app.use('/calcvar', require('./routes/calcvars'))
+app.use('/calcvars', require('./routes/calcvars'))
 // Set
 app.listen(port, function () {
     console.log(pkg.name,`listening on ${port}`)
