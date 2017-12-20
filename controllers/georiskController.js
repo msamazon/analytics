@@ -89,19 +89,14 @@ georiskController.update = function(req, res){
           req.params.id,          
           { $set: 
               { 
-                device 	:req.body.device,
-                supplier   :req.body.supplier,
-                description :req.body.description,
-                active     :req.body.active,
-                firmware    :req.body.firmware,
-                version     :req.body.version, 
-                sms_srv_addr:req.body.sms_srv_addr,
-                sms_srv_key :req.body.sms_srv_key,
-                sms_apn     :req.body.sms_apn,
-                sms_user    :req.body.sms_user,
-                sms_password:req.body.sms_password,
-                sms_set_ip  :req.body.sms_set_ip,
-                sms_set_port:req.body.sms_set_port,
+                mapid 	:req.body.mapid,
+                country   :req.body.country,
+                state :req.body.state,
+                city     :req.body.city,
+                district    :req.body.district,
+                zone     :req.body.zone, 
+                risk:req.body.risk,
+                points :req.body.points,
                 modifiedBy: req.user.email
               }
           }, 
@@ -119,7 +114,7 @@ georiskController.update = function(req, res){
           }   
           res.render("georisks/edit", {georisks: req.body, baseuri:baseurl})
         }else{
-          req.flash('alert-info', 'Dados salvos com sucesso!')            
+          // req.flash('alert-info', 'Dados salvos com sucesso!')            
           res.redirect("/georisks/show/"+profile._id)
         }
       })
@@ -129,11 +124,11 @@ georiskController.save  =   function(req, res){
     var baseurl = req.protocol + "://" + req.get('host') + "/" 
     var payload = req.body
     
-    if(req.user) {           
-      // console.log('Check req.user data:'+ JSON.stringify(req.user))
-      payload.modifiedBy = req.user.email
-      payload.active = false
-    }  
+    // if(req.user) {           
+    //   // console.log('Check req.user data:'+ JSON.stringify(req.user))
+    //   payload.modifiedBy = req.user.email
+    //   // payload.active = false
+    // }  
     
     var device = new Georisk(payload)      
     
@@ -150,10 +145,10 @@ georiskController.save  =   function(req, res){
         }       
         // res.render('georisks/new.jade', { title: 'DriveOn | Novo Device',baseuri:baseurl});
       } else {          
-        req.flash('alert-info', 'Dados salvos com sucesso!')  
-        // res.redirect('/georisks/show/'+device._id)
+        // req.flash('alert-info', 'Dados salvos com sucesso!')  
+        res.redirect('/georisks/show/'+device._id)
       }
-      res.render('georisks/new.jade', { title: 'DriveOn | Novo Device',baseuri:baseurl});
+      res.render('georisks/new.jade', { title: 'DriveOn | Novo Device', baseuri:baseurl});
     })
  }
 
@@ -172,7 +167,7 @@ georiskController.delete = function(req, res){
           }  
         } else {    
           req.flash('alert-info', 'Dados removidos com sucesso!')        
-          res.redirect("/georisks");
+          res.redirect("/georisks")
         }
       })
   }

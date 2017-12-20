@@ -137,11 +137,11 @@ extensiveclassController.save  =   function(req, res){
                req.flash('alert-danger', "Erro ao salvar:"+ err)  
                break;
         }       
-        res.render('extensiveclasses/new.jade', { title: 'DriveOn | Novo Device',baseuri:baseurl});
+        res.render('extensiveclasses/new.jade', { title: 'DriveOn | Novo Device',baseuri:baseurl})
       } else {                  
         res.redirect('/extclasses/show/'+device._id)
       }
-      res.render('extensiveclasses/new.jade', { title: 'DriveOn | Novo Device',baseuri:baseurl});
+      res.render('extensiveclasses/new.jade', { title: 'DriveOn | Novo Device', baseuri:baseurl})
     })
  }
 

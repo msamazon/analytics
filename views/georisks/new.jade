@@ -25,67 +25,47 @@ block content
                             .input-group
                               input#mapid.form-control(name='mapid',size='10', type='text')
                         .form-group
-                          label.form-control-label(for='supplier') Fornecedor
+                          label.form-control-label(for='country') País
                           .controls
                             .input-group
-                              input#supplier.form-control(name='supplier',size='100', type='text')  
+                              input#country.form-control(name='country',size='100', type='text')  
                         .form-group
-                          label.form-control-label(for='supplier') Descrição
+                          label.form-control-label(for='state') Estado
                           .controls
                             .input-group
-                              input#description.form-control(name='description',size='100', type='text')  
+                              input#state.form-control(name='state',size='100', type='text') 
                         .form-group
-                          label.form-control-label(for='firmware') Firmware
+                          label.form-control-label(for='city') Cidade
                           .controls
                             .input-group
-                              input#Firmware.form-control(name='firmware',size='16', type='text')
+                              input#city.form-control(name='city',size='100', type='text')     
                         .form-group
-                          label.form-control-label(for='version') Versão do Firmware
+                          label.form-control-label(for='district') Bairro
                           .controls
                             .input-group
-                              input#version.form-control(name='version',size='16', type='text') 
+                              input#district.form-control(name='district',size='100', type='text') 
                         .form-group
-                          label.form-control-label(for='sms_srv_addr') Endereço do Servidor SMS
+                          label.form-control-label(for='zone') Zona
                           .controls
                             .input-group
-                              input#sms_srv_addr.form-control(name='sms_srv_addr',size='16', type='text') 
+                              input#zone.form-control(name='zone',size='100', type='text') 
                         .form-group
-                          label.form-control-label(for='sms_srv_key') Senha do Servidor SMS
+                          label.form-control-label(for='risk') Risco
                           .controls
                             .input-group
-                              input#sms_srv_key.form-control(name='sms_srv_key',size='16', type='password')                  
+                              input#risk.form-control(name='risk',size='16', type='text') 
                         .form-group
-                          label.form-control-label(for='sms_apn') SMS APN
+                          label.form-control-label(for='points') Pontos
                           .controls
                             .input-group
-                              input#sms_apn.form-control(name='sms_apn',size='16', type='text')  
+                              input#points.form-control(name='points',size='16', type='text')                                                                                                                  
                         .form-group
-                          label.form-control-label(for='sms_user') SMS Usuário
+                          label.form-control-label(for='activedYN') Ativo?
                           .controls
                             .input-group
-                              input#sms_user.form-control(name='sms_user',size='16', type='text') 
-                        .form-group
-                          label.form-control-label(for='sms_password') SMS Senha
-                          .controls
-                            .input-group
-                              input#sms_password.form-control(name='sms_password',size='16', type='password')  
-                        .form-group
-                          label.form-control-label(for='sms_set_ip') SMS IP
-                          .controls
-                            .input-group
-                              input#sms_set_ip.form-control(name='sms_set_ip',size='16', type='text')   
-                        .form-group
-                          label.form-control-label(for='sms_set_port') SMS Porta
-                          .controls
-                            .input-group
-                              input#sms_set_port.form-control(name='sms_set_port',size='16', type='text')                                                                                           
-                        //- .form-group
-                        //-   label.form-control-label(for='activedYN') Ativo?
-                        //-   .controls
-                        //-     .input-group
-                        //-       select#select.form-control-sm(name='active')
-                        //-         option(value='true') Sim
-                        //-         option(value='false') Não                                                   
+                              select#select.form-control-sm(name='active')
+                                option(value='true') Sim
+                                option(value='false') Não                                                   
                         .form-actions
                           button.btn.btn-sm.primary(type='submit') Salvar
                           span
