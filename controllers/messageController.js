@@ -93,7 +93,7 @@ messageController.show = function(req, res) {
 messageController.SOSCounter = function(req, res) {
     
     Message
-      .find({'eventcode':'0320','alarmNo':'0e'}).count().exec(function(err, count){                       
+      .find({'eventcode':'0320','alarmNo':'SOS'}).count().exec(function(err, count){                       
             var message0 = {'total':count}
                 res.json(message0);                     
           });        
@@ -103,7 +103,7 @@ messageController.SOSCounter = function(req, res) {
 messageController.GuinchoCounter = function(req, res) {
     
     Message
-      .find({'eventcode':'0320','alarmNo':'06'}).count().exec(function(err, count){                       
+      .find({'eventcode':'0320','alarmNo':'Towing'}).count().exec(function(err, count){                       
             var message0 = {'total':count}
                 res.json(message0);                     
           });        
@@ -113,7 +113,7 @@ messageController.GuinchoCounter = function(req, res) {
 messageController.MILCounter = function(req, res) {
   
   Message
-    .find({'eventcode':'0320','alarmNo':'01'}).count().exec(function(err, count){                       
+    .find({'eventcode':'0320','alarmNo':'MIL on'}).count().exec(function(err, count){                       
           var message0 = {'total':count}
               res.json(message0);                     
         });        
@@ -123,7 +123,7 @@ messageController.MILCounter = function(req, res) {
 messageController.GASsum = function(req, res) {
   var dongleCode = req.params.id
 
-  Message.findOne({'dongleCode':dongleCode,'eventcode':'0120'}).sort({$natural :1}).exec(function (err, message) {  
+  Message.findOne({'eventcode':'0120'}).sort({$natural :1}).exec(function (err, message) {  
     if (err) {
       console.log("Error GASsum:", err);
     }else {

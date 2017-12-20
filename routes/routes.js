@@ -61,7 +61,7 @@ router.post('/cntDevDisconnected', isLoggedIn, devices.cntVehiclesDisconnecteds)
 router.post('/cntSOS', isLoggedIn, message.SOSCounter)
 router.post('/cntReb', isLoggedIn, message.GuinchoCounter)
 router.post('/cntMIL', isLoggedIn, message.MILCounter)
-router.post('/sumGAS/:id', isLoggedIn, message.GASsum)
+router.post('/sumGAS', isLoggedIn, message.GASsum)
 // router.post('/getmotorTemp/:id', isLoggedIn,  message.chartMotorTemp)
 // // Generic Tools
 // router.post('/calAlarm',  currtripinfo.calAlarm)

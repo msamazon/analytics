@@ -351,8 +351,73 @@ block content
                                   data: data,
                                   options: options
                                 });   
-                          });  
+                         });  
 
+                         $.ajax
+                          ({
+                            type: "post",
+                            url: "/cntSOS",
+                            dataType: "json",
+                            crossDomain: "false",
+                            contentType: "application/json; charset=UTF-8"                                                             
+                          }).done(function ( data ) {  
+                            if ( data.total ) {                                   
+                                    retrnCnt = data.total
+                              } else {
+                                    retrnCnt ='0'; 
+                              }  
+                            $('#SOScnt').html(retrnCnt);    
+                          });
+
+                       $.ajax
+                          ({
+                            type: "post",
+                            url: "/cntReb",
+                            dataType: "json",
+                            crossDomain: "false",
+                            contentType: "application/json; charset=UTF-8"                                                             
+                          }).done(function ( data ) {  
+                             if ( data.total ) {                                   
+                                    retrnCnt = data.total
+                              } else {
+                                    retrnCnt ='0'; 
+                              }  
+                            $('#Rebcnt').html(retrnCnt);    
+                          });
+
+
+                          $.ajax
+                          ({
+                            type: "post",
+                            url: "/cntMIL",
+                            dataType: "json",
+                            crossDomain: "false",
+                            contentType: "application/json; charset=UTF-8"                                                             
+                          }).done(function ( data ) {  
+                            if ( data.total ) {                                   
+                                    retrnCnt = data.total
+                              } else {
+                                    retrnCnt ='0'; 
+                              } 
+                            $('#MILcnt').html(retrnCnt);    
+                          });
+
+                          $.ajax
+                            ({
+                              type: "post",
+                              url: "/sumGAS",
+                              dataType: "json",
+                              crossDomain: "false",
+                              contentType: "application/json; charset=UTF-8"                                                             
+                            }).done(function ( data ) {  
+                             if ( data.total ) {                                   
+                                    retrnCnt = data.total
+                              } else {
+                                    retrnCnt ='0'; 
+                              } 
+                              retrnCnt = parseInt(data.total) * 0.1;
+                              $('#SumFuel').html(retrnCnt);    
+                            });
                       })              
               .col-sm-6.col-lg-3
                 .card.text-white.bg-info
