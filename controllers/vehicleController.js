@@ -104,7 +104,20 @@ var vehicleController = {}
  vehicleController.show = function(req, res){ 
   var baseurl = req.protocol + "://" + req.get('host') + "/" 
   if (req.params.id != null || req.params.id != undefined) {      
-  Vehicle.findOne({_id: req.params.id}).exec(function (err, profile) {
+  Vehicle.findOne({_id: req.params.id})
+  .populate({
+    path:'device', 
+    select:'device',
+    match:{ active: true},
+    options: { sort: { device: -1 }}
+  })
+  .populate({
+    path:'customer', 
+    select:'fullname',
+    match:{ active: true },
+    options: { sort: { fullname: -1 }}
+  })
+  .exec(function (err, vehicle) {
         if (err) {
           switch (err.code)
           {
@@ -116,8 +129,9 @@ var vehicleController = {}
                  break;
           }   
         } else {     
-          req.flash('alert-info', 'Dados salvos com sucesso!')       
-          res.render('vehicles/show', {vehicles: profile, baseuri:baseurl});
+          req.flash('alert-info', 'Dados salvos com sucesso!')   
+          console.log(vehicle)  
+          res.render('vehicles/show', {vehicles: vehicle, baseuri:baseurl});
         }
       });
   } else {    

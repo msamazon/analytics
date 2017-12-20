@@ -20,15 +20,48 @@ block content
                       != messages()  
                       form.form-horizontal(action='/users/update/#{users.id}', method='post')
                         .form-group
-                          label.form-control-label(for='userProfile') Perfil
+                          label.form-control-label(for='fullname') Nome
                           .controls
                             .input-group
-                              input#userProfile.form-control(name='userProfile',size='16', type='text', value='#{users.userProfile}')                       
+                              input#fullname.form-control(name='fullname',size='16', type='text',  value='#{users.fullname}', readonly=false)
                         .form-group
-                          label.form-control-label(for='ProfileDescription') Descrição
+                          label.form-control-label(for='email') e-mail
                           .controls
                             .input-group
-                              input#ProfileDescription.form-control(name='ProfileDescription',size='100', type='text', value='#{users.ProfileDescription}') 
+                              input#email.form-control(name='email',size='100', type='text',  value='#{users.email}', readonly=false)                                                           
+                        .form-group
+                          label.form-control-label(for='password') Senha
+                          .controls
+                            .input-group
+                              input#password.form-control(name='password',size='16', type='password',  value='#{users.password}', readonly=false) 
+                        .form-group
+                          label.form-control-label(for='genderMF') Genero?
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='gender')
+                                option(value='Masculino') Masculino
+                                option(value='Feminino') Feminino 
+                        .form-group
+                          label.form-control-label(for='profilelbl') Perfil
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='profile')
+                                each prof in profiles
+                                  option(value='#{prof.id}', selected=prof.id==users.profile) #{prof.ProfileDescription}                                                                                       
+                        .form-group
+                          label.form-control-label(for='authlbl') Autoridade
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='authority')
+                                each auth in authorities
+                                  option(value='#{auth.id}', selected=auth.id==users.authority) #{auth.AuthorityDescription}  
+                         .form-group
+                          label.form-control-label(for='accountlbl') Conta
+                          .controls
+                            .input-group
+                              select#select.form-control-sm(name='customer')
+                                each cust in customers
+                                  option(value='#{cust.id}', selected=cust.id==users.customer) #{cust.fullname}  
                         .form-group
                           label.col-md-3.form-control-label(for='activedYN') Ativo?
                           .controls

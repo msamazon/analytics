@@ -16,37 +16,35 @@ block content
                       i.fa.fa-align-justify
                       |  Usuários
                     .card-body   
-                      != messages()  
+                      != messages()                        
                       table.table.table-striped
                         thead
                           tr
                             th Nome
                             th e-mail
-                            th Genero
-                            th Perfil
-                            th Autoridade                            
-                            th Conta
+                            //- th Perfil
+                            //- th Autoridade                            
+                            //- th Conta
                             th Ativo
                             th Ações
-                        tbody                                                  
-                             each profile in list
+                        tbody                                                                                                         
+                            each user in list                         
                               tr
-                                td #{profile.fullname}
-                                td #{profile.email}
-                                td #{profile.gender=='M'?'Masculino':'Feminino'}
-                                td #{profile.profile} 
-                                td #{profile.authority}                                 
-                                td #{profile.customer}
-                                td #{ativo = profile.active==true?'Sim':'Não' }                            
+                                td #{user.fullname}
+                                td #{user.email}                                                                
+                                //- td #{uprof.ProfileDescription}
+                                //- td #{auth.AuthorityDescription}                                 
+                                //- td #{cli.fullname}
+                                td #{ativo = user.active==true?'Sim':'Não' }                            
                                 td 
                                   .form-group
-                                    form.form-horizontal(action='/users/delete/#{profile.id}', method='post')                                      
-                                      a(href='/users/edit/#{profile.id}')
+                                    form.form-horizontal(action='/users/delete/#{user.id}', method='post')                                      
+                                      a(href='/users/edit/#{user.id}')
                                         button(type='button', style='background-color:transparent; border-color:transparent;')
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
                                       button(type='submit', style='background-color:transparent; border-color:transparent;')
-                                        i.fa.fa-remove                                                              
+                                        i.fa.fa-remove
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  

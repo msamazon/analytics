@@ -73,6 +73,12 @@ userController.list = function(req, res) {
         options: { sort: { userProfile: -1 }}
       })
       .populate({
+        path:'authority', 
+        select:'AuthorityDescription',
+        match:{ active: true },
+        options: { sort: { authority: -1 }}
+      })
+      .populate({
         path:'customer', 
         select:'fullname',
         match:{ active: true },
@@ -80,14 +86,14 @@ userController.list = function(req, res) {
       })
       .limit(limit)
       .skip(limit * page).exec(function(err, users){
-        // console.log('user infoo:'+ users)
+        console.log('user infoo:'+ users)
         if(err){          
           req.flash('alert-danger', 'Erro ao Listar os usuários:'+err)  
           res.render('errors/500', {message:req.flash});                    
         }else{
           User.count().exec(function(err, count){
             if (count > 0) {
-                  res.render('users/index',
+                   res.render('users/index',
                     { 
                       title: 'DriveOn Portal | Usuários', 
                       list: users,
