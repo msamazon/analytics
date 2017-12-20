@@ -29,12 +29,12 @@ block content
                           label.form-control-label(for='value') Valor
                           .controls
                             .input-group
-                              input#value.form-control(name='value',size='16', type='text', value='#{extvalueses.class}', readonly=true) 
+                              input#value.form-control(name='value',size='16', type='text', value='#{extvalueses.value}', readonly=true) 
                         .form-group
                           label.form-control-label(for='description') Descrição
                           .controls
                             .input-group
-                              input#description.form-control(name='description',size='100', type='text') 
+                              input#description.form-control(name='description',size='100', type='text', value='#{extvalueses.description}', readonly=true)
                         .form-group
                           label.col-md-3.form-control-label(for='activedYN') Ativo?
                           .controls

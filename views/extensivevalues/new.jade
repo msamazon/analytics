@@ -15,7 +15,7 @@ block content
                   .card
                     .card-header
                       i.fa.fa-edit
-                      |   Valor Extensivo
+                      |  Novo Valor Extensivo
                     .card-body                                              
                       != messages()
                       form.form-horizontal(action='/extensivevalues/save', method='post')
@@ -24,8 +24,8 @@ block content
                           .controls
                             .input-group
                               select#select.form-control-sm(name='class')
-                               if extclasses
-                                each classes in extclasses
+                               if extvalueses
+                                each classes in extvalueses
                                   option(value='#{classes.id}') #{classes.description}  
                         .form-group
                           label.form-control-label(for='value') Valor

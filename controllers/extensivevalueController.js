@@ -80,7 +80,7 @@ extensivevalueController.show = function(req, res){
         if (err) {         
           req.flash('alert-danger', "Erro ao exibir:"+ err)                
         } else {     
-          req.flash('alert-info', 'Dados salvos com sucesso!')       
+          // req.flash('alert-info', 'Dados salvos com sucesso!')       
           res.render('extensivevalues/show', {extvalueses: extvalues, baseuri:baseurl})
         }
       })
@@ -103,7 +103,16 @@ extensivevalueController.edit = function(req, res){
                  break;
           }   
         } else {          
-          res.render('extensivevalues/edit', {extvalueses: uprofile, baseuri:baseurl});
+          
+          ExtensiveClass.find({active: true}).exec(function (err, extclass) { 
+            // console.log('logo:'+extvalues)
+            if (err) {         
+              req.flash('alert-danger', "Erro ao editar:"+ err)                
+            } else {               
+              res.render('extensivevalues/edit', {extvalueses: uprofile, extclasses: extclass, baseuri:baseurl});
+            }  
+           
+          }) 
         }
       })
  }
@@ -135,8 +144,8 @@ extensivevalueController.update = function(req, res){
           }   
           res.render("extensivevalues/edit", {extensivevalues: req.body, baseuri:baseurl})
         }else{
-          req.flash('alert-info', 'Dados salvos com sucesso!')            
-          res.redirect("/extvalueses/show/"+profile._id)
+          // req.flash('alert-info', 'Dados salvos com sucesso!')            
+          res.redirect("/extensivevalues/show/"+profile._id)
         }
       })
  }  
@@ -150,9 +159,9 @@ extensivevalueController.save  =   function(req, res){
       payload.modifiedBy = req.user.email
     }  
     
-    var device = new ExtensiveValue(payload)      
+    var extvalue = new ExtensiveValue(payload)      
     
-    device.save(function(err) {
+    extvalue.save(function(err) {
       if(err) {  
         switch (err.code)
         {
@@ -173,8 +182,8 @@ extensivevalueController.save  =   function(req, res){
          
         })  
       } else {          
-        req.flash('alert-info', 'Dados salvos com sucesso!')  
-        res.redirect('/extvalueses/show/'+device._id)
+        // req.flash('alert-info', 'Dados salvos com sucesso!')  
+        res.redirect('/extensivevalues/show/'+extvalue._id)
       }
       ExtensiveClass.find({active: true}).exec(function (err, extvalues) { 
         // console.log('logo:'+extvalues)
@@ -203,7 +212,7 @@ extensivevalueController.delete = function(req, res){
           }  
         } else {    
           req.flash('alert-info', 'Dados removidos com sucesso!')        
-          res.redirect("/extvalueses");
+          res.redirect("/extensivevalues");
         }
       })
   }

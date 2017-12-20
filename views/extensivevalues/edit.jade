@@ -19,15 +19,15 @@ block content
                       |  Valor Extensivo - Edição
                     .card-body   
                       != messages()  
-                      form.form-horizontal(action='/extensivevalues/update/#{extensivevalues.id}', method='post')
-                         .form-group
-                          label.form-control-label(for='class') Classe
+                      form.form-horizontal(action='/extensivevalues/update/#{extvalueses.id}', method='post')
+                        .form-group
+                          label.form-control-label(for='classasa') Classe
                           .controls
                             .input-group
                               select#select.form-control-sm(name='class')
                                if extclasses
                                 each classes in extclasses
-                                  option(value='#{classes.id}', selected=classes.id==extensivevalues.id) #{classes.description}  
+                                  option(value='#{classes.id}', selected=classes.id==extvalueses.id) #{classes.description}  
                         .form-group
                           label.form-control-label(for='value') Valor
                           .controls

@@ -41,8 +41,8 @@ block content
                                 td #{(profile.modifiedBy)}
                                 td 
                                   .form-group
-                                    form.form-horizontal(action='/profiles/delete/#{profile.id}', method='post')                                      
-                                      a(href='/profiles/edit/#{profile.id}')
+                                    form.form-horizontal(action='/extensivevalues/delete/#{profile.id}', method='post')                                      
+                                      a(href='/extensivevalues/edit/#{profile.id}')
                                         button(type='button', style='background-color:transparent; border-color:transparent;')
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
@@ -51,5 +51,5 @@ block content
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  
-                      a(href='/profiles/new', target='_top')    
+                      a(href='/extensivevalues/new', target='_top')    
                        button.btn.btn-primary.btn-sm(type='button') Novo

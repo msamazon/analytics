@@ -109,7 +109,7 @@ extensiveclassController.update = function(req, res){
           }   
           res.render("extensiveclasses/edit", {extensiveclasses: req.body, baseuri:baseurl})
         }else{
-          req.flash('alert-info', 'Dados salvos com sucesso!')            
+          // req.flash('alert-info', 'Dados salvos com sucesso!')            
           res.redirect("/extclasses/show/"+profile._id)
         }
       })
@@ -138,8 +138,7 @@ extensiveclassController.save  =   function(req, res){
                break;
         }       
         res.render('extensiveclasses/new.jade', { title: 'DriveOn | Novo Device',baseuri:baseurl});
-      } else {          
-        req.flash('alert-info', 'Dados salvos com sucesso!')  
+      } else {                  
         res.redirect('/extclasses/show/'+device._id)
       }
       res.render('extensiveclasses/new.jade', { title: 'DriveOn | Novo Device',baseuri:baseurl});
