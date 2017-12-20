@@ -138,7 +138,7 @@ block content
                                 }).done(function ( data ) {       
                                   var lbl = []      
                                   var dts = []
-                                  console.log ( data.sumIdleTime )
+                                 
                                   $.each(data.sumIdleTime, function(index, value) {      //Cards with Charts
                                     var rawDrecv = value.dreceived
                                     var cumTot   = value.Min
@@ -202,6 +202,156 @@ block content
                                     options: options
                                   });
                                 });  
+
+
+
+                            //- Altas Acelerações
+                            $.ajax
+                            ({
+                                type: "post",
+                                url: "/cntHACCOccur",
+                                dataType: "json",
+                                crossDomain: "false",
+                                contentType: "application/json; charset=UTF-8"                                                            
+                            }).done(function ( data ) {                               
+                              if ( data ) {                                   
+                                    retrnCnt = data.sumHardacceleration + ' Ocorrências';
+                              } else {
+                                    retrnCnt ='0 Ocorrências'; 
+                              }  
+                              $('#SumHACCOccur').html(retrnCnt);     
+                            });
+
+                          $.ajax
+                           ({
+                                type: "post",
+                                url: "/chartHACCOccur",
+                                dataType: "json",
+                                crossDomain: "false",
+                                contentType: "application/json; charset=UTF-8"                                                             
+                           }).done(function ( data ) {  
+
+                              var lbl = []      
+                              var dts = []
+                              $.each(data.sumIdleTime, function(index, value) {      //Cards with Charts
+                                var rawDrecv = value.dreceived
+                                var cumTot   = value.Min
+
+                                lbl.push(rawDrecv);
+                                dts.push(cumTot);  
+                              });
+
+                              var options = {
+                                maintainAspectRatio: false,
+                                legend: {
+                                  display: false
+                                },
+                                scales: {
+                                  xAxes: [{
+                                    display: false
+                                  }],
+                                  yAxes: [{
+                                    display: false
+                                  }],
+                                },
+                                elements: {
+                                  line: {
+                                    borderWidth: 2
+                                  },
+                                  point: {
+                                    radius: 0,
+                                    hitRadius: 10,
+                                    hoverRadius: 4,
+                                  },
+                                }
+                              };
+                              var data = {
+                                labels: lbl,
+                                datasets: [
+                                  {
+                                    label: 'Altas Acelerações',
+                                    backgroundColor: 'rgba(255,255,255,.2)',
+                                    borderColor: 'rgba(255,255,255,.55)',
+                                    data: dts
+                                  },
+                                ]
+                              };
+                              var ctx = $('#card-chart3');
+                              var cardChart3 = new Chart(ctx, {
+                                type: 'line',
+                                data: data,
+                                options: options
+                              });
+                            });  
+
+
+                          //- Break hash
+                          $.ajax
+                          ({
+                            type: "post",
+                            url: "/cntHBRAKEOccur",
+                            dataType: "json",
+                            crossDomain: "false",
+                            contentType: "application/json; charset=UTF-8"                                                             
+                          }).done(function ( data ) {  
+                            if ( data ) {                                   
+                                    retrnCnt = data.cntHBRAKEOccur + ' Ocorrências';
+                              } else {
+                                    retrnCnt ='0 Ocorrências'; 
+                              }  
+                            $('#SumHBRAKEOccur').html(retrnCnt);    
+                          }); 
+                           $.ajax
+                          ({
+                            type: "post",
+                            url: "/chartHBRAKEOccur",
+                            dataType: "json",
+                            crossDomain: "false",
+                            contentType: "application/json; charset=UTF-8"                                                             
+                          }).done(function ( data ) {          
+                             var lbl = []      
+                              var dts = []
+                              $.each(data.cntHBRAKEOccur, function(index, value) {      
+                                var rawDrecv = value.Data
+                                var cumTot   = value.Min
+                                
+                                lbl.push(rawDrecv);
+                                dts.push(cumTot);  
+                              });
+
+                              var options = {
+                                  maintainAspectRatio: false,
+                                  legend: {
+                                    display: false
+                                  },
+                                  scales: {
+                                    xAxes: [{
+                                      display: false,
+                                      barPercentage: 0.6,
+                                    }],
+                                    yAxes: [{
+                                      display: false,
+                                    }]
+                                  },
+
+                                };
+                                var data = {
+                                  labels: lbl,
+                                  datasets: [
+                                    {
+                                      backgroundColor: 'rgba(255,255,255,.3)',
+                                      borderColor: 'transparent',
+                                      data: dts
+                                    },
+                                  ]
+                                };
+                                var ctx = $('#card-chart4');
+                                var cardChart4 = new Chart(ctx, {
+                                  type: 'bar',
+                                  data: data,
+                                  options: options
+                                });   
+                          });  
 
                       })              
               .col-sm-6.col-lg-3

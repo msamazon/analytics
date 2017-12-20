@@ -48,20 +48,20 @@ router.post('/chartMileageMonth', isLoggedIn, currtripinfo.chartTripMileage)
 router.post('/cntIdleTime', isLoggedIn,  currtripinfo.sumIdleEngineTime)
 router.post('/chartIdleTime', isLoggedIn,  currtripinfo.chartIdleEngineTime)
 // // Top 3
-// router.post('/cntHACCOccur', isLoggedIn, currtripinfo.cntHarshAcc)
-// router.post('/chartHACCOccur', isLoggedIn, currtripinfo.chartHarshAcc)
+router.post('/cntHACCOccur', isLoggedIn, currtripinfo.cntHarshAcc)
+router.post('/chartHACCOccur', isLoggedIn, currtripinfo.chartHarshAcc)
 // // Top 4
-// router.post('/cntHBRAKEOccur', isLoggedIn,  currtripinfo.cntHarshBrake)
-// router.post('/chartHBRAKEOccur', isLoggedIn,  currtripinfo.chartHarshBrake)
+router.post('/cntHBRAKEOccur', isLoggedIn,  currtripinfo.cntHarshBrake)
+router.post('/chartHBRAKEOccur', isLoggedIn,  currtripinfo.chartHarshBrake)
 
 
 // / // From Index Monthly Grid
-// router.post('/cntDevConnected', isLoggedIn, devices.cntVehiclesConnecteds)
-// router.post('/cntDevDisconnected', isLoggedIn, devices.cntVehiclesDisconnecteds)
-// router.post('/cntSOS', isLoggedIn, message.SOSCounter)
-// router.post('/cntReb', isLoggedIn, message.GuinchoCounter)
-// router.post('/cntMIL', isLoggedIn, message.MILCounter)
-// router.post('/sumGAS/:id', isLoggedIn, message.GASsum)
+router.post('/cntDevConnected', isLoggedIn, devices.cntVehiclesConnecteds)
+router.post('/cntDevDisconnected', isLoggedIn, devices.cntVehiclesDisconnecteds)
+router.post('/cntSOS', isLoggedIn, message.SOSCounter)
+router.post('/cntReb', isLoggedIn, message.GuinchoCounter)
+router.post('/cntMIL', isLoggedIn, message.MILCounter)
+router.post('/sumGAS/:id', isLoggedIn, message.GASsum)
 // router.post('/getmotorTemp/:id', isLoggedIn,  message.chartMotorTemp)
 // // Generic Tools
 // router.post('/calAlarm',  currtripinfo.calAlarm)
