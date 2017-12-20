@@ -5,6 +5,7 @@ var masterdata      = require('../controllers/masterController')
 var message         = require("../controllers/messageController")
 var currtripinfo    = require("../controllers/currenttripinfoController")
 var devices         = require("../controllers/deviceController")
+var vehicles        = require("../controllers/vehicleController")
 // restrict index for logged in user only
 // router.get('/', user.home)
 
@@ -26,6 +27,10 @@ router.post('/register', user.doRegister);
 
 router.get('/', isLoggedIn, masterdata.list)
 router.get('/trips', isLoggedIn, masterdata.carlist)
+
+
+router.get('/alarms', isLoggedIn, vehicles.listbyUser)
+router.post('/alarmsbyvehicle', isLoggedIn, message.getAlarm)
 
 // //Locates
 router.get('/message/gps/:id',  message.getgeo)

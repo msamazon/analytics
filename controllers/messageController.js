@@ -1,5 +1,6 @@
 var mongoose = require("mongoose")
 var Message = require("../models/Message")
+var Device = require("../models/Device")
 var messageController = {}
 
 messageController.list = function(req, res) {
@@ -183,8 +184,8 @@ messageController.getgeolist = function(req, res) {
     }
 
 messageController.getAlarm = function(req, res) {
-        console.log('List Alarms')
-        var dongleCode = req.params.id
+        var baseurl = req.protocol + "://" + req.get('host') + "/" 
+        var dongleCode = req.body.vehicle
         var dbase = new Date().toDateString();
               
         const page = (req.query.page > 0 ? req.query.page : 1) - 1;
@@ -194,22 +195,32 @@ messageController.getAlarm = function(req, res) {
           limit: limit,
           page: page
         };        
-
+        
+  Device.find({_id:dongleCode}, function(err, dev){        
+    for(var i = 0; i < dev.length; i++) {
+      var dvice = dev[i].device
         Message
-              .find({'dongleCode':dongleCode,'eventcode':'0320','dateReceived':{ $regex: /dbase/i }}, function(err, alarmes){
-                Message.count().exec(function(err, count){
-                          res.render('ealarms',
-                          { title: 'DriveOn Portal | Alarmes', 
-                              alarmes: alarmes,
-                              page: page + 1,
-                              pages: Math.ceil(count / limit)}
-                          );
-                  });        
+              .find({'dongleCode':dvice,'eventname':'alarm'}, function(err, alarme){
+                if(err) {
+                  console.log('err='+err)                  
+                        req.flash('alert-danger', "Erro ao pesquisar alarmes:"+ err)                          
+                } else { 
+                  Message.find({'dongleCode':dvice,'eventname':'alarm'}).count().exec(function(err, count){
+                    console.log('alarme='+alarme)
+                            res.render('vehicles/alarms',
+                            { title: 'DriveOn Portal | Alarmes', 
+                                alarmes: alarme,
+                                page: page + 1,
+                                baseuri: baseurl,
+                                pages: Math.ceil(count / limit)}
+                            )
+                    })   
+                }         
               })
               .limit(limit)
-              .skip(limit * page);               
-        
-        
+              .skip(limit * page)  
+          }       
+        })
       }    
 
 
