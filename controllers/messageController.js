@@ -157,7 +157,7 @@ messageController.getgeolist = function(req, res) {
       var dbase = '2017-12-06'
       console.log('paramentros='+ dongleCode + ' - ' + dbase)
       // Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'},'dateReceived':{ $regex: /^dbase/ }}).sort({$natural:-1}).exec(function (err, message) {        
-      Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({$natural:-1}).limit(10).exec(function (err, message) {        
+      Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({$natural:-1}).limit(2000).exec(function (err, message) {        
           
         if (err) {
           console.log("Error:", err);
@@ -270,31 +270,26 @@ messageController.getVoltage = function(req, res) {
       page: page
     };        
     
-Device.find({_id:dongleCode}, function(err, dev){        
-for(var i = 0; i < dev.length; i++) {
-  var dvice = dev[i].device
-    Message
-          .find({'dongleCode':dvice,'eventcode':'0120'}).sort({$natural:-1}).limit(1000).exec(function(err, message){
+Device.findOne({_id:dongleCode}, function(err, dev){        
+ 
+  var dvice = dev.device
+    Message.find({dongleCode:dvice, eventcode:'0120'}).sort({$natural:-1}).limit(100).exec(function(err, message){
             if (err) {
               console.log("Error when load voltage:", err)
             }else {
-              // console.log("info:", JSON.stringify( message ))
-              var arrayCurrinfo = []
-              for(var i = 0; i < message.length; i++) {
-                var id             = message[i]._id
-                var dateReceived   = message[i].dateReceived
-                var voltage        = message[i].voltage
-                var dongleCode     = message[i].dongleCode
-      
-                var message =  { "_id": id, "dateReceived": dateReceived, "voltage": voltage, "dongleCode": dongleCode }
-      
-                  arrayCurrinfo.push(message)                  
-                }
-                console.log("info:", JSON.stringify( arrayCurrinfo ))
-                res.json(arrayCurrinfo)
+                // console.log("info:", JSON.stringify( message ))
+                // var arrayCurrinfo = []
+                // for(var j = 0; j < message.length; j++) {
+                //   var dateReceived   = message[j].dateReceived
+                //   var volts          = message[j].voltage     
+                //   var msg =  {  "dateReceived": dateReceived, "voltage": volts }      
+                //   arrayCurrinfo.push(msg)                  
+                // }
+                // console.log("info:", JSON.stringify( arrayCurrinfo ))
+                res.json(message)
               }     
           })  
-      }       
+            
     })
   } 
 
