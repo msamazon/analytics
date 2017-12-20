@@ -1,12 +1,13 @@
 extends layout/default
 
 block content
+  
   main.main         
         ol.breadcrumb
           li.breadcrumb-item Home
           li.breadcrumb-item
             a(href='#') Admin
-          li.breadcrumb-item.active Dashboard          
+          li.breadcrumb-item.active Dashboard                    
         .container-fluid
           .animated.fadeIn
             .row               
@@ -17,7 +18,100 @@ block content
                       #SumCurMileage                             
                     p Distância Percorrida
                   .chart-wrapper.px-3(style='height:70px;')
-                    canvas#card-chart1.chart(height='70')                
+                    canvas#card-chart1.chart(height='70')  
+                  //- script(src='#{baseuri}bower_components/jquery/dist/jquery.min.js').
+                  //- script(src='#{baseuri}bower_components/chart.js/dist/Chart.min.js').                  
+                  script(type='text/javascript'). 
+                    $(document).ready(function(){ 
+                       $.ajax
+                          ({
+                            type: "post",
+                            url: "/cntMileageMonth",
+                            dataType: "json",
+                            crossDomain: "false",
+                            contentType: "application/json; charset=UTF-8"                                                             
+                          }).done(function ( data ) {  
+                            console.log( data );
+                            retrnCnt = data.sumcurrentTripMileage + ' Km';
+                            $('#SumCurMileage').html(retrnCnt);    
+                          });
+
+                      //-  $.ajax
+                      //-     ({
+                      //-       type: "post",
+                      //-       url: "/chartMileageMonth",
+                      //-       dataType: "json",
+                      //-       crossDomain: "false",
+                      //-       contentType: "application/json; charset=UTF-8"                                                             
+                      //-     }).done(function ( data ) {            
+                      //-         var lbl = []      
+                      //-         var dts = []
+                      //-         $.each(data, function(index, value) {      //Cards with Charts
+                      //-             var rawDrecv = value.dreceived
+                      //-             var cumTot   = value.TotDeslocamento
+
+                      //-             rawDrecv =  rawDrecv.toString().substr(6,2) + '/' + rawDrecv.toString().substr(4,2)  
+
+                      //-             lbl.push(rawDrecv);
+                      //-             dts.push(cumTot);
+                      //-         });
+                              
+                      //-         // var labels = lbl;  
+                      //-         var data = {
+                      //-           labels: labels,
+                      //-           datasets: [
+                      //-             {
+                      //-               label: 'Distância Percorrida',
+                      //-               backgroundColor: $.brandPrimary,
+                      //-               borderColor: 'rgba(255,255,255,.55)',
+                      //-               data: dts
+                      //-             },
+                      //-           ]
+                      //-         };
+                      //-         var options = {
+                      //-             maintainAspectRatio: false,
+                      //-             legend: {
+                      //-               display: false
+                      //-             },
+                      //-             scales: {
+                      //-               xAxes: [{
+                      //-                 gridLines: {
+                      //-                   color: 'transparent',
+                      //-                   zeroLineColor: 'transparent'
+                      //-                 },
+                      //-                 ticks: {
+                      //-                   fontSize: 2,
+                      //-                   fontColor: 'transparent',
+                      //-                 }
+                      //-               }],
+                      //-               yAxes: [{
+                      //-                 display: false,
+                      //-                 ticks: {
+                      //-                   display: false,
+                      //-                   min: Math.min.apply(Math, data.datasets[0].data) - 5,
+                      //-                   max: Math.max.apply(Math, data.datasets[0].data) + 5,
+                      //-                 }
+                      //-               }],
+                      //-             },
+                      //-             elements: {
+                      //-               line: {
+                      //-                 borderWidth: 1
+                      //-               },
+                      //-               point: {
+                      //-                 radius: 4,
+                      //-                 hitRadius: 10,
+                      //-                 hoverRadius: 4,
+                      //-               },
+                      //-             }
+                      //-           };
+                      //-           var ctx = $('#card-chart1');
+                      //-           var cardChart1 = new Chart(ctx, {
+                      //-             type: 'line',
+                      //-             data: data,
+                      //-             options: options
+                      //-           });  
+                      //-     });     
+                      }              
               .col-sm-6.col-lg-3
                 .card.text-white.bg-info
                   .card-body.pb-0                   

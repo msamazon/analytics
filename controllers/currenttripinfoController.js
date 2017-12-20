@@ -154,6 +154,10 @@ currenttripinfoController.chartIdleEngineTime = function(req, res) {
  }
 
 currenttripinfoController.sumTripMileage = function(req, res) {
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+  var dongleCode = req.params.id
+        
+ 
   
   // DO_CAR_C02.find().exec(function (err, currinfo) {    
   //         if (err) {
@@ -174,6 +178,32 @@ currenttripinfoController.sumTripMileage = function(req, res) {
   //             res.json(message0) 
   //         }
   // })
+
+ 
+ Message.find({eventcode:'0120'}).sort({$natural:-1}).limit(100).exec(function(err, message){
+     
+                      if (err) {
+                          console.log("Error:", err);
+                      }else {
+                          var sumcurrentTripMileage = 0
+            
+                          var arrayCurrinfo = []
+                          // console.log("Retorno do banco:" + currinfo.length)
+                          for(var i = 0; i < message.length; i++) {
+                  
+                              var currentTripMileage  = message[i].currentTripMileage/1000
+                              sumcurrentTripMileage   = sumcurrentTripMileage + currentTripMileage
+                          }   
+                          var message0 =  { "sumcurrentTripMileage": Math.round(sumcurrentTripMileage)  }
+                          arrayCurrinfo.push(message0)
+                          // res.json({message:arrayCurrinfo})
+                          res.json(message0) 
+                      }
+          
+  })
+
+
+
  }
 
 currenttripinfoController.chartTripMileage = function(req, res) {
