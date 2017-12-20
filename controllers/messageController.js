@@ -93,7 +93,7 @@ messageController.show = function(req, res) {
 messageController.SOSCounter = function(req, res) {
     
     Message
-      .find({'eventcode':'0320','alarmNo':'0e'}).count().exec(function(err, count){                       
+      .find({'eventcode':'0320','alarmNo':'SOS'}).count().exec(function(err, count){                       
             var message0 = {'total':count}
                 res.json(message0);                     
           });        
@@ -103,7 +103,7 @@ messageController.SOSCounter = function(req, res) {
 messageController.GuinchoCounter = function(req, res) {
     
     Message
-      .find({'eventcode':'0320','alarmNo':'06'}).count().exec(function(err, count){                       
+      .find({'eventcode':'0320','alarmNo':'Towing'}).count().exec(function(err, count){                       
             var message0 = {'total':count}
                 res.json(message0);                     
           });        
@@ -113,7 +113,7 @@ messageController.GuinchoCounter = function(req, res) {
 messageController.MILCounter = function(req, res) {
   
   Message
-    .find({'eventcode':'0320','alarmNo':'01'}).count().exec(function(err, count){                       
+    .find({'eventcode':'0320','alarmNo':'MIL on'}).count().exec(function(err, count){                       
           var message0 = {'total':count}
               res.json(message0);                     
         });        
@@ -123,7 +123,7 @@ messageController.MILCounter = function(req, res) {
 messageController.GASsum = function(req, res) {
   var dongleCode = req.params.id
 
-  Message.findOne({'dongleCode':dongleCode,'eventcode':'0120'}).sort({$natural :1}).exec(function (err, message) {  
+  Message.findOne({'eventcode':'0120'}).sort({$natural :1}).exec(function (err, message) {  
     if (err) {
       console.log("Error GASsum:", err);
     }else {
@@ -157,7 +157,7 @@ messageController.getgeolist = function(req, res) {
       var dbase = '2017-12-06'
       console.log('paramentros='+ dongleCode + ' - ' + dbase)
       // Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'},'dateReceived':{ $regex: /^dbase/ }}).sort({$natural:-1}).exec(function (err, message) {        
-      Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({$natural:-1}).limit(10).exec(function (err, message) {        
+      Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({$natural:-1}).limit(2000).exec(function (err, message) {        
           
         if (err) {
           console.log("Error:", err);
@@ -270,33 +270,65 @@ messageController.getVoltage = function(req, res) {
       page: page
     };        
     
-Device.find({_id:dongleCode}, function(err, dev){        
-for(var i = 0; i < dev.length; i++) {
-  var dvice = dev[i].device
-    Message
-          .find({'dongleCode':dvice,'eventcode':'0120'}).sort({$natural:-1}).limit(1000).exec(function(err, message){
+Device.findOne({_id:dongleCode}, function(err, dev){        
+ 
+  var dvice = dev.device
+    Message.find({dongleCode:dvice, eventcode:'0120'}).sort({$natural:-1}).limit(100).exec(function(err, message){
             if (err) {
               console.log("Error when load voltage:", err)
             }else {
-              // console.log("info:", JSON.stringify( message ))
-              var arrayCurrinfo = []
-              for(var i = 0; i < message.length; i++) {
-                var id             = message[i]._id
-                var dateReceived   = message[i].dateReceived
-                var voltage        = message[i].voltage
-                var dongleCode     = message[i].dongleCode
-      
-                var message =  { "_id": id, "dateReceived": dateReceived, "voltage": voltage, "dongleCode": dongleCode }
-      
-                  arrayCurrinfo.push(message)                  
-                }
-                console.log("info:", JSON.stringify( arrayCurrinfo ))
-                res.json(arrayCurrinfo)
+                // console.log("info:", JSON.stringify( message ))
+                // var arrayCurrinfo = []
+                // for(var j = 0; j < message.length; j++) {
+                //   var dateReceived   = message[j].dateReceived
+                //   var volts          = message[j].voltage     
+                //   var msg =  {  "dateReceived": dateReceived, "voltage": volts }      
+                //   arrayCurrinfo.push(msg)                  
+                // }
+                // console.log("info:", JSON.stringify( arrayCurrinfo ))
+                res.json(message)
               }     
           })  
-      }       
+            
     })
   } 
+
+
+  messageController.getDurationbyUser = function(req, res) {
+    var baseurl = req.protocol + "://" + req.get('host') + "/" 
+    var dongleCode = req.params.id
+          
+    const page = (req.query.page > 0 ? req.query.page : 1) - 1;
+    const _id = req.query.item;
+    const limit = 10;
+    const options = {
+      limit: limit,
+      page: page
+    };        
+    
+Device.findOne({_id:dongleCode}, function(err, dev){        
+ 
+  var dvice = dev.device
+    Message.find({dongleCode:dvice, eventcode:'0120'}).sort({$natural:-1}).limit(100).exec(function(err, msg){
+      if (err) {
+          console.log("Error:", err);
+      }else {
+          var sumcurrentTripDuration = 0            
+          var arrayCurrinfo = []
+          
+          for(var i = 0; i < msg.length; i++) {                  
+              var currentTripDuration  = msg[i].currentTripDuration
+              sumcurrentTripDuration   = sumcurrentTripDuration + currentTripDuration
+          }   
+          var message0 =  { "sumcurrentTripDuration": Math.round(sumcurrentTripDuration)  }
+          arrayCurrinfo.push(message0)
+          console.log("Retorno:" + arrayCurrinfo)
+          res.json(message0) 
+      }     
+     })              
+    })
+  } 
+
 
 
 module.exports = messageController

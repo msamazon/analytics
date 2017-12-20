@@ -6,7 +6,7 @@ var bodyParser      = require('body-parser')
 var mongoose        = require('mongoose')
 var config          = require('./lib/config')
 var path            = require('path')
-
+var chart           = require('chart.js')
 var cookieParser    = require('cookie-parser')
 var session         = require('express-session')
 var helpers         = require('view-helpers')

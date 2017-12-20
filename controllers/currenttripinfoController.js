@@ -122,8 +122,8 @@ currenttripinfoController.sumIdleEngineTime = function(req, res) {
         console.log("sumIdleEngineTime Error:", err);
     }else {
       var sumIdleEngine = 0
-      for (var i =0; i < info.length; i++) {
-        sumIdleEngine += Number(info[i].alarmCurrent)
+      for (var i =0; i < info.length; i++) {       
+        sumIdleEngine += parseInt(info[i].alarmCurrent,'16')
       }
     } 
     res.json({sumIdleTime: sumIdleEngine})
@@ -133,27 +133,31 @@ currenttripinfoController.sumIdleEngineTime = function(req, res) {
 
 currenttripinfoController.chartIdleEngineTime = function(req, res) {
   
-  console.log('chartIdleEngineTime')
-  var array = []
-  // DO_CAR_A03.find().exec(function (err, currinfo) {
-  //   if (err) {
-  //       console.log("chartIdleEngineTime Error:", err);
-  //   }else {
-  //     var arrayMessage = []      
-  //     for(var i = 0; i < currinfo.length; i++) {
-  //       var id                        = currinfo[i]._id
-  //       var Data                      = currinfo[i].Data
-  //       var Min                       = currinfo[i].Min
-  //       var message0 =  { "_id": id, "Data": Data, "Min": Min }
-  //       arrayMessage.push(message0)
-  //     }   
-  //     res.json(arrayMessage)
-  //   } 
-  // })
+ 
+    messsage.find({eventcode:'0320', alarmNo:'Idle Engine'}).exec(function (err, info) {
+    console.log("info.length %s", info.length)    
+    if (err) {
+        console.log("sumIdleEngineTime Error:", err);
+    }else {
+         var arrayCurrinfo = []
+        for(var i = 0; i < info.length; i++) {   
+            var id                        = info[i]._id
+            var dreceived                 = info[i].dateReceived
+            var Min                       = parseInt(info[i].alarmCurrent,'16')
+            var message0                  = {"_id": id, "dreceived": dreceived, "Min": Min }
+            arrayCurrinfo.push(message0)
+        }               
+    } 
+    res.json({sumIdleTime: arrayCurrinfo})
+  })
 
  }
 
 currenttripinfoController.sumTripMileage = function(req, res) {
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+  var dongleCode = req.params.id
+        
+ 
   
   // DO_CAR_C02.find().exec(function (err, currinfo) {    
   //         if (err) {
@@ -174,6 +178,29 @@ currenttripinfoController.sumTripMileage = function(req, res) {
   //             res.json(message0) 
   //         }
   // })
+
+ 
+  messsage.find({eventcode:'0120'}).sort({$natural:-1}).limit(1000).exec(function(err, msg){     
+                      if (err) {
+                          console.log("Error:", err);
+                      }else {
+                          var sumcurrentTripMileage = 0
+            
+                          var arrayCurrinfo = []
+                          // console.log("Retorno do banco:" + currinfo.length)
+                          for(var i = 0; i < msg.length; i++) {                  
+                              var currentTripMileage  = msg[i].currentTripMileage/1000
+                              sumcurrentTripMileage   = sumcurrentTripMileage + currentTripMileage
+                          }   
+                          var message0 =  { "sumcurrentTripMileage": Math.round(sumcurrentTripMileage)/i  }
+                          arrayCurrinfo.push(message0)
+                          // res.json({message:arrayCurrinfo})
+                          res.json(message0) 
+                      }          
+  })
+
+
+
  }
 
 currenttripinfoController.chartTripMileage = function(req, res) {
@@ -196,58 +223,81 @@ currenttripinfoController.chartTripMileage = function(req, res) {
   //                 res.json(arrayMessage)
   //         }
   // })
+
+  messsage.find({eventcode:'0120'}).sort({$natural:-1}).limit(10).exec(function(err, msg){     
+    if (err) {
+        console.log("Error:", err);
+    }else {
+        var sumcurrentTripMileage = 0
+        var arrayCurrinfo = []
+        for(var i = 0; i < msg.length; i++) {   
+            var id                        = msg[i]._id
+            var dreceived                 = msg[i].dateReceived
+            var TotDeslocamento           = msg[i].currentTripMileage/1000
+            var message0                  = {"_id": id, "dreceived": dreceived, "TotDeslocamento": TotDeslocamento }
+            arrayCurrinfo.push(message0)
+        }        
+        res.json({message:arrayCurrinfo})        
+    }          
+})
+
+
  }
 
 
 currenttripinfoController.cntHarshAcc = function(req, res) {
   
-  // DO_CAR_A10.find().exec(function (err, currinfo) {    
-  //         if (err) {
-  //             console.log("cntHarshAcc Error:", err);
-  //         }else{
-  //             var cntHACC = 0
-  //             // var arrayCurrinfo = []
-  //             // console.log("Retorno do banco:" + currinfo.length)
-  //             if (currinfo.length > 0) {
-  //               cntHACC = currinfo.length
-  //             }
-                 
-  //             var message0 =  { "cntHACCOccur": cntHACC  }
-  //             // arrayCurrinfo.push(message0)
-  //             // res.json({message:arrayCurrinfo})
-  //             res.json(message0)              
-
-  //         }
-  // })
+  messsage.find({eventcode:'0320', alarmNo:'Hard acceleration'}).exec(function (err, info) {
+    console.log("info.length %s", info.length)    
+    if (err) {
+        console.log("sumHardacceleration Error:", err);
+    }else {
+      var sumHardacceleration = 0
+      for (var i =0; i < info.length; i++) {       
+        sumHardacceleration += parseInt(info[i].alarmCurrent,'16')
+      }
+    } 
+    res.json({sumHardacceleration: sumHardacceleration})
+  })
  }
 
 currenttripinfoController.chartHarshAcc = function(req, res) {  
-  // DO_CAR_A10.find().exec(function (err, currinfo) {    
-  //         if (err) {
-  //             console.log("chartHarshAcc Error:", err);
-  //         }else {
-  //           var arrayMessage = []            
-  //           var newDt = ''
-  //           var cntAlarms = 1
-  //           for(var i = 0; i < currinfo.length; i++) {      
-  //             var Data = currinfo[i].Data
-  //             var Hora = currinfo[i].Hora
-  //             if (Data == newDt){
-  //               cntAlarms += 1;
-  //             }else{
-  //               var message0 =  { "Data": Data,"cntAlarms": cntAlarms }
-  //               arrayMessage.push(message0)
-  //               newDt = Data 
-  //             }             
-  //           }      
-  //           res.json(arrayMessage)            
-  //         }
-  // })
+  messsage.find({eventcode:'0320', alarmNo:'Hard acceleration'}).exec(function (err, info) {
+    console.log("info.length %s", info.length)    
+    if (err) {
+        console.log("sumIdleEngineTime Error:", err);
+    }else {
+         var arrayCurrinfo = []
+        for(var i = 0; i < info.length; i++) {   
+            var id                        = info[i]._id
+            var dreceived                 = info[i].dateReceived
+            var Min                       = parseInt(info[i].alarmCurrent,'16')
+            var message0                  = {"_id": id, "dreceived": dreceived, "Min": Min }
+            arrayCurrinfo.push(message0)
+        }               
+    } 
+    res.json({sumIdleTime: arrayCurrinfo})
+  })
+
  }
 
 
 currenttripinfoController.cntHarshBrake = function(req, res) {
   
+
+  messsage.find({eventcode:'0320', alarmNo:'Hard braking'}).exec(function (err, info) {
+    console.log("info.length %s", info.length)    
+    if (err) {
+        console.log("cntHBRAKE Error:", err);
+    }else {
+      var cntHBRAKE = 0
+      for (var i =0; i < info.length; i++) {       
+        cntHBRAKE += parseInt(info[i].alarmCurrent,'16')
+      }
+    } 
+    res.json({cntHBRAKEOccur: cntHBRAKE})
+  })
+
   // DO_CAR_A11.find().exec(function (err, currinfo) {    
   //         if (err) {
   //             console.log("cntHarshBrake Error:", err);
@@ -270,6 +320,25 @@ currenttripinfoController.cntHarshBrake = function(req, res) {
 
 
 currenttripinfoController.chartHarshBrake = function(req, res) {  
+
+  messsage.find({eventcode:'0320', alarmNo:'Hard braking'}).exec(function (err, info) {
+    console.log("info.length %s", info.length)    
+    if (err) {
+        console.log("cntHBRAKE Error:", err);
+    }else {
+      var cntHBRAKE = 0
+      for (var i =0; i < info.length; i++) {     
+        
+        var id                        = info[i]._id
+        var dreceived                 = info[i].dateReceived
+        var Min                       = parseInt(info[i].alarmCurrent,'16')
+        var message0                  = {"_id": id, "dreceived": dreceived, "Min": Min }
+        arrayCurrinfo.push(message0)
+      }
+    } 
+    res.json({cntHBRAKEOccur: cntHBRAKE})
+  })
+
   // DO_CAR_A11.find().exec(function (err, currinfo) {    
   //         if (err) {
   //             console.log("chartHarshBrake Error:", err);
@@ -292,6 +361,33 @@ currenttripinfoController.chartHarshBrake = function(req, res) {
   //         }
   // })
  }
+
+ currenttripinfoController.getDurationbyUser = function(req, res) {
+  var baseurl = req.protocol + "://" + req.get('host') + "/" 
+  var dongleCode = req.params.id
+      
+  messsage.find({eventcode:'0120'}).sort({$natural:-1}).limit(1000).exec(function(err, msg){     
+                      if (err) {
+                          console.log("Error:", err);
+                      }else {
+                          var sumcurrentTripDuration = 0            
+                          var arrayCurrinfo = []
+                          
+                          for(var i = 0; i < msg.length; i++) {                  
+                              var currentTripDuration  = msg[i].currentTripDuration
+                              sumcurrentTripDuration   = sumcurrentTripDuration + currentTripDuration
+                          }   
+                          var message0 =  { "sumcurrentTripDuration": Math.round(sumcurrentTripDuration)  }
+                          arrayCurrinfo.push(message0)
+                          console.log("Retorno:" + arrayCurrinfo)
+                          res.json(message0) 
+                      }          
+  })
+
+
+
+ }
+
 currenttripinfoController.cntVehiclesConnecteds = function(req, res) {  
    DO_DEV_M00.find().exec(function (err, currinfo) {    
     if (err) {
