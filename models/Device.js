@@ -10,10 +10,11 @@ var DeviceSchema = new Schema({
         required: true
     },
     supplier   : String,
-    description        : String,
+    description: String,
     active      : Boolean,
     firmware    : String,
     version     : String, 
+    simnumber   : String,
         sms_srv_addr: String,
         sms_srv_key : String,
         sms_apn     : String,

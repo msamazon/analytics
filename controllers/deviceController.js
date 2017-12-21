@@ -95,6 +95,7 @@ deviceController.update = function(req, res){
                 active     :req.body.active,
                 firmware    :req.body.firmware,
                 version     :req.body.version, 
+                simnumber :req.body.simnumber,
                 sms_srv_addr:req.body.sms_srv_addr,
                 sms_srv_key :req.body.sms_srv_key,
                 sms_apn     :req.body.sms_apn,
