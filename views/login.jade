@@ -31,8 +31,9 @@ html(lang='en')
               img.img-fluid(src='img/logo_login_driveon.png', border='0', alt='DriveOn Auto')
               //- |  Login
             .panel-body      
-              - if (message)
-                .alert.alert-danger #{message}                          
+              //- - if (message)
+              //-   .alert.alert-danger #{message}                          
+              != messages()  
               form.form-horizontal(role='form', action='/login', method='post')
                 .form-group
                   label.col-sm-3.control-label(for='email') E-mail
