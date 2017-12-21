@@ -1,10 +1,15 @@
 var mongoose  = require('mongoose')
 var Schema    = mongoose.Schema
+var compType =['Seguradora','Rent a Car','Frotista','Outros']
 
 var DO_COM_M00Schema = new Schema({
-    companyId : String, 
+    company : String, 
     name : String, 
     commercialName : String, 
+    segmento: {
+        type: String,
+        enum: compType
+    },
     address1 : String, 
     address2 : String, 
     address3 : String, 

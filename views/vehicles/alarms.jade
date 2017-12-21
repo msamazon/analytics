@@ -43,9 +43,12 @@ block content
                              tr
                               td #{alarm.dateReceived}
                               td #{alarm.alarmNo}                              
-                              td 
-                                span.badge.badge-success #{alarm.alarmTag}
-                              td #{alarm.alarmCurrent} 
+                              td
+                                if alarm.alarmTag > 0
+                                  span.badge.badge-success #{alarm.alarmTag}
+                                else
+                                  span.badge.badge-danger #{alarm.alarmTag}
+                              td #{parseInt(alarm.alarmCurrent,'16')} 
                         if (pages > 1)
                           ul.pagination
                             != createPagination(pages, page)

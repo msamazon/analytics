@@ -11,7 +11,7 @@ var DeviceSchema = new Schema({
     },
     supplier   : String,
     description        : String,
-    active     : Boolean,
+    active      : Boolean,
     firmware    : String,
     version     : String, 
         sms_srv_addr: String,
