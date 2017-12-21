@@ -1,0 +1,102 @@
+extends ../layout/templatetrips
+block content
+  main.main
+        ol.breadcrumb
+          li.breadcrumb-item Clientes
+          li.breadcrumb-item Veiculos
+          li.breadcrumb-item.active Último trajeto
+        .container-fluid
+          .animated.fadeIn         
+            #mapid(style='padding-top: 0px; width: 960px;height: 500px;position: relative;margin:0 auto;line-height: 1.4em;')
+            script.
+                var mymap = L.map('mapid').setView([-3.0658966666666667,-60.013075], 13);
+
+                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                  maxZoom: 19,
+                  id: 'mapbox.streets'
+                }).addTo(mymap);
+           #cnttable(style='position: absolute; top:270px; left: 230px;  width:180px;  height:30px; z-index: 2000;')
+                          table.table.table-responsive.table-hover.table-outline.mb-0
+                            thead.thead-default
+                              tr                           
+                                th Veículos                            
+                            tbody
+                              each carro in carros
+                                tr                           
+                                  td
+                                    div                             
+                                      //- button.btn-link(onclick='executeQuery(#{carro.deviceHex})') #{carro.plate}
+                                      button.btn-link(onclick='executeQuery("#{carro.device}","Viatura")') #{carro.plate}
+                          if (pages > 1)
+                            ul.pagination
+                              != createPagination(pages, page)     
+                        script(type='text/javascript').
+                         function executeQuery(dongle, plate) {
+                              jQuery.support.cors = true;
+                              $.ajax
+                              ({
+                                type: "get",
+                                url: "/message/gpslist/" + dongle,
+                                dataType: "json",
+                                crossDomain: "true",
+                                contentType: "application/json; charset=UTF-8"                                                             
+                              }).done(function ( data ) {    
+                                //- console.log('Data=>'+ data);                            
+                                success(data,plate);
+                                //- getPolyline(dongle);
+                              });
+                          };   
+
+                          function success(position, pl) {
+                            console.log('position=o'+JSON.stringify(position))
+                            var geoloc =  position[0].gpsData.split(',');
+                             var lati = geoloc[0];
+                            var logi = geoloc[1];
+                            var latlon = [];
+                            latlon.push(lati);
+                            latlon.push(logi);
+
+                           console.log('dafads=o'+geoloc)
+
+                              //- var drawControl = new L.Control.Draw({
+                              //-   draw: {
+                              //-     polyline: {
+                              //-       distance: 20
+                              //-       vertices: true
+                              //-     },
+                              //-     polygon: {
+                              //-       distance: 25
+                              //-     },
+                              //-     marker: {
+                              //-       distance: 25
+                              //-     },
+                              //-     rectangle: false,
+                              //-     circle: false
+                              //-   }
+                              //- }
+
+                            //- var pointA = new L.LatLng(geoloc);
+                            //- var pointB = new L.LatLng(geoloc);
+                            //- var pointList = [pointA, pointB];
+
+                            //- var firstpolyline = new L.Polyline(pointList, {
+                            //-     color: 'red',
+                            //-     weight: 3,
+                            //-     opacity: 0.5,
+                            //-     smoothFactor: 1
+                            //- });
+                            //- firstpolyline.addTo(mymap);                             
+                              var greenIcon = L.icon({
+                                  iconUrl: 'img/driveonicocar.png',
+                                  //- shadowUrl: 'img/leaf-shadow.png',
+
+                                  iconSize:     [15, 33], // size of the icon
+                                  shadowSize:   [50, 64], // size of the shadow
+                                  iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                                  shadowAnchor: [4, 62],  // the same for the shadow
+                                  popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                              });
+
+                            L.marker(latlon, {icon: greenIcon}).addTo(mymap);
+
+                          }                             

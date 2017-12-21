@@ -1,26 +1,28 @@
 //Modules
+var pkg             = require('./package.json');
 var express         = require('express')
 var app             = express()
 var bodyParser      = require('body-parser')
 var mongoose        = require('mongoose')
-var passport        = require('passport')
-var jwt             = require('jsonwebtoken')
 var config          = require('./lib/config')
-var routes          = require('./routes/api.js')
 var path            = require('path')
-var flash           = require('req-flash')
+var chart           = require('chart.js')
 var cookieParser    = require('cookie-parser')
 var session         = require('express-session')
-var localpass       = require('./lib/passport')(passport)
 var helpers         = require('view-helpers')
+var dotenv          = require('dotenv').config()
+var favicon 		= require('serve-favicon')
+var passport        = require('passport')
+var LocalStrategy   = require('passport-local').Strategy
+
 // Service Port
-var port = process.env.PORT || 8080
+var port = process.env.PORT ||  4884
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'jade')
 
-//MongoDB
+// MongoDB
 mongoose.Promise = global.Promise
 mongoose.connect(config.database, { useMongoClient: true })
 
@@ -37,27 +39,51 @@ mongoose.connection.on('error', error => {
 })
 
 //Middlewares
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({secret: 'driveonbeta', saveUninitialized: true, resave: true,cookie: { maxAge: 60000 }}));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(cookieParser('driveonbeta'));
-app.use(flash());
-app.use(helpers('analytics'))
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
+
+// Passport middleware Scope******************************************************************
+app.use(session({
+        secret: 'driveonsecret', 
+        saveUninitialized: false, 
+        resave:false
+        }))
+app.use(passport.initialize())
+app.use(passport.session())
+
+// Configure passport-local to use account model for authentication
+var  User = require('./models/User')
+passport.use(User.createStrategy())
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+//*********************************************************************************************
+app.use(cookieParser())
+//*********************************************************************************************
+app.use(require('connect-flash')())
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
+//*********************************************************************************************  
+app.use(helpers('dashboard'))
+
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 // Set Service Scope for Intercharge messages
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+    next()
 })
 
+
 // Set Main Route
-app.use('/', routes)
+app.use('/', require('./routes/routes'))
 
 // Set
 app.listen(port, function () {
-    console.log('Analytics-API listening on port ' + port)
+    console.log(pkg.name,`listening on ${port}`)
 })

@@ -3,7 +3,7 @@ block content
  main.main
         // Breadcrumb
         ol.breadcrumb
-          li.breadcrumb-item Meu Veículo
+          li.breadcrumb-item Clientes
           li.breadcrumb-item Eventos
           li.breadcrumb-item.active Alarmes
         .container-fluid
@@ -20,74 +20,13 @@ block content
                           tr
                             th Alarme
                             th Data
-                            th Hora
                             th Condição
                         tbody
                           tr
-                            td Ignição
-                            td Sep 12 2017
-                            td 00:45
+                            td #{alarmes.alarmNo}
+                            td #{alarmes.rtcTime}
                             td 
-                              span.badge.badge-success Alarme Ligado
-                          tr
-                            td Baixa Voltagem
-                            td Sep 12 2017
-                            td 00:47
-                            td 
-                              span.badge.badge-danger Alarme Desligado
-                          tr
-                            td Ignição
-                            td Sep 12 2017
-                            td 00:51
-                            td
-                              span.badge.badge-success Alarme Ligado
-                          tr
-                            td Motor Ocioso
-                            td Sep 12 2017
-                            td 01:06
-                            td
-                              span.badge.badge-warning Alarme Ligado
-                          tr
-                            td Dongle Conectado
-                            td Sep 12 2017
-                            td 01:28
-                            td
-                              span.badge.badge-success Alarme Ligado
-                      ul.pagination
-                        li.page-item
-                          a.page-link(href='#') Prev
-                        li.page-item.active
-                          a.page-link(href='#') 1
-                        li.page-item
-                          a.page-link(href='#') 2
-                        li.page-item
-                          a.page-link(href='#') 3
-                        li.page-item
-                          a.page-link(href='#') 4
-                        li.page-item
-                          a.page-link(href='#') Next
-scripts(lang='javascript').  
-  $(document).ready(function() {
-        // Populate the user table on initial page load
-        //- populateTable();
-
-  });         
-  function populateTable() {
-      // Empty content string
-      var tableContent = '';
-      // jQuery AJAX call for JSON
-      $.getJSON( '/users/userlist', function( data ) {
-
-          // For each item in our JSON, add a table row and cells to the content string
-          $.each(data, function(){
-              tableContent += '<tr>';
-              tableContent += '<td><a href="#" class="linkshowuser" rel="' + this.username + '">' + this.username + '</a></td>';
-              tableContent += '<td>' + this.email + '</td>';
-              tableContent += '<td><a href="#" class="linkdeleteuser" rel="' + this._id + '">delete</a></td>';
-              tableContent += '</tr>';
-          });
-
-          // Inject the whole content string into our existing HTML table
-          $('#userList table tbody').html(tableContent);
-      });
-  };                 
+                              span.badge.badge-success #{alarmes.alarmTag}
+                       if (pages > 1)
+                        ul.pagination
+                          != createPagination(pages, page)
