@@ -42,9 +42,17 @@ userController.login = function(req, res) {
 
 
 userController.doLogin = function(req, res) {
-  passport.authenticate('local')(req, res, function () {
-    res.redirect('/')
-  })
+  // passport.authenticate('local')(req, res, function () {
+  //   res.redirect('/')
+  // })
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/login'); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      return res.redirect('/');
+    });
+  })(req, res, next);
  }
 
 
