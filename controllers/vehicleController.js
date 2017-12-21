@@ -54,7 +54,42 @@ var vehicleController = {}
                         pages: Math.ceil(count / limit)}
                     );
                   }else{
-                    res.render('vehicles/new.jade', {title: 'DriveOn | Novo Veiculo',baseuri:baseurl});
+                    Device
+                          .find({active: true}).exec(function(err, device){
+                            if (err) {
+                              switch (err.code)
+                              {
+                                case 11000: 
+                                    req.flash('alert-danger', 'Estes dados já existem no registro de devices.')    
+                                    break;        
+                                default: 
+                                    req.flash('alert-danger', "Erro ao carregar os perfis de devices:"+ err)  
+                                    break;
+                              }   
+                            }else{  
+                                Customer
+                                  .find({active: true}).exec(function(err, customer){
+                                    if (err) {
+                                      switch (err.code)
+                                      {
+                                        case 11000: 
+                                            req.flash('alert-danger', 'Estes dados já existem no registro de usuarios.')    
+                                            break;        
+                                        default: 
+                                            req.flash('alert-danger', "Erro ao carregar as autoridades de usuário:"+ err)  
+                                            break;
+                                      }   
+                                    }else{                                    
+                                              res.render('vehicles/new.jade', { title: 'DriveOn | Novo Veiculo',
+                                                  baseuri: baseurl,
+                                                  devices: device,
+                                                  customers: customer
+                                                })
+                                    } 
+                                })  
+                            }
+                          })  
+
                   }     
             })      
         })  
@@ -212,7 +247,41 @@ var vehicleController = {}
                req.flash('alert-danger', "Erro ao salvar:"+ err)  
                break;
         }        
-        res.render('vehicles/new', { title: 'DriveOn | Novo Veiculo', baseuri:baseurl})
+            Device.find({active: true}).exec(function(err, device){
+                      if (err) {
+                        switch (err.code)
+                        {
+                          case 11000: 
+                              req.flash('alert-danger', 'Estes dados já existem no registro de devices.')    
+                              break;        
+                          default: 
+                              req.flash('alert-danger', "Erro ao carregar os perfis de devices:"+ err)  
+                              break;
+                        }   
+                      }else{  
+                          Customer
+                            .find({active: true}).exec(function(err, customer){
+                              if (err) {
+                                switch (err.code)
+                                {
+                                  case 11000: 
+                                      req.flash('alert-danger', 'Estes dados já existem no registro de usuarios.')    
+                                      break;        
+                                  default: 
+                                      req.flash('alert-danger', "Erro ao carregar as autoridades de usuário:"+ err)  
+                                      break;
+                                }   
+                              }else{                                    
+                                        res.render('vehicles/new.jade', { title: 'DriveOn | Novo Veiculo',
+                                            baseuri: baseurl,
+                                            devices: device,
+                                            customers: customer
+                                          })
+                              } 
+                          })  
+                      }
+                    })  
+
       } else {          
         req.flash('alert-info', 'Dados salvos com sucesso!')  
         res.redirect('/vehicles/show/'+vehicle._id)
