@@ -5,7 +5,7 @@ var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
 var async           = require('run-async')
-
+var http            = require('https')
 var deviceController = {}
 
 /**
@@ -209,6 +209,61 @@ deviceController.setuplist = function(req, res){
       })        
       .limit(limit)
       .skip(limit * page)
+  }
+
+deviceController.callttvapi = function(req, res){
+ 
+  var dvc = req.params.id
+  var tk  = process.env.TTVKEY
+  var options = {
+    "method": "POST",
+    "hostname": "api.totalvoice.com.br",
+    "porto" : 443,
+    "path": "/sms",
+    "headers": {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Access-Token": tk ,
+      "Cache-Control": "no-cache"
+    }
+  }
+  console.log('options:'+ options)
+    Device
+      .findOne({_id:dvc}).exec(function(err, device){
+            var mobilenumber  = device.simnumber
+            var smssrvadd     = device.sms_srv_addr
+            var smssrvkey     = device.sms_srv_key
+            var smsapn        = device.sms_apn
+            var smsuser       = device.sms_user  
+            var smspassword   = device.sms_password
+            var smssetip      = device.sms_set_ip
+            var smssetport  = device.sms_set_port
+            var smsmsg =  '*'+smssrvkey+'#set gprs#' +smsapn+ ',' +smsuser+','+smsuser+','+smssetip+','+smssetport+'*'        
+            var req = http.request(options, function (res) {
+            var chunks = [];
+            
+              res.on("data", function (chunk) {
+                chunks.push(chunk)
+              })
+            
+              res.on("end", function () {
+                var body = Buffer.concat(chunks)
+                console.log(body.toString())
+                res.json(body)
+              })
+
+              res.on("error", function (e) {
+                res.json(e)
+              })
+            })
+            
+            req.write(JSON.stringify({ numero_destino: mobilenumber,
+              mensagem: smsmsg,
+              resposta_usuario: false,
+              multi_sms: false }));
+            req.end();
+      })       
+
   }
 
 module.exports = deviceController  

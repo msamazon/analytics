@@ -160,6 +160,10 @@ router.post('/devices/update/:id', isLoggedIn,  devices.update)
 router.post('/delete/:id', isLoggedIn, devices.delete)
 
 router.get('/devices/setup', isLoggedIn,  devices.setuplist)
+
+router.get('/devices/sendcmd/:id', isLoggedIn,  devices.callttvapi)
+
+
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // / ++++++++++++++++++++++ Vehicle +++++++++++++++++++++++++++

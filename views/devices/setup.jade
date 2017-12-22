@@ -36,8 +36,8 @@ block content
                                 td 
                                   .form-group
                                     form.form-horizontal(action='/devices/reset/#{device.id}', method='post')                                      
-                                      a(href='/devices/setup/#{device.id}')
-                                        button(type='button', placeholder='Setup', style='background-color:transparent; border-color:transparent;')
+                                      a(href='/devices/sendcmd/#{device.id}')
+                                        button(type='button',  style='background-color:transparent; border-color:transparent;')
                                           i.fa.fa-server                                                                                                             
                                       span                                      
                                       button(type='submit', style='background-color:transparent; border-color:transparent;')
@@ -55,11 +55,24 @@ block content
                   button.close(type='button', data-dismiss='modal', aria-label='Close')
                     span(aria-hidden='true') ×
                 .modal-body
-                  p One fine body…
+                  #JQRYLOG
                 .modal-footer
                   button.btn.btn-secondary(type='button', data-dismiss='modal') Fechar
-                  //- button.btn.btn-info(type='button') Save changes
-              // /.modal-content
-            // /.modal-dialog
-          // /.modal
- 
+                  button.#sendcmd.btn.btn-info(type='button') Enviar Config.
+                  script(type='text/javascript'). 
+                    $(document).ready(function(){ 
+                      $('#btnrefresh').click(function(){  
+                       $('#JQRYLOG').html("Enviando sms..."); 
+                       $.ajax
+                          ({
+                            type: "get",
+                            url: "/devices/sendcmd/#{device.id}",
+                            dataType: "json",
+                            crossDomain: "false",
+                            contentType: "application/json; charset=UTF-8"                                                             
+                          }).done(function ( data ) {  
+                            retrnCnt = data;
+                            $('#JQRYLOG').html(retrnCnt);    
+                          });            
+                      }  
+                    }     
