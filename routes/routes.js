@@ -159,6 +159,7 @@ router.post('/devices/update/:id', isLoggedIn,  devices.update)
 // Delete
 router.post('/delete/:id', isLoggedIn, devices.delete)
 
+router.get('/devices/setup', isLoggedIn,  devices.setuplist)
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // / ++++++++++++++++++++++ Vehicle +++++++++++++++++++++++++++

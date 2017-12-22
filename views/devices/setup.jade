@@ -37,15 +37,29 @@ block content
                                   .form-group
                                     form.form-horizontal(action='/devices/reset/#{device.id}', method='post')                                      
                                       a(href='/devices/setup/#{device.id}')
-                                        button(type='button', style='background-color:transparent; border-color:transparent;')
-                                          i.fa.fa-edit
-                                            | Enviar                                                                                                              
+                                        button(type='button', placeholder='Setup', style='background-color:transparent; border-color:transparent;')
+                                          i.fa.fa-server                                                                                                             
                                       span                                      
                                       button(type='submit', style='background-color:transparent; border-color:transparent;')
-                                        i.fa.fa-remove  
-                                          | Resetar                                                            
+                                        i.fa.fa-repeat 
+                                      button.btn.btn-info(type='button', data-toggle='modal', data-target='#infoModal')
+                                        | Setup   
                        if (pages > 1)
                         ul.pagination
-                          != createPagination(pages, page)  
-                      //- a(href='/devices/new', target='_top')    
-                      //-  button.btn.btn-primary.btn-sm(type='button') Novo
+                          != createPagination(pages, page) 
+          #infoModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+            .modal-dialog.modal-info(role='document')
+              .modal-content
+                .modal-header
+                  h4.modal-title Setup Log
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') ×
+                .modal-body
+                  p One fine body…
+                .modal-footer
+                  button.btn.btn-secondary(type='button', data-dismiss='modal') Fechar
+                  //- button.btn.btn-info(type='button') Save changes
+              // /.modal-content
+            // /.modal-dialog
+          // /.modal
+ 

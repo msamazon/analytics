@@ -117,7 +117,7 @@ currenttripinfoController.calAlarm = function(req, res) {
 currenttripinfoController.sumIdleEngineTime = function(req, res) {
     
   messsage.find({eventcode:'0320', alarmNo:'Idle Engine'}).exec(function (err, info) {
-    console.log("info.length %s", info.length)    
+    // console.log("info.length %s", info.length)    
     if (err) {
         console.log("sumIdleEngineTime Error:", err);
     }else {
@@ -135,7 +135,7 @@ currenttripinfoController.chartIdleEngineTime = function(req, res) {
   
  
     messsage.find({eventcode:'0320', alarmNo:'Idle Engine'}).exec(function (err, info) {
-    console.log("info.length %s", info.length)    
+    // console.log("info.length %s", info.length)    
     if (err) {
         console.log("sumIdleEngineTime Error:", err);
     }else {
@@ -248,7 +248,7 @@ currenttripinfoController.chartTripMileage = function(req, res) {
 currenttripinfoController.cntHarshAcc = function(req, res) {
   
   messsage.find({eventcode:'0320', alarmNo:'Hard acceleration'}).exec(function (err, info) {
-    console.log("info.length %s", info.length)    
+    // console.log("info.length %s", info.length)    
     if (err) {
         console.log("sumHardacceleration Error:", err);
     }else {
@@ -263,7 +263,7 @@ currenttripinfoController.cntHarshAcc = function(req, res) {
 
 currenttripinfoController.chartHarshAcc = function(req, res) {  
   messsage.find({eventcode:'0320', alarmNo:'Hard acceleration'}).exec(function (err, info) {
-    console.log("info.length %s", info.length)    
+    // console.log("info.length %s", info.length)    
     if (err) {
         console.log("sumIdleEngineTime Error:", err);
     }else {
@@ -286,7 +286,7 @@ currenttripinfoController.cntHarshBrake = function(req, res) {
   
 
   messsage.find({eventcode:'0320', alarmNo:'Hard braking'}).exec(function (err, info) {
-    console.log("info.length %s", info.length)    
+    // console.log("info.length %s", info.length)    
     if (err) {
         console.log("cntHBRAKE Error:", err);
     }else {
@@ -322,7 +322,7 @@ currenttripinfoController.cntHarshBrake = function(req, res) {
 currenttripinfoController.chartHarshBrake = function(req, res) {  
 
   messsage.find({eventcode:'0320', alarmNo:'Hard braking'}).exec(function (err, info) {
-    console.log("info.length %s", info.length)    
+    // console.log("info.length %s", info.length)    
     if (err) {
         console.log("cntHBRAKE Error:", err);
     }else {

@@ -188,4 +188,27 @@ deviceController.cntVehiclesDisconnecteds = function(req, res){
     res.json({total:0})
     }
 
+deviceController.setuplist = function(req, res){
+  var baseurl = req.protocol + "://" + req.get('host') + "/"    
+  var page = (req.query.page > 0 ? req.query.page : 1) - 1;
+  var _id = req.query.item;
+  var limit = 10;
+
+  Device
+      .find({active:true}, function(err, devices){
+        Device.count().exec(function(err, count){            
+                  res.render('devices/setup',
+                  { title: 'DriveOn Portal | Setup Devices', 
+                      list: devices,
+                      user_info: req.user,
+                      baseuri: baseurl,
+                      page: page + 1,
+                      pages: Math.ceil(count / limit)}
+                  )                    
+          })        
+      })        
+      .limit(limit)
+      .skip(limit * page)
+  }
+
 module.exports = deviceController  

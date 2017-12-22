@@ -127,7 +127,7 @@ messageController.GASsum = function(req, res) {
     if (err) {
       console.log("Error GASsum:", err);
     }else {
-        console.log('Checkl:'+message)
+        // console.log('Checkl:'+message)
         if (message == null){
           var sumgas = 0         
         }else{          
@@ -206,7 +206,7 @@ messageController.getAlarm = function(req, res) {
                         req.flash('alert-danger', "Erro ao pesquisar alarmes:"+ err)                          
                 } else { 
                   Message.find({'dongleCode':dvice,'eventname':'alarm'}).count().exec(function(err, count){
-                    console.log('alarme='+alarme)
+                    // console.log('alarme='+alarme)
                             res.render('vehicles/alarms',
                             { title: 'DriveOn Portal | Alarmes', 
                                 alarmes: alarme,
