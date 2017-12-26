@@ -8,6 +8,7 @@ block content
           li.breadcrumb-item Configurações
           li.breadcrumb-item Devices
           li.breadcrumb-item.active Setup
+        script(src='#{baseuri}bower_components/jquery/dist/jquery.min.js').  
         .container-fluid
           .animated.fadeIn
             .row
@@ -35,15 +36,33 @@ block content
                                 td #{(device.modifiedBy)}
                                 td 
                                   .form-group
-                                    form.form-horizontal(action='/devices/reset/#{device.id}', method='post')                                      
-                                      a(href='/devices/sendcmd/#{device.id}')
-                                        button(type='button',  style='background-color:transparent; border-color:transparent;')
-                                          i.fa.fa-server                                                                                                             
-                                      span                                      
-                                      button(type='submit', style='background-color:transparent; border-color:transparent;')
-                                        i.fa.fa-repeat 
+                                    form.form-horizontal(action='/devices/reset/#{device.id}', method='post')   
+                                      //- a(href='/devices/sendcmd/#{device.id}')
+                                      //-   button(type='button',  style='background-color:transparent; border-color:transparent;')
+                                      //-     i.fa.fa-server                                                                                                             
+                                      //- span                                      
+                                      //- button(type='submit', style='background-color:transparent; border-color:transparent;')
+                                      //-   i.fa.fa-repeat 
                                       button.btn.btn-info(type='button', data-toggle='modal', data-target='#infoModal')
-                                        | Setup   
+                                        | Setup                                         
+                                        script(type='text/javascript'). 
+                                          $(document).ready(function(){ 
+                                            $('#sendcmd').click(function(){ 
+                                              var retrnCnt = 'Enviando sms...'
+                                              $.ajax
+                                                ({
+                                                  type: "get",
+                                                  url: "/devices/sendcmd/#{device.id}",
+                                                  dataType: "json",
+                                                  crossDomain: "false",
+                                                  contentType: "application/json; charset=UTF-8"                                                             
+                                                }).done(function ( data ) {  
+                                                  retrnCnt += data;
+                                                  $('#JQRYLOG').html(retrnCnt);    
+                                                });            
+                                               });  
+                                              });  
+
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page) 
@@ -58,21 +77,4 @@ block content
                   #JQRYLOG
                 .modal-footer
                   button.btn.btn-secondary(type='button', data-dismiss='modal') Fechar
-                  button.#sendcmd.btn.btn-info(type='button') Enviar Config.
-                  script(type='text/javascript'). 
-                    $(document).ready(function(){ 
-                      $('#btnrefresh').click(function(){  
-                       $('#JQRYLOG').html("Enviando sms..."); 
-                       $.ajax
-                          ({
-                            type: "get",
-                            url: "/devices/sendcmd/#{device.id}",
-                            dataType: "json",
-                            crossDomain: "false",
-                            contentType: "application/json; charset=UTF-8"                                                             
-                          }).done(function ( data ) {  
-                            retrnCnt = data;
-                            $('#JQRYLOG').html(retrnCnt);    
-                          });            
-                      }  
-                    }     
+                  button#sendcmd.btn.btn-info(type='button') Enviar Config.                  

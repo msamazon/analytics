@@ -3,3 +3,4 @@ package-lock.json
 bin
 .env
 .vscode/temp.sql
+.vscode/last.sql

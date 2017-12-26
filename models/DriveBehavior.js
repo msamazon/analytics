@@ -15,7 +15,7 @@ var DO_CAR_A00Schema = new Schema({
     index7      : Number,
     index8      : Number,
     index9      : Number,
-    indexAvg    : String,    
+    indexAvg    : Number,    
     active      : Boolean
 },
 {

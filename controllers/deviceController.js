@@ -1,11 +1,13 @@
 var mongoose        = require('mongoose')
 var passport        = require('passport')
-var Device       = require('../models/Device')
+var Device          = require('../models/Device')
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
 var async           = require('run-async')
 var http            = require('https')
+var fetch           = require('node-fetch')
+var FormData        = require('form-data')
 var deviceController = {}
 
 /**
@@ -227,7 +229,7 @@ deviceController.callttvapi = function(req, res){
       "Cache-Control": "no-cache"
     }
   }
-  console.log('options:'+ options)
+  // console.log('options:'+ options)
     Device
       .findOne({_id:dvc}).exec(function(err, device){
             var mobilenumber  = device.simnumber
@@ -239,29 +241,55 @@ deviceController.callttvapi = function(req, res){
             var smssetip      = device.sms_set_ip
             var smssetport  = device.sms_set_port
             var smsmsg =  '*'+smssrvkey+'#set gprs#' +smsapn+ ',' +smsuser+','+smsuser+','+smssetip+','+smssetport+'*'        
-            var req = http.request(options, function (res) {
-            var chunks = [];
             
-              res.on("data", function (chunk) {
-                chunks.push(chunk)
-              })
-            
-              res.on("end", function () {
-                var body = Buffer.concat(chunks)
-                console.log(body.toString())
-                res.json(body)
-              })
-
-              res.on("error", function (e) {
-                res.json(e)
-              })
+            var form = new FormData()
+            form.headers({
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+              "Access-Token": tk,
+              "Cache-Control": "no-cache"
             })
+            form.append('numero_destino', mobilenumber)
+            form.append('mensagem ', smsmsg)
+            form.append('resposta_usuario  ', false)
+            form.append('multi_sms  ', false)
+             
+            fetch('https://api.totalvoice.com.br', {
+              method: 'POST',             
+              body: form,
+              headers: form.getHeaders()
+            }).then(function(res) {
+              return res.json();
+            }).then(function(json) {
+                console.log(json);
+            });
+            // var clientreq = http.request(options, function (clientres) {
+            //   var chunks = [];
+            //   console.log("statusCode: ", clientres.statusCode);
+            //   clientres.on("data", function (chunk) {
+            //     chunks.push(chunk)
+            //   })
             
-            req.write(JSON.stringify({ numero_destino: mobilenumber,
-              mensagem: smsmsg,
-              resposta_usuario: false,
-              multi_sms: false }));
-            req.end();
+            //   clientres.on("end", function () {
+            //     var body = Buffer.concat(chunks)
+            //     console.log(body.toString())
+            //     res.JSON(body)
+            //   })
+
+            //   clientres.on("error", function (e) {
+            //     console.log('ttv  erro:'+ e)
+            //   })
+            // })
+            
+            // clientreq.write(JSON.stringify({ numero_destino: mobilenumber,
+            //   mensagem: smsmsg,
+            //   resposta_usuario: false,
+            //   multi_sms: false }));
+            // clientreq.end();
+            // clientreq.on('error', function(e) {
+            //   console.error(e);
+            // });
+          
       })       
 
   }
