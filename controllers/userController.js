@@ -22,8 +22,7 @@ userController.register = function(req, res) {
  }
 
 userController.doRegister = function(req, res) {
-  
-  
+    
   User.register( new User({ email : req.body.email, fullname: req.body.fullname, password: req.body.password }), function(err, user) {
     if (err) {
       // return res.render('register', { user : user });
@@ -46,11 +45,22 @@ userController.doLogin = function(req, res, next) {
   //   res.redirect('/')
   // })
   passport.authenticate('local', function(err, user, info) {
-    if (err) { return next(err); }
-    if (!user) { return res.redirect('/login'); }
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      return res.redirect('/');
+    if (err) { 
+        return next(err); 
+    }
+
+    if (!user) { 
+      req.flash('alert-danger', "Erro ao salvar:"+ err)  
+      return res.send({ success : false, message : 'authentication failed' });
+      // return res.redirect('/login') 
+    }
+    
+    req.logIn(user, function(loginErr) {      
+      if (loginErr) { 
+          return next(loginErr); 
+      }
+      // return res.send({ success : true, message : 'authentication succeeded' });
+       return res.redirect('/');
     });
   })(req, res, next);
  }

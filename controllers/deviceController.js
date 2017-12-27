@@ -217,19 +217,7 @@ deviceController.callttvapi = function(req, res){
  
   var dvc = req.params.id
   var tk  = process.env.TTVKEY
-  var options = {
-    "method": "POST",
-    "hostname": "api.totalvoice.com.br",
-    "porto" : 443,
-    "path": "/sms",
-    "headers": {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Access-Token": tk ,
-      "Cache-Control": "no-cache"
-    }
-  }
-  // console.log('options:'+ options)
+ 
     Device
       .findOne({_id:dvc}).exec(function(err, device){
             var mobilenumber  = device.simnumber
@@ -241,54 +229,28 @@ deviceController.callttvapi = function(req, res){
             var smssetip      = device.sms_set_ip
             var smssetport  = device.sms_set_port
             var smsmsg =  '*'+smssrvkey+'#set gprs#' +smsapn+ ',' +smsuser+','+smsuser+','+smssetip+','+smssetport+'*'        
-            
-            var form = new FormData()
-            form.headers({
-              "Content-Type": "application/json",
-              "Accept": "application/json",
-              "Access-Token": tk,
-              "Cache-Control": "no-cache"
-            })
-            form.append('numero_destino', mobilenumber)
-            form.append('mensagem ', smsmsg)
-            form.append('resposta_usuario  ', false)
-            form.append('multi_sms  ', false)
-             
-            fetch('https://api.totalvoice.com.br', {
-              method: 'POST',             
-              body: form,
-              headers: form.getHeaders()
+                        
+            fetch('https://api.totalvoice.com.br/sms', {
+              headers: {
+                'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+                'Access-Token': tk
+                },
+              method: 'POST',     
+              body: JSON.stringify({
+                'numero_destino':mobilenumber,
+                'mensagem':smsmsg,
+                'resposta_usuario':false,
+                'multi_sms':false
+              })               
             }).then(function(res) {
-              return res.json();
+              return res.json()
             }).then(function(json) {
-                console.log(json);
-            });
-            // var clientreq = http.request(options, function (clientres) {
-            //   var chunks = [];
-            //   console.log("statusCode: ", clientres.statusCode);
-            //   clientres.on("data", function (chunk) {
-            //     chunks.push(chunk)
-            //   })
-            
-            //   clientres.on("end", function () {
-            //     var body = Buffer.concat(chunks)
-            //     console.log(body.toString())
-            //     res.JSON(body)
-            //   })
-
-            //   clientres.on("error", function (e) {
-            //     console.log('ttv  erro:'+ e)
-            //   })
-            // })
-            
-            // clientreq.write(JSON.stringify({ numero_destino: mobilenumber,
-            //   mensagem: smsmsg,
-            //   resposta_usuario: false,
-            //   multi_sms: false }));
-            // clientreq.end();
-            // clientreq.on('error', function(e) {
-            //   console.error(e);
-            // });
+              //  var arrayMessage = []
+              //   var message0 =  { "return": id, "dreceived": dreceived, "temperatura": tempera }
+              //  arrayMessage.push(message0)
+               res.json(json)
+            })            
           
       })       
 

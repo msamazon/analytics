@@ -48,7 +48,8 @@ block content
                                         script(type='text/javascript'). 
                                           $(document).ready(function(){ 
                                             $('#sendcmd').click(function(){ 
-                                              var retrnCnt = 'Enviando sms...'
+                                              var retrnCnt = "<p>Enviando sms...</p>" 
+                                              $('#JQRYLOG').html(retrnCnt); 
                                               $.ajax
                                                 ({
                                                   type: "get",
@@ -56,13 +57,22 @@ block content
                                                   dataType: "json",
                                                   crossDomain: "false",
                                                   contentType: "application/json; charset=UTF-8"                                                             
-                                                }).done(function ( data ) {  
-                                                  retrnCnt += data;
-                                                  $('#JQRYLOG').html(retrnCnt);    
-                                                });            
+                                                }).done(function ( data ) {
+                                                  retrnCnt = retrnCnt + "<p>Status:" + data.status +"</p>";  
+                                                  $('#JQRYLOG').append(retrnCnt);                                                     
+                                                  retrnCnt = retrnCnt + "<p>Sucesso:" + data.sucesso +"</p>"; 
+                                                  $('#JQRYLOG').append(retrnCnt);  
+                                                  retrnCnt = retrnCnt + "<p>Mensagem:" + data.mensagem +"</p>"; 
+                                                  $('#JQRYLOG').append(retrnCnt);  
+                                                  retrnCnt = retrnCnt + "<p>Id:" + data.dados.id +"</p>";
+                                                  $('#JQRYLOG').append(retrnCnt);                                                
+                                                }).fail(function( err ) {
+                                                  retrnCnt = retrnCnt + "<p>ERRO=>"+err+"</p>";                                                   
+                                                }); 
+                                                retrnCnt = retrnCnt + "<p>Configuração finalizada!</p>";
+                                                $('#JQRYLOG').append(retrnCnt);           
                                                });  
                                               });  
-
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page) 
