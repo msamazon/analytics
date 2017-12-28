@@ -13,6 +13,7 @@ var carval          =  require("../controllers/calcvarController")
 var georisk         =  require("../controllers/georiskController")
 var eclass          =  require("../controllers/extensiveclassController")
 var evalo           =  require("../controllers/extensivevalueController")
+var drivebahavior   = require('../controllers/drivebehaviorController')
 
 // restrict index for logged in user only
 // router.get('/', user.home)
@@ -71,6 +72,9 @@ router.post('/cntSOS', isLoggedIn, message.SOSCounter)
 router.post('/cntReb', isLoggedIn, message.GuinchoCounter)
 router.post('/cntMIL', isLoggedIn, message.MILCounter)
 router.post('/sumGAS', isLoggedIn, message.GASsum)
+
+// Drive Behavior
+router.get('/driverbehavior', isLoggedIn, drivebahavior.list)
 
 
  // ++++++++++++++++++++++ Users CRUD +++++++++++++++++++++++++++
