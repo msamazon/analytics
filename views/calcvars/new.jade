@@ -57,7 +57,14 @@ block content
                             .input-group
                               select#select.form-control-sm(name='valtype')
                                 each vtype in valtypes
-                                 option(value='#{vtype}') #{vtype}                                                                     
+                                 option(value='#{vtype}') #{vtype}    
+                        .form-group
+                          label.form-control-label(for='itemlbl') Index
+                          .controls
+                            .input-group
+                              select#indexno.form-control-sm(name='indexno')
+                                each idxs in indexno
+                                 option(value='#{idxs}') #{idxs}                                                                            
                         .form-group
                           label.form-control-label(for='activedYN') Ativo?
                           .controls

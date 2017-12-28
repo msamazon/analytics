@@ -4,9 +4,8 @@ block content
   main.main
         // Breadcrumb
         ol.breadcrumb
-          li.breadcrumb-item Administração
-          li.breadcrumb-item Configuração
-          li.breadcrumb-item.active Veiculos
+          li.breadcrumb-item Clientes
+          li.breadcrumb-item.active Score Comportamental
         .container-fluid
           .animated.fadeIn
             .row
@@ -21,22 +20,32 @@ block content
                         thead
                           tr
                             th Placa
-                            th Device
-                            th Indice 1
-                            th Indice 2                            
-                            th Indice 3
-                            th Indice 4
-                            th Indice 5
-                            th Indice 6
-                            th Indice 7
-                            th Indice 8
-                            th Indice 9
+                            th Data
+                            each ttl in titles
+                              if(ttl.indexNo==1)
+                                th #{ttl.description} 
+                              if(ttl.indexNo==2)
+                                th #{ttl.description} 
+                              if(ttl.indexNo==3)
+                                th #{ttl.description} 
+                              if(ttl.indexNo==4)
+                                th #{ttl.description} 
+                              if(ttl.indexNo==5)
+                                th #{ttl.description} 
+                              if(ttl.indexNo==6)
+                                th #{ttl.description} 
+                              if(ttl.indexNo==7)
+                                th #{ttl.description} 
+                              if(ttl.indexNo==8)
+                                th #{ttl.description}  
+                              if(ttl.indexNo==9)
+                                th #{ttl.description}                                     
                             th Média
                         tbody                                                  
                              each behavior in list
                               tr
                                 td #{behavior.plate}
-                                td #{behavior.device} 
+                                td #{behavior.dworkd} 
                                 td #{behavior.index1}
                                 td #{behavior.index2}                                
                                 td #{behavior.index3}

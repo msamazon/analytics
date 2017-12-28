@@ -4,6 +4,7 @@ var bcrypt    = require('bcrypt')
 var mongooseLogs = require('mongoose-activitylogs')
 var calculationtype = ['Quantitativo','Qualitativo']
 var variabletype = ['Numérico','Textual','Percentual']
+var indexseq = ['1','2','3','4','5','6','7','8','9']
 
 var CalcvarSchema = new Schema({    
     item: {
@@ -28,6 +29,10 @@ var CalcvarSchema = new Schema({
     defaultvalue:String,
     minvalue: String,
     maxvalue: String,
+    indexNo: {
+        type: String,
+        enum:indexseq
+    }, 
     createdBy:{
         type: String
     },
@@ -47,6 +52,6 @@ CalcvarSchema.plugin(mongooseLogs, {
     deleteAction: "deleted" 
  })
 
-var profile = mongoose.model('do_sys_t00', CalcvarSchema)
+var variables = mongoose.model('do_sys_t00', CalcvarSchema)
 
-module.exports = profile
+module.exports = variables

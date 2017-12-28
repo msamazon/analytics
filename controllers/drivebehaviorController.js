@@ -9,7 +9,7 @@ var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
 var async           = require('run-async')
-
+var Carvars         = require('../models/Calcvar')
 var drivebehaviorController = {}
 
  drivebehaviorController.list = function(req, res) {   
@@ -23,7 +23,7 @@ var drivebehaviorController = {}
     };
     
     DriveBehavior
-        .find()
+        .find({active:true})
         .populate({
           path:'do_car_m00', 
           select:'plate',
@@ -38,18 +38,19 @@ var drivebehaviorController = {}
         })        
         .limit(limit)
         .skip(limit * page)
-        .exec(function(err, vehicles){
-          console.log('logo:' + vehicles)
-          DriveBehavior.count().exec(function(err, count){              
+        .exec(function(err, vehicles){          
+          DriveBehavior.count().exec(function(err, count){    
+            Carvars.find({active:true}).exec(function(error, idxvars){
                     res.render('drivebehavior/index',
                     { title: 'DriveOn Portal | Score Comportamental', 
                         list: vehicles,
+                        titles: idxvars,
                         user_info: req.user,
                         baseuri: baseurl,
                         page: page + 1,
                         pages: Math.ceil(count / limit)}
-                    );
-                  
+                    )
+                })   
             })      
         })  
   }

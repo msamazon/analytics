@@ -60,6 +60,13 @@ block content
                                 each vtype in valtypes
                                  option(value='#{vtype}') #{vtype} 
                         .form-group
+                          label.form-control-label(for='itemlbl') Index
+                          .controls
+                            .input-group
+                              select#idxno.form-control-sm(name='indexno')
+                                each idxs in indexnos
+                                 option(value='#{idxs}') #{idxs}            
+                        .form-group
                           label.col-md-3.form-control-label(for='activedYN') Ativo?
                           .controls
                             .col-md-9

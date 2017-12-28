@@ -22,7 +22,7 @@ var DO_CAR_A00Schema = new Schema({
     timestamps:true
 })
 
-DO_CAR_M00Schema.plugin(mongooseLogs, {
+DO_CAR_A00Schema.plugin(mongooseLogs, {
   schemaName: "DriveBehavior",
   createAction: "created",
   updateAction: "updated",
@@ -30,4 +30,4 @@ DO_CAR_M00Schema.plugin(mongooseLogs, {
 })
 
 
-module.exports =  mongoose.model('do_car_a00', DO_CAR_M00Schema)
+module.exports =  mongoose.model('do_car_a00', DO_CAR_A00Schema)

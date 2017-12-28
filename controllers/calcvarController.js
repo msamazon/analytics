@@ -19,8 +19,9 @@ exports.list = function(req, res) {
       limit: limit,
       page: page
     };
-    var clclogic = Calcvar.schema.path('calctype').enumValues; 
-    var vlrlogic = Calcvar.schema.path('valtype').enumValues;  
+    var clclogic = Calcvar.schema.path('calctype').enumValues 
+    var vlrlogic = Calcvar.schema.path('valtype').enumValues  
+    var indexseq = Calcvar.schema.path('indexNo').enumValues 
 
     Calcvar
         .find({}, function(err, calcvars){
@@ -35,7 +36,7 @@ exports.list = function(req, res) {
                         pages: Math.ceil(count / limit)}
                     );
                   }else{                    
-                    res.render('calcvars/new.jade', {title: 'DriveOn | Nova Variável para Cálculo', calctypes:clclogic, valtypes:vlrlogic, baseuri:baseurl});
+                    res.render('calcvars/new.jade', {title: 'DriveOn | Nova Variável para Cálculo', calctypes:clclogic, valtypes:vlrlogic, indexno:indexseq, baseuri:baseurl});
                   }     
             });        
         })
@@ -47,8 +48,8 @@ exports.create = function(req, res){
     var baseurl = req.protocol + "://" + req.get('host') + "/"   
     var clclogic = Calcvar.schema.path('calctype').enumValues
     var vlrlogic = Calcvar.schema.path('valtype').enumValues
-
-    res.render('calcvars/new.jade', { title: 'DriveOn | Nova Variável para Cálculo', calctypes:clclogic, valtypes:vlrlogic, baseuri:baseurl})
+    var indexseq = Calcvar.schema.path('indexNo').enumValues 
+    res.render('calcvars/new.jade', { title: 'DriveOn | Nova Variável para Cálculo', calctypes:clclogic, valtypes:vlrlogic, indexno:indexseq, baseuri:baseurl})
  };   
  
 exports.show = function(req, res){ 
@@ -67,10 +68,11 @@ exports.show = function(req, res){
           }   
         } else {     
           var clclogic = Calcvar.schema.path('calctype').enumValues
-          var vlrlogic = Calcvar.schema.path('valtype').enumValues
+          var vlrlogic = Calcvar.schema.path('valtype').enumValues          
+          var indexseq = Calcvar.schema.path('indexNo').enumValues
 
           req.flash('alert-info', 'Dados salvos com sucesso!')       
-          res.render('calcvars/show', {calcvars: profile, calctypes:clclogic, valtypes:vlrlogic, baseuri:baseurl});
+          res.render('calcvars/show', {calcvars: profile, calctypes:clclogic, valtypes:vlrlogic, indexno:indexseq, baseuri:baseurl});
         }
       });
   } else {    
@@ -93,8 +95,9 @@ exports.edit = function(req, res){
           }   
         } else {    
           var clclogic = Calcvar.schema.path('calctype').enumValues
-          var vlrlogic = Calcvar.schema.path('valtype').enumValues      
-          res.render('calcvars/edit', {calcvars: uprofile, calctypes:clclogic, valtypes:vlrlogic, baseuri:baseurl})
+          var vlrlogic = Calcvar.schema.path('valtype').enumValues                    
+          var indexseq = Calcvar.schema.path('indexNo').enumValues     
+          res.render('calcvars/edit', {calcvars: uprofile, calctypes:clclogic, valtypes:vlrlogic, indexnos:indexseq, baseuri:baseurl})
         }
       });
  };
@@ -110,6 +113,7 @@ exports.update = function(req, res){
                 active: req.body.active,
                 calctype: req.body.calctype,
                 valtype: req.body.valtype,
+                indexNo: req.body.indexno,
                 defaultvalue: req.body.defaultvalue,
                 minvalue: req.body.minvalue,
                 maxvalue: req.body.maxvalue,
@@ -129,8 +133,9 @@ exports.update = function(req, res){
                  break;
           }   
           var clclogic = Calcvar.schema.path('calctype').enumValues
-          var vlrlogic = Calcvar.schema.path('valtype').enumValues      
-          res.render('calcvars/edit', {calcvars: uprofile, calctypes:clclogic, valtypes:vlrlogic, baseuri:baseurl})
+          var vlrlogic = Calcvar.schema.path('valtype').enumValues                                
+          var indexseq = Calcvar.schema.path('indexNo').enumValues     
+          res.render('calcvars/edit', {calcvars: uprofile, calctypes:clclogic, valtypes:vlrlogic, indexno:indexseq, baseuri:baseurl})
         }else{
           req.flash('alert-info', 'Dados salvos com sucesso!')            
           res.redirect("/calcvars/show/"+profile._id)
@@ -161,9 +166,10 @@ exports.save  =   function(req, res){
                break;
         }        
         var clclogic = Calcvar.schema.path('calctype').enumValues
-        var vlrlogic = Calcvar.schema.path('valtype').enumValues
+        var vlrlogic = Calcvar.schema.path('valtype').enumValues                                       
+        var indexseq = Calcvar.schema.path('indexNo').enumValues 
     
-        res.render('calcvars/new.jade', { title: 'DriveOn | Nova Variável para Cálculo', calctypes:clclogic, valtypes:vlrlogic, baseuri:baseurl})
+        res.render('calcvars/new.jade', { title: 'DriveOn | Nova Variável para Cálculo', calctypes:clclogic, valtypes:vlrlogic, indexno:indexseq, baseuri:baseurl})
       } else {          
         req.flash('alert-info', 'Dados salvos com sucesso!')  
         res.redirect('/calcvars/show/'+profile._id)

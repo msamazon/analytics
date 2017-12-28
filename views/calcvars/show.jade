@@ -49,16 +49,23 @@ block content
                           label.form-control-label(for='calctype') Tipo de Cálculo
                           .controls
                             .input-group
-                              select#select.form-control-sm(name='calctype')
+                              select#select.form-control-sm(name='calctype', disabled=true)
                                each ctype in calctypes
                                 option(value='#{ctype}', selected=calcvars.calctype==ctype) #{ctype}
                         .form-group
                           label.form-control-label(for='itemlbl') Tipo de variável
                           .controls
                             .input-group
-                              select#select.form-control-sm(name='valtype')
+                              select#select.form-control-sm(name='valtype', disabled=true)
                                 each vtype in valtypes
                                  option(value='#{vtype}', selected=calcvars.valtype==vtype) #{vtype} 
+                         .form-group
+                          label.form-control-label(for='itemlbl') Index
+                          .controls
+                            .input-group
+                              select#indexno.form-control-sm(name='indexno', disabled=true)
+                                each idxs in indexno
+                                 option(value='#{idxs}', selected=calcvars.indexNo==idxs) #{idxs}   
                         .form-group
                           label.col-md-3.form-control-label(for='activedYN') Ativo?
                           .controls
