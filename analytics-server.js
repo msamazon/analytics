@@ -10,7 +10,6 @@ var chart           = require('chart.js')
 var cookieParser    = require('cookie-parser')
 var session         = require('express-session')
 var helpers         = require('view-helpers')
-var dotenv          = require('dotenv').config()
 var favicon 		= require('serve-favicon')
 var passport        = require('passport')
 var LocalStrategy   = require('passport-local').Strategy

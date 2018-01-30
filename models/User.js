@@ -20,7 +20,7 @@ var UserSchema = new Schema({
         customer : { type: Schema.Types.ObjectId, ref: 'do_cus_m00' },
         gender: String,
         active: Boolean,
-        avatar: { data: Buffer, contentType: String },
+        // avatar: { data: Buffer, contentType: String },
         attempts: Number,
         lastloginAt: [{ type: Schema.Types.Date }],
         createdBy: {

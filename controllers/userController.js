@@ -22,8 +22,15 @@ userController.register = function(req, res) {
  }
 
 userController.doRegister = function(req, res) {
-    
-  User.register( new User({ email : req.body.email, fullname: req.body.fullname, password: req.body.password }), function(err, user) {
+  
+  var user = new User({ 
+    fullname: req.body.fullname, 
+    email: req.body.email, 
+    active: true
+  })   
+
+
+  User.register( user,req.body.password, function(err, user) {
     if (err) {
       // return res.render('register', { user : user });
       console.log('Error on User registration:'+ err)
