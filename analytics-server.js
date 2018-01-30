@@ -13,7 +13,7 @@ var helpers         = require('view-helpers')
 var favicon 		= require('serve-favicon')
 var passport        = require('passport')
 var LocalStrategy   = require('passport-local').Strategy
-
+global.config = config;
 // Service Port
 var port = process.env.PORT ||  4884
 

@@ -216,8 +216,8 @@ deviceController.setuplist = function(req, res){
 deviceController.callttvapi = function(req, res){
  
   var dvc = req.params.id
-  var tk  = process.env.TTVKEY
- 
+  var tk  = config.TTVKEY
+  
     Device
       .findOne({_id:dvc}).exec(function(err, device){
             var mobilenumber  = device.simnumber
@@ -228,7 +228,7 @@ deviceController.callttvapi = function(req, res){
             var smspassword   = device.sms_password
             var smssetip      = device.sms_set_ip
             var smssetport  = device.sms_set_port
-            var smsmsg =  '*'+smssrvkey+'#set gprs#' +smsapn+ ',' +smsuser+','+smsuser+','+smssetip+','+smssetport+'*'        
+            var smsmsg =  '*'+smssrvkey+'#set gprs#' +smsapn+ ',' +smsuser+','+smspassword+','+smssetip+','+smssetport+'*'        
                         
             fetch('https://api.totalvoice.com.br/sms', {
               headers: {
