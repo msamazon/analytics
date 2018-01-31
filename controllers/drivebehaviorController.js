@@ -41,6 +41,7 @@ var drivebehaviorController = {}
         .exec(function(err, vehicles){          
           DriveBehavior.count().exec(function(err, count){    
             Carvars.find({active:true}).exec(function(error, idxvars){
+                    console.log(vehicles);
                     res.render('drivebehavior/index',
                     { title: 'DriveOn Portal | Score Comportamental', 
                         list: vehicles,
@@ -49,7 +50,7 @@ var drivebehaviorController = {}
                         baseuri: baseurl,
                         page: page + 1,
                         pages: Math.ceil(count / limit)}
-                    )
+                    )                    
                 })   
             })      
         })  
