@@ -15,7 +15,7 @@ var passport        = require('passport')
 var LocalStrategy   = require('passport-local').Strategy
 global.config = config;
 // Service Port
-var port = process.env.PORT ||  4884
+var port = config.port ||  4884
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))

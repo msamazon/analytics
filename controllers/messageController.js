@@ -157,7 +157,7 @@ messageController.getgeolist = function(req, res) {
       var dbase = '2017-12-06'
       console.log('paramentros='+ dongleCode + ' - ' + dbase)
       // Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'},'dateReceived':{ $regex: /^dbase/ }}).sort({$natural:-1}).exec(function (err, message) {        
-      Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({$natural:-1}).limit(2000).exec(function (err, message) {        
+      Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({$natural:-1}).limit(100).exec(function (err, message) {        
           
         if (err) {
           console.log("Error:", err);
