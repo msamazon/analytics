@@ -145,19 +145,18 @@ messageController.getgeolist = function(req, res) {
     
       var dongleCode = req.params.id
       
-      var d = new Date(),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
+      // var d = new Date(),
+      // month = '' + (d.getMonth() + 1),
+      // day = '' + d.getDate(),
+      // year = d.getFullYear();
 
-      if (month.length < 2) month = '0' + month;
-      if (day.length < 2) day = '0' + day;
-      var dbase = [year, month, day].join('-');
-
-      var dbase = '2017-12-06'
-      console.log('paramentros='+ dongleCode + ' - ' + dbase)
-      // Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'},'dateReceived':{ $regex: /^dbase/ }}).sort({$natural:-1}).exec(function (err, message) {        
-      Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({$natural:-1}).limit(100).exec(function (err, message) {        
+      // if (month.length < 2) month = '0' + month;
+      // if (day.length < 2) day = '0' + day;
+      // var dbase = [year, month, day].join('-');
+ Device.findOne({_id:dongleCode}, function(err, dev){        
+ 
+        var dvice = dev.device
+      Message.find({'dongleCode':dvice,'eventcode':{'$ne':'0220'}}).sort({$natural:-1}).limit(100).exec(function (err, message) {        
           
         if (err) {
           console.log("Error:", err);
@@ -175,12 +174,13 @@ messageController.getgeolist = function(req, res) {
               var message =  { "_id": id, "gpsData": gpsData, "time": time, 
               "dateReceived": dateReceived, "eventcode": eventcode, "dongleCode": dongleCode }
   
-              arrayCurrinfo.push(message)
-              res.json(arrayCurrinfo)
-            }
+              arrayCurrinfo.push(message)              
+            }            
           }
+          res.json(arrayCurrinfo)
         }
       })
+     })  
     }
 
 messageController.getAlarm = function(req, res) {

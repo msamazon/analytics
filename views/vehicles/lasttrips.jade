@@ -9,7 +9,7 @@ block content
           .animated.fadeIn         
             #mapid(style='padding-top: 0px; width: 960px;height: 500px;position: relative;margin:0 auto;line-height: 1.4em;')
             script.
-                var mymap = L.map('mapid').setView([-3.0658966666666667,-60.013075], 13);
+                var mymap = L.map('mapid').setView([-3.0658966666666667,-60.013075], 10);
 
                 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
                   maxZoom: 19,
@@ -41,14 +41,14 @@ block content
                                 crossDomain: "true",
                                 contentType: "application/json; charset=UTF-8"                                                             
                               }).done(function ( data ) {    
-                                //- console.log('Data=>'+ data);                            
+                                //- console.log('dongle=>'+ dongle + '  Data=>'+ JSON.stringify(data));                            
                                 success(data,plate);
                                 //- getPolyline(dongle);
                               });
                           };   
 
                           function success(position, pl) {
-                            console.log('position=o'+JSON.stringify(position))
+                            //- console.log('position=o'+JSON.stringify(position))
                             var geoloc =  position[0].gpsData.split(',');
                              var lati = geoloc[0];
                             var logi = geoloc[1];
@@ -56,8 +56,9 @@ block content
                             latlon.push(lati);
                             latlon.push(logi);
 
-                           console.log('dafads=o'+geoloc)
-
+                            //- console.log('dafads=o'+geoloc)
+                            
+                            mymap.flyTo(latlon, 13);
                               //- var drawControl = new L.Control.Draw({
                               //-   draw: {
                               //-     polyline: {
@@ -87,13 +88,13 @@ block content
                             //- });
                             //- firstpolyline.addTo(mymap);                             
                               var greenIcon = L.icon({
-                                  iconUrl: 'img/driveonicocar.png',
+                                  iconUrl: 'img/driveonstd.png',
                                   //- shadowUrl: 'img/leaf-shadow.png',
 
-                                  iconSize:     [15, 33], // size of the icon
-                                  shadowSize:   [50, 64], // size of the shadow
+                                  iconSize:     [70, 70], // size of the icon
+                                  //- shadowSize:   [50, 64], // size of the shadow
                                   iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-                                  shadowAnchor: [4, 62],  // the same for the shadow
+                                  //- shadowAnchor: [4, 62],  // the same for the shadow
                                   popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
                               });
 
