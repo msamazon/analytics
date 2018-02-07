@@ -177,7 +177,20 @@ var vehicleController = {}
 
  vehicleController.edit = function(req, res){ 
   var baseurl = req.protocol + "://" + req.get('host') + "/"    
-  Vehicle.findOne({_id: req.params.id}).exec(function (err, uprofile) {
+  Vehicle.findOne({_id: req.params.id})
+  .populate({
+    path:'device', 
+    select:'device',
+    match:{ active: true},
+    options: { sort: { device: -1 }}
+  })
+  .populate({
+    path:'customer', 
+    select:'fullname',
+    match:{ active: true },
+    options: { sort: { fullname: -1 }}
+  })
+  .exec(function (err, uprofile) {
         if (err) {
           switch (err.code)
           {
@@ -188,8 +201,47 @@ var vehicleController = {}
                  req.flash('alert-danger', "Erro ao editar:"+ err)  
                  break;
           }   
-        } else {          
-          res.render('vehicles/edit', {vehicles: uprofile, baseuri:baseurl});
+        } else {   
+          
+          Device
+                          .find({active: true}).exec(function(err, device){
+                            if (err) {
+                              switch (err.code)
+                              {
+                                case 11000: 
+                                    req.flash('alert-danger', 'Estes dados já existem no registro de devices.')    
+                                    break;        
+                                default: 
+                                    req.flash('alert-danger', "Erro ao carregar os perfis de devices:"+ err)  
+                                    break;
+                              }   
+                            }else{  
+                                Customer
+                                  .find({active: true}).exec(function(err, customer){
+                                    if (err) {
+                                      switch (err.code)
+                                      {
+                                        case 11000: 
+                                            req.flash('alert-danger', 'Estes dados já existem no registro de usuarios.')    
+                                            break;        
+                                        default: 
+                                            req.flash('alert-danger', "Erro ao carregar as autoridades de usuário:"+ err)  
+                                            break;
+                                      }   
+                                    }else{                                    
+                                              res.render('vehicles/edit', { title: 'DriveOn | Novo Veiculo',
+                                                  baseuri: baseurl,
+                                                  devices: device,
+                                                  customers: customer,
+                                                  vehicles: uprofile
+                                                })
+                                    } 
+                                })  
+                            }
+                          })  
+
+
+          // res.render('vehicles/edit', {vehicles: uprofile, baseuri:baseurl});
         }
       })
   }
@@ -200,10 +252,17 @@ var vehicleController = {}
           req.params.id,          
           { $set: 
               { 
-                userProfile: req.body.userProfile, 
-                ProfileDescription: req.body.ProfileDescription, 
+                plate: req.body.plate,
+                device: req.body.device,
+                vin: req.body.vin,
+                model: req.body.model,
+                color: req.body.color,
+                state: req.body.state,
+                customer: req.body.customer,
+                motor: req.body.motor,
+                fueltype: req.body.fueltype, 
+                manufYear: req.body.manufYear,               
                 active: req.body.active,
-                modifiedBy: req.user.email
               }
           }, 
           { new: true }, 
@@ -230,10 +289,10 @@ var vehicleController = {}
     var baseurl = req.protocol + "://" + req.get('host') + "/" 
     var payload = req.body
     
-    if(req.user) {           
-      // console.log('Check req.user data:'+ JSON.stringify(req.user))
-      payload.modifiedBy = req.user.email
-    }  
+    // if(req.user) {           
+    //   // console.log('Check req.user data:'+ JSON.stringify(req.user))
+    //   payload.modifiedBy = req.user.email
+    // }  
     
     var vehicle = new Vehicle(payload)      
     vehicle.save(function(err) {

@@ -20,28 +20,18 @@ block content
                       table.table.table-striped
                         thead
                           tr
+                            th Ações
                             th Placa
                             th Device
                             th Chassis
-                            //- th Modelo
-                            //- th Cor
-                            //- th Estado
                             th Conta
                             th Motor
-                            th Ativo
-                            th Ações
+                            th Ativo                            
                         tbody                                                  
                              each vehicle in list
+                              - var devname = vehicle.device.device;
+                              - var custname = vehicle.customer.fullname;
                               tr
-                                td #{vehicle.plate}
-                                td #{vehicle.device} 
-                                td #{vehicle.vin}
-                                //- td #{vehicle.model}                                
-                                //- td #{vehicle.color}
-                                //- td #{vehicle.state}
-                                td #{vehicle.customer}
-                                td #{vehicle.motor} 
-                                td #{ativo = vehicle.active==true?'Sim':'Não' }
                                 td 
                                   .form-group
                                     form.form-horizontal(action='/vehicles/delete/#{vehicle.id}', method='post')                                      
@@ -50,7 +40,13 @@ block content
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
                                       button(type='submit', style='background-color:transparent; border-color:transparent;')
-                                        i.fa.fa-remove                                                              
+                                        i.fa.fa-remove  
+                                td #{vehicle.plate}
+                                td #{devname} 
+                                td #{vehicle.vin}
+                                td #{custname}
+                                td #{vehicle.motor} 
+                                td #{ativo = vehicle.active==true?'Sim':'Não' }                                                                                            
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  

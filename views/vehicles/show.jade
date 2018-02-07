@@ -22,18 +22,20 @@ block content
                         .form-group
                           label.form-control-label(for='plate') Placa
                           .controls
-                            .input-group
+                            .input-group                              
                               input#plate.form-control(name='plate',size='100', type='text', value='#{vehicles.plate}', readonly=true)
                         .form-group
                           label.form-control-label(for='plate') Device
                           .controls
                             .input-group
-                              input#device.form-control(name='device',size='100', type='text', value='#{vehicles.device}', readonly=true) 
+                              - var devname = vehicles.device.device;
+                              input#device.form-control(name='device',size='100', type='text', value='#{devname}', readonly=true) 
                        .form-group
                           label.form-control-label(for='plate') Conta
                           .controls
                             .input-group
-                              input#customer.form-control(name='customer',size='100', type='text', value='#{vehicles.customer}', readonly=true)            
+                              - var customername = vehicles.customer.fullname;
+                              input#customer.form-control(name='customer',size='100', type='text', value='#{customername}', readonly=true)            
                         .form-group
                           label.form-control-label(for='businesscode') Chassis
                           .controls
