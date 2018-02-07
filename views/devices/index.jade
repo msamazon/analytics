@@ -21,22 +21,17 @@ block content
                       table.table.table-striped
                         thead
                           tr
+                            th Ações
                             th Device
                             th Descrição
                             th Ativo
                             th Criado em                             
                             th Modificado em 
                             th Modificado por
-                            th Ações
+                            
                         tbody                                                  
                              each device in list
                               tr
-                                td #{device.device}
-                                td #{device.description} 
-                                td #{ativo = device.active==true?'Sim':'Não' }                                
-                                td #{formatDate(device.createdAt)}                                
-                                td #{formatDate(device.updatedAt)}
-                                td #{(device.modifiedBy)}
                                 td 
                                   .form-group
                                     form.form-horizontal(action='/devices/delete/#{device.id}', method='post')                                      
@@ -45,7 +40,13 @@ block content
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
                                       button(type='submit', style='background-color:transparent; border-color:transparent;')
-                                        i.fa.fa-remove                                                              
+                                        i.fa.fa-remove 
+                                td #{device.device}
+                                td #{device.description} 
+                                td #{ativo = device.active==true?'Sim':'Não' }                                
+                                td #{formatDate(device.createdAt)}                                
+                                td #{formatDate(device.updatedAt)}
+                                td #{(device.modifiedBy)}                                                                                             
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  

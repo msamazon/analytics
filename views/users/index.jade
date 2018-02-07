@@ -20,22 +20,16 @@ block content
                       table.table.table-striped
                         thead
                           tr
+                            th Ações
                             th Nome
                             th e-mail
                             //- th Perfil
                             //- th Autoridade                            
                             //- th Conta
-                            th Ativo
-                            th Ações
+                            th Ativo                            
                         tbody                                                                                                         
                             each user in list                         
                               tr
-                                td #{user.fullname}
-                                td #{user.email}                                                                
-                                //- td #{uprof.ProfileDescription}
-                                //- td #{auth.AuthorityDescription}                                 
-                                //- td #{cli.fullname}
-                                td #{ativo = user.active==true?'Sim':'Não' }                            
                                 td 
                                   .form-group
                                     form.form-horizontal(action='/users/delete/#{user.id}', method='post')                                      
@@ -45,6 +39,12 @@ block content
                                       span                                      
                                       button(type='submit', style='background-color:transparent; border-color:transparent;')
                                         i.fa.fa-remove
+                                td #{user.fullname}
+                                td #{user.email}                                                                
+                                //- td #{uprof.ProfileDescription}
+                                //- td #{auth.AuthorityDescription}                                 
+                                //- td #{cli.fullname}
+                                td #{ativo = user.active==true?'Sim':'Não' }     
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  

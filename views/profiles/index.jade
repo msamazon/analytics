@@ -20,22 +20,16 @@ block content
                       table.table.table-striped
                         thead
                           tr
+                            th Ações
                             th Perfil
                             th Descrição
                             th Ativo
                             th Criado em                             
                             th Modificado em 
-                            th Modificado por
-                            th Ações
+                            th Modificado por                           
                         tbody                                                  
                              each profile in list
                               tr
-                                td #{profile.userProfile}
-                                td #{profile.ProfileDescription} 
-                                td #{ativo = profile.active==true?'Sim':'Não' }                                
-                                td #{formatDate(profile.createdAt)}                                
-                                td #{formatDate(profile.updatedAt)}
-                                td #{(profile.modifiedBy)}
                                 td 
                                   .form-group
                                     form.form-horizontal(action='/profiles/delete/#{profile.id}', method='post')                                      
@@ -44,7 +38,13 @@ block content
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
                                       button(type='submit', style='background-color:transparent; border-color:transparent;')
-                                        i.fa.fa-remove                                                              
+                                        i.fa.fa-remove
+                                td #{profile.userProfile}
+                                td #{profile.ProfileDescription} 
+                                td #{ativo = profile.active==true?'Sim':'Não' }                                
+                                td #{formatDate(profile.createdAt)}                                
+                                td #{formatDate(profile.updatedAt)}
+                                td #{(profile.modifiedBy)}                                                                                              
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  

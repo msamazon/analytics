@@ -20,22 +20,17 @@ block content
                       table.table.table-striped
                         thead
                           tr
+                            th Ações
                             th Autoridade
                             th Descrição
                             th Ativo
                             th Criado em                             
                             th Modificado em 
                             th Modificado por
-                            th Ações
+                            
                         tbody                                                  
                              each authority in list
                               tr
-                                td #{authority.userAuthority}
-                                td #{authority.AuthorityDescription} 
-                                td #{ativo = authority.active==true?'Sim':'Não' }                                
-                                td #{formatDate(authority.createdAt)}                                
-                                td #{formatDate(authority.updatedAt)}
-                                td #{(authority.modifiedBy)}
                                 td 
                                   .form-group
                                     form.form-horizontal(action='/authorities/delete/#{authority.id}', method='post')                                      
@@ -44,7 +39,13 @@ block content
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
                                       button(type='submit', style='background-color:transparent; border-color:transparent;')
-                                        i.fa.fa-remove                                                              
+                                        i.fa.fa-remove 
+                                td #{authority.userAuthority}
+                                td #{authority.AuthorityDescription} 
+                                td #{ativo = authority.active==true?'Sim':'Não' }                                
+                                td #{formatDate(authority.createdAt)}                                
+                                td #{formatDate(authority.updatedAt)}
+                                td #{(authority.modifiedBy)}                                                                                             
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  

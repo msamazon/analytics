@@ -20,6 +20,7 @@ block content
                       table.table.table-striped
                         thead
                           tr
+                            th Ações
                             th Nome / Razao Social
                             th eMail
                             th CPF / CNPJ
@@ -27,19 +28,10 @@ block content
                             th Bairro
                             th Cidade
                             th Estado
-                            th Ativo
-                            th Ações
+                            th Ativo                            
                         tbody                                                  
                              each customer in list
                               tr
-                                td #{customer.fullname}
-                                td #{customer.email} 
-                                td #{customer.businesscode}
-                                td #{customer.address1}                                
-                                td #{customer.district}
-                                td #{customer.city}
-                                td #{customer.province}  
-                                td #{ativo = customer.active==true?'Sim':'Não' }
                                 td 
                                   .form-group
                                     form.form-horizontal(action='/customers/delete/#{customer.id}', method='post')                                      
@@ -48,7 +40,15 @@ block content
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
                                       button(type='submit', style='background-color:transparent; border-color:transparent;')
-                                        i.fa.fa-remove                                                              
+                                        i.fa.fa-remove 
+                                td #{customer.fullname}
+                                td #{customer.email} 
+                                td #{customer.businesscode}
+                                td #{customer.address1}                                
+                                td #{customer.district}
+                                td #{customer.city}
+                                td #{customer.province}  
+                                td #{ativo = customer.active==true?'Sim':'Não' }                                                                                             
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  

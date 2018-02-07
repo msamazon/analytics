@@ -21,22 +21,16 @@ block content
                       table.table.table-striped
                         thead
                           tr
+                            th Ações
                             th Classe
                             th Descrição
                             th Ativo
                             th Criado em                             
                             th Modificado em 
-                            th Modificado por
-                            th Ações
+                            th Modificado por                            
                         tbody                                                  
                              each classes in list
                               tr
-                                td #{classes.class}
-                                td #{classes.description} 
-                                td #{ativo = classes.active==true?'Sim':'Não' }                                
-                                td #{formatDate(classes.createdAt)}                                
-                                td #{formatDate(classes.updatedAt)}
-                                td #{(classes.modifiedBy)}
                                 td 
                                   .form-group
                                     form.form-horizontal(action='/extclasses/delete/#{classes.id}', method='post')                                      
@@ -45,7 +39,13 @@ block content
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
                                       button(type='submit', style='background-color:transparent; border-color:transparent;')
-                                        i.fa.fa-remove                                                              
+                                        i.fa.fa-remove 
+                                td #{classes.class}
+                                td #{classes.description} 
+                                td #{ativo = classes.active==true?'Sim':'Não' }                                
+                                td #{formatDate(classes.createdAt)}                                
+                                td #{formatDate(classes.updatedAt)}
+                                td #{(classes.modifiedBy)}                                                                                             
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  

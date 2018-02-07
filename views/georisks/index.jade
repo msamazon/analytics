@@ -21,22 +21,16 @@ block content
                       table.table.table-striped
                         thead
                           tr
+                            th Ações
                             th Map Id
                             th País
                             th Estado
                             th Cidade                            
                             th Bairro
-                            th Zona
-                            th Ações
+                            th Zona                            
                         tbody                                                  
                              each georisk in list
                               tr
-                                td #{georisk.mapid}
-                                td #{georisk.country}
-                                td #{georisk.state}
-                                td #{georisk.city}
-                                td #{georisk.district}
-                                td #{georisk.zone}
                                 td 
                                   .form-group
                                     form.form-horizontal(action='/georisks/delete/#{georisk.id}', method='post')                                      
@@ -45,7 +39,13 @@ block content
                                           i.fa.fa-edit                                                                                                              
                                       span                                      
                                       button(type='submit', style='background-color:transparent; border-color:transparent;')
-                                        i.fa.fa-remove                                                              
+                                        i.fa.fa-remove 
+                                td #{georisk.mapid}
+                                td #{georisk.country}
+                                td #{georisk.state}
+                                td #{georisk.city}
+                                td #{georisk.district}
+                                td #{georisk.zone}                                                                                             
                        if (pages > 1)
                         ul.pagination
                           != createPagination(pages, page)  
