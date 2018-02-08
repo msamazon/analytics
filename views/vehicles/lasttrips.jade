@@ -42,7 +42,7 @@ block content
                                 contentType: "application/json; charset=UTF-8"                                                             
                               }).done(function ( data ) {                                    
                                 success(data,plate);
-                                //- getPolyline(dongle);
+                                getPolyline(dongle);
                               });
                           };   
 
@@ -54,8 +54,6 @@ block content
                             var latlon = [];
                             latlon.push(lati);
                             latlon.push(logi);
-
-                            
                             
                             mymap.flyTo(latlon, 13);
                                                          
@@ -70,7 +68,7 @@ block content
                                   popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
                               });
 
-                            L.marker(latlon, {icon: greenIcon}).addTo(mymap);
+                              L.marker(latlon, {icon: greenIcon}).addTo(mymap);
 
                             };
                           function getPolyline(donglecode){
@@ -83,14 +81,15 @@ block content
                                 crossDomain: "true",
                                 contentType: "application/json; charset=UTF-8"                                                             
                               }).done(function ( data ) {             
-                                console.log('Data polyline=>'+ data);                       
+                                //- console.log('Data polyline=>'+JSON.stringify(data));    
                                 // --- Polygon, with an inner ring ---                                
-                                //- var polygon = L.polygon([[[54, -6], [55, -7], [56, -2], [55, 1], [53, 0]], [[54, -3], [54, -2], [55, -1], [55, -5]]], {color: "#ff7800", weight: 1}).addTo(map);
-                                //- var pd = L.polylineDecorator(polygon, {
-                                //-     patterns: [
-                                //-         {offset: 0, repeat: 10, symbol: L.Symbol.dash({pixelSize: 0})}
-                                //-     ]
-                                //- }).addTo(map);
+                                //- var polygon = L.polygon([[[-23.553601666666665,-46.67834333333333], [-23.554365,-46.67883666666667]]], {color: "#089db8", weight: 1}).addTo(mymap);
+                                var polygon = L.polygon(data, {color: "#089db8", weight: 5}).addTo(mymap);
+                                var pd = L.polylineDecorator(polygon, {
+                                    patterns: [
+                                        {offset: 0, repeat: 10, symbol: L.Symbol.dash({pixelSize: 0})}
+                                    ]
+                                }).addTo(mymap);
                               });
                                 
                             };                               
