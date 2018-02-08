@@ -40,53 +40,25 @@ block content
                                 dataType: "json",
                                 crossDomain: "true",
                                 contentType: "application/json; charset=UTF-8"                                                             
-                              }).done(function ( data ) {    
-                                //- console.log('dongle=>'+ dongle + '  Data=>'+ JSON.stringify(data));                            
+                              }).done(function ( data ) {                                    
                                 success(data,plate);
                                 //- getPolyline(dongle);
                               });
                           };   
 
                           function success(position, pl) {
-                            //- console.log('position=o'+JSON.stringify(position))
+                            
                             var geoloc =  position[0].gpsData.split(',');
-                             var lati = geoloc[0];
+                            var lati = geoloc[0];
                             var logi = geoloc[1];
                             var latlon = [];
                             latlon.push(lati);
                             latlon.push(logi);
 
-                            //- console.log('dafads=o'+geoloc)
+                            
                             
                             mymap.flyTo(latlon, 13);
-                              //- var drawControl = new L.Control.Draw({
-                              //-   draw: {
-                              //-     polyline: {
-                              //-       distance: 20
-                              //-       vertices: true
-                              //-     },
-                              //-     polygon: {
-                              //-       distance: 25
-                              //-     },
-                              //-     marker: {
-                              //-       distance: 25
-                              //-     },
-                              //-     rectangle: false,
-                              //-     circle: false
-                              //-   }
-                              //- }
-
-                            //- var pointA = new L.LatLng(geoloc);
-                            //- var pointB = new L.LatLng(geoloc);
-                            //- var pointList = [pointA, pointB];
-
-                            //- var firstpolyline = new L.Polyline(pointList, {
-                            //-     color: 'red',
-                            //-     weight: 3,
-                            //-     opacity: 0.5,
-                            //-     smoothFactor: 1
-                            //- });
-                            //- firstpolyline.addTo(mymap);                             
+                                                         
                               var greenIcon = L.icon({
                                   iconUrl: 'img/driveonstd.png',
                                   //- shadowUrl: 'img/leaf-shadow.png',
@@ -100,4 +72,25 @@ block content
 
                             L.marker(latlon, {icon: greenIcon}).addTo(mymap);
 
-                          }                             
+                            };
+                          function getPolyline(donglecode){
+                              jQuery.support.cors = true;
+                              $.ajax
+                              ({
+                                type: "get",
+                                url: "/message/gps/" + donglecode,
+                                dataType: "json",
+                                crossDomain: "true",
+                                contentType: "application/json; charset=UTF-8"                                                             
+                              }).done(function ( data ) {             
+                                console.log('Data polyline=>'+ data);                       
+                                // --- Polygon, with an inner ring ---                                
+                                //- var polygon = L.polygon([[[54, -6], [55, -7], [56, -2], [55, 1], [53, 0]], [[54, -3], [54, -2], [55, -1], [55, -5]]], {color: "#ff7800", weight: 1}).addTo(map);
+                                //- var pd = L.polylineDecorator(polygon, {
+                                //-     patterns: [
+                                //-         {offset: 0, repeat: 10, symbol: L.Symbol.dash({pixelSize: 0})}
+                                //-     ]
+                                //- }).addTo(map);
+                              });
+                                
+                            };                               

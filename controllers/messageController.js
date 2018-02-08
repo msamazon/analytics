@@ -37,31 +37,30 @@ messageController.list = function(req, res) {
 
 messageController.getgeo = function(req, res) {
   
-    var dongleCode = req.params.id
+    var dongleCode = req.params.id;
   
-    Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({$natural:-1}).limit(10).exec(function (err, message) {
+    Message.find({'dongleCode':dongleCode,'eventcode':{'$ne':'0220'}}).sort({$natural:-1}).limit(50).exec(function (err, message) {
       
       if (err) {
         console.log("Error:", err);
       }else {
-  
+        var arrayCurrinfo = []
         for(var i = 0; i < message.length; i++) {
   
-          var id             = message[i]._id
-          var gpsData        = message[i].gpsData
-          var time           = message[i].time
-          var dateReceived   = message[i].dateReceived
-          var eventcode      = message[i].eventcode
-          var dongleCode     = message[i].dongleCode
+          var gpsData  = message[i].gpsData;
+          var geoloc =  gpsData.split(',');
+          var lati = geoloc[0];
+          var logi = geoloc[1];
+          var latlon = [];
 
-          if (gpsData != undefined) {
-            var message =  { "_id": id, "gpsData": gpsData, "time": time, 
-            "dateReceived": dateReceived, "eventcode": eventcode, "dongleCode": dongleCode }
-
-            console.log({message: message})
-            res.json({message: message})
+          latlon.push(lati);
+          latlon.push(logi);
+          
+          if (gpsData != undefined) {            
+            arrayCurrinfo.push(latlon); 
           }
-        }        
+        }
+        res.json(arrayCurrinfo)        
       }
     })
   }
