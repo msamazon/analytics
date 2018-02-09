@@ -378,7 +378,7 @@ vehicleController.listbyUser = function(req, res) {
     User
       .findOne({email:req.user.email}).exec(function(err, user){ 
           Vehicle
-              .find({customer:user.customer.id})
+              .find({customer:user.customer})
               .limit(limit)
               .skip(limit * page)
               .exec(function(err, vehicles){
