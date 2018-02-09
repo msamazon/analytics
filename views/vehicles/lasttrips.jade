@@ -14,16 +14,16 @@ block content
           li.breadcrumb-item.active Último trajeto
         .container-fluid            
             #sidebar    
-              table.table.table-responsive.table-hover.table-outline.mb-0
-                          thead.thead-default
-                            tr                           
-                              th Veículos                            
-                          tbody  
-                              each carro in carros
-                                tr                           
-                                  td
-                                    div                                                              
-                                      button.btn-link(onclick='executeQuery("#{carro.device}","Viatura")') #{carro.plate}
+              //- table.table.table-responsive.table-hover.table-outline.mb-0
+              //-             thead.thead-default
+              //-               tr                           
+              //-                 th Veículos                            
+              //-             tbody  
+              //-                 each carro in carros
+              //-                   tr                           
+              //-                     td
+              //-                       div                                                              
+              //-                         button.btn-link(onclick='executeQuery("#{carro.device}","Viatura")') #{carro.plate}
             #mapid(style='padding-top: 0px; width: 960px;height: 500px;position: relative;margin:0 auto;line-height: 1.4em;')            
             script(type='text/javascript').
               if (navigator.geolocation)

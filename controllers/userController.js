@@ -57,9 +57,10 @@ userController.doLogin = function(req, res, next) {
     }
 
     if (!user) { 
-      req.flash('alert-danger', "Erro ao salvar:"+ err)  
-      return res.send({ success : false, message : 'authentication failed' });
-      // return res.redirect('/login') 
+      req.flash('alert-danger', "Usuário não encontrado, Favor revisar usuário e senha. Detalhes:"+ err)  
+      // return res.send({ success : false, message : 'authentication failed' });
+      return res.redirect('/login') 
+      // res.render('login', {title:'DriveOn'})
     }
     
     req.logIn(user, function(loginErr) {      

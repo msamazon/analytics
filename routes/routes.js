@@ -15,9 +15,6 @@ var eclass          =  require("../controllers/extensiveclassController")
 var evalo           =  require("../controllers/extensivevalueController")
 var drivebahavior   = require('../controllers/drivebehaviorController')
 
-// restrict index for logged in user only
-// router.get('/', user.home)
-
 // route to login page
 router.get('/login', user.login);
 

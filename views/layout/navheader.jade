@@ -1,4 +1,8 @@
 header.app-header.navbar
+      if (user) 
+        - var username = user.fullname;
+        - var useremail = user.email;
+        - var uavatar = ulogo;
       button.navbar-toggler.mobile-sidebar-toggler.d-lg-none.mr-auto(type='button') ☰
       a.navbar-brand(href='#')
       button.navbar-toggler.sidebar-minimizer.d-md-down-none(type='button') ☰
@@ -7,10 +11,8 @@ header.app-header.navbar
           a.nav-link(href='/') Dashboard    
       ul.nav.navbar-nav.ml-auto
         li.nav-item.dropdown
-          a.nav-link.dropdown-toggle.nav-link(data-toggle='dropdown', href='#', role='button', aria-haspopup='true', aria-expanded='false')
-            //- img.img-avatar(src='#{user_info.avatar}', alt='#{user_info.email}')
-            //- img.img-avatar(src='#{baseuri}img/avatars/2.jpg', alt='#{user_info.email}')
-            //- span.d-md-down-none #{user_info.fullname}
+          a.nav-link.dropdown-toggle.nav-link(data-toggle='dropdown', href='#', role='button', aria-haspopup='true', aria-expanded='false')            
+            span(data-letters=uavatar).d-md-down-none #{username}             
           .dropdown-menu.dropdown-menu-right
             .dropdown-header.text-center
               strong Conta de Usuário

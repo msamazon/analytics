@@ -21,7 +21,8 @@ exports.list = function(req, res){
       page: page
     };
   
-         
+    var uavatar = getInitials(req.user.fullname);       
+
     User
       .findOne({email:req.user.email}).exec(function(err, user){ 
           cars
@@ -34,7 +35,8 @@ exports.list = function(req, res){
                           { title: 'DriveOn Portal',
                               params:{CurWStart:firstday, CurWEnd:lastday},  
                               carros: carss,
-                              user_info: req.user,
+                              user: req.user,                              
+                              ulogo: uavatar,
                               baseuri: baseurl,
                               page: page + 1,
                               pages: Math.ceil(count / limit)}
@@ -65,6 +67,7 @@ exports.list = function(req, res){
       page: page
     };
   
+    
     cars
         .find({'active': true}, function(err, car){
             cars.count().exec(function(err, count){
@@ -82,3 +85,15 @@ exports.list = function(req, res){
         .limit(limit)
         .skip(limit * page)
  }
+
+var getInitials = function (string) {
+    var names = string.split(' '),
+        initials = names[0].substring(0, 1).toUpperCase();
+    
+    if (names.length > 1) {
+        initials += names[names.length - 1].substring(0, 1).toUpperCase();
+    }else{
+        initials = names.substring(0, 1).toUpperCase();
+    }   
+    return initials;
+};
