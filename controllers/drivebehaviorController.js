@@ -5,6 +5,7 @@ var DriveBehavior   = require('../models/DriveBehavior')
 var Device          = require('../models/Device')
 var Customer        = require('../models/Customer')
 var User            = require('../models/User')
+var cars            = require("../models/Vehicle")
 var bcrypt          = require('bcrypt')
 var jwt             = require('jsonwebtoken')
 var config          = require('../lib/config')
@@ -21,39 +22,49 @@ var drivebehaviorController = {}
       limit: limit,
       page: page
     };
+  
     
-    DriveBehavior
-        .find({active:true})
-        .populate({
-          path:'do_car_m00', 
-          select:'plate',
-          match:{ active: true },
-          options: { sort: { plate: -1 }}
-        })
-        .populate({
-          path:'do_dev_m00', 
-          select:'device',
-          match:{ active: true },
-          options: { sort: { device: -1 }}
-        })        
-        .limit(limit)
-        .skip(limit * page)
-        .exec(function(err, vehicles){          
-          DriveBehavior.count().exec(function(err, count){    
-            Carvars.find({active:true}).exec(function(error, idxvars){
-                    console.log(vehicles);
-                    res.render('drivebehavior/index',
-                    { title: 'DriveOn Portal | Score Comportamental', 
-                        list: vehicles,
-                        titles: idxvars,
-                        user_info: req.user,
-                        baseuri: baseurl,
-                        page: page + 1,
-                        pages: Math.ceil(count / limit)}
-                    )                    
-                })   
-            })      
-        })  
+  User
+    .findOne({email:req.user.email}).exec(function(err, user){  
+      cars
+      .find({customer:user.customer, active: true })
+      .exec(function(err, carss){    
+          DriveBehavior
+            .find({'plate': carss[0]._id})            
+            .populate({
+              path:'plate', 
+              select:'plate',
+              match:{ active: true },
+              options: { sort: { plate: -1 }}
+            })
+            .populate({
+              path:'device', 
+              select:'device',
+              match:{ active: true },
+              options: { sort: { device: -1 }}
+            })        
+            .limit(limit)
+            .skip(limit * page)
+            .exec(function(err, vehicles){  
+              DriveBehavior.count().exec(function(err, count){    
+                Carvars.find({active:true}).exec(function(error, idxvars){                    
+                        res.render('drivebehavior/index',
+                        { title: 'DriveOn Portal | Score Comportamental', 
+                            list: vehicles,
+                            titles: idxvars,
+                            user_info: req.user,
+                            baseuri: baseurl,
+                            page: page + 1,
+                            pages: Math.ceil(count / limit)}
+                        )                    
+                    })   
+                })      
+            })  
+
+      });
+    });
+
+    
   }
 
 

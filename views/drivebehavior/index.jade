@@ -21,7 +21,7 @@ block content
                           tr
                             th Placa
                             th Data
-                            th Score
+                            th Score (%)
                             each ttl in titles
                               if(ttl.indexNo==1)
                                 th #{ttl.description} 
@@ -43,10 +43,10 @@ block content
                                 th #{ttl.description}
                         tbody                                                  
                              each behavior in list
-                              tr
-                                td CAR-0054 
-                                //- td #{behavior.plate}
-                                td #{behavior.dworkd} 
+                              - var placa = behavior.plate.plate;
+                              tr                                
+                                td #{placa}
+                                td #{formatDate(behavior.dworkd)} 
                                 td #{behavior.indexAvg}
                                 td #{behavior.index1}
                                 td #{behavior.index2}                                

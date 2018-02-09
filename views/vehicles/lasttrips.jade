@@ -1,95 +1,141 @@
 extends ../layout/templatetrips
+block head
+  link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css')
+  link(rel='stylesheet', href='/css/L.control.sidebar.css')
+block scripts
+  script(src='http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js')
+  script(src='/js/L.control.sidebar.js')
+
 block content
   main.main
         ol.breadcrumb
           li.breadcrumb-item Clientes
           li.breadcrumb-item Veiculos
           li.breadcrumb-item.active Último trajeto
-        .container-fluid
-          .animated.fadeIn         
-            #mapid(style='padding-top: 0px; width: 960px;height: 500px;position: relative;margin:0 auto;line-height: 1.4em;')
-            script.
-                var mymap = L.map('mapid').setView([-3.0658966666666667,-60.013075], 10);
-
-                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-                  maxZoom: 19,
-                  id: 'mapbox.streets'
-                }).addTo(mymap);
-           #cnttable(style='position: absolute; top:270px; left: 230px;  width:180px;  height:30px; z-index: 2000;')
-                          table.table.table-responsive.table-hover.table-outline.mb-0
-                            thead.thead-default
-                              tr                           
-                                th Veículos                            
-                            tbody
+        .container-fluid            
+            #sidebar    
+              table.table.table-responsive.table-hover.table-outline.mb-0
+                          thead.thead-default
+                            tr                           
+                              th Veículos                            
+                          tbody  
                               each carro in carros
                                 tr                           
                                   td
-                                    div                             
-                                      //- button.btn-link(onclick='executeQuery(#{carro.deviceHex})') #{carro.plate}
+                                    div                                                              
                                       button.btn-link(onclick='executeQuery("#{carro.device}","Viatura")') #{carro.plate}
-                          if (pages > 1)
-                            ul.pagination
-                              != createPagination(pages, page)     
-                        script(type='text/javascript').
-                         function executeQuery(dongle, plate) {
-                              jQuery.support.cors = true;
-                              $.ajax
-                              ({
-                                type: "get",
-                                url: "/message/gpslist/" + dongle,
-                                dataType: "json",
-                                crossDomain: "true",
-                                contentType: "application/json; charset=UTF-8"                                                             
-                              }).done(function ( data ) {                                    
-                                success(data,plate);
-                                getPolyline(dongle);
-                              });
-                          };   
+            #mapid(style='padding-top: 0px; width: 960px;height: 500px;position: relative;margin:0 auto;line-height: 1.4em;')            
+            script(type='text/javascript').
+              if (navigator.geolocation)
+              {
+                navigator.geolocation.getCurrentPosition(showPosition);
+              }
 
-                          function success(position, pl) {
-                            
-                            var geoloc =  position[0].gpsData.split(',');
-                            var lati = geoloc[0];
-                            var logi = geoloc[1];
-                            var latlon = [];
-                            latlon.push(lati);
-                            latlon.push(logi);
-                            
-                            mymap.flyTo(latlon, 13);
-                                                         
-                              var greenIcon = L.icon({
-                                  iconUrl: 'img/driveonstd.png',
-                                  //- shadowUrl: 'img/leaf-shadow.png',
+              function showPosition(position) {
+                
+                  var lat = position.coords.latitude | -3.0658966666666667;
+                  var lon = position.coords.longitude | -60.013075;
 
-                                  iconSize:     [70, 70], // size of the icon
-                                  //- shadowSize:   [50, 64], // size of the shadow
-                                  iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-                                  //- shadowAnchor: [4, 62],  // the same for the shadow
-                                  popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-                              });
+                  var mymap = L.map('mapid').setView([lat,lon], 10);
 
-                              L.marker(latlon, {icon: greenIcon}).addTo(mymap);
+                  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                    maxZoom: 19,
+                    id: 'mapbox.streets'
+                  }).addTo(mymap);
 
-                            };
-                          function getPolyline(donglecode){
-                              jQuery.support.cors = true;
-                              $.ajax
-                              ({
-                                type: "get",
-                                url: "/message/gps/" + donglecode,
-                                dataType: "json",
-                                crossDomain: "true",
-                                contentType: "application/json; charset=UTF-8"                                                             
-                              }).done(function ( data ) {             
-                                //- console.log('Data polyline=>'+JSON.stringify(data));    
-                                // --- Polygon, with an inner ring ---                                
-                                //- var polygon = L.polygon([[[-23.553601666666665,-46.67834333333333], [-23.554365,-46.67883666666667]]], {color: "#089db8", weight: 1}).addTo(mymap);
-                                var polygon = L.polygon(data, {color: "#089db8", weight: 5}).addTo(mymap);
-                                var pd = L.polylineDecorator(polygon, {
-                                    patterns: [
-                                        {offset: 0, repeat: 10, symbol: L.Symbol.dash({pixelSize: 0})}
-                                    ]
-                                }).addTo(mymap);
-                              });
-                                
-                            };                               
+                  var sidebar = L.control.sidebar('sidebar', {
+                      closeButton: true,
+                      position: 'left'
+                  });
+                  mymap.addControl(sidebar);
+
+                  setTimeout(function () {
+                      sidebar.show();
+                  }, 500);
+
+                  mymap.on('click', function () {
+                      sidebar.hide();
+                  })
+
+                  sidebar.on('show', function () {
+                      console.log('Sidebar will be visible.');
+                  });
+
+                  sidebar.on('shown', function () {
+                      console.log('Sidebar is visible.');
+                  });
+
+                  sidebar.on('hide', function () {
+                      console.log('Sidebar will be hidden.');
+                  });
+
+                  sidebar.on('hidden', function () {
+                      console.log('Sidebar is hidden.');
+                  });
+
+                  L.DomEvent.on(sidebar.getCloseButton(), 'click', function () {
+                      console.log('Close button clicked.');
+                  });
+                }                                         
+            
+              function executeQuery(dongle, plate) {
+                  jQuery.support.cors = true;
+                  $.ajax
+                  ({
+                    type: "get",
+                    url: "/message/gpslist/" + dongle,
+                    dataType: "json",
+                    crossDomain: "true",
+                    contentType: "application/json; charset=UTF-8"                                                             
+                  }).done(function ( data ) {                                    
+                    success(data,plate);
+                    //- getPolyline(dongle);
+                  });
+              };   
+
+              function success(position, pl) {
+                
+                var geoloc =  position[0].gpsData.split(',');
+                var lati = geoloc[0];
+                var logi = geoloc[1];
+                var latlon = [];
+                latlon.push(lati);
+                latlon.push(logi);
+                
+                mymap.flyTo(latlon, 13);
+                                              
+                  var greenIcon = L.icon({
+                      iconUrl: 'img/driveonstd.png',
+                      //- shadowUrl: 'img/leaf-shadow.png',
+
+                      iconSize:     [70, 70], // size of the icon
+                      //- shadowSize:   [50, 64], // size of the shadow
+                      iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+                      //- shadowAnchor: [4, 62],  // the same for the shadow
+                      popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+                  });
+
+                  L.marker(latlon, {icon: greenIcon}).addTo(mymap);
+
+                };
+              function getPolyline(donglecode){
+                  jQuery.support.cors = true;
+                  $.ajax
+                  ({
+                    type: "get",
+                    url: "/message/gps/" + donglecode,
+                    dataType: "json",
+                    crossDomain: "true",
+                    contentType: "application/json; charset=UTF-8"                                                             
+                  }).done(function ( data ) {             
+                    //- console.log('Data polyline=>'+JSON.stringify(data));    
+                    // --- Polygon, with an inner ring ---                                
+                    //- var polygon = L.polygon([[[-23.553601666666665,-46.67834333333333], [-23.554365,-46.67883666666667]]], {color: "#089db8", weight: 1}).addTo(mymap);
+                    var polygon = L.polygon(data, {color: "#089db8", weight: 5}).addTo(mymap);
+                    var pd = L.polylineDecorator(polygon, {
+                        patterns: [
+                            {offset: 0, repeat: 10, symbol: L.Symbol.dash({pixelSize: 0})}
+                        ]
+                    }).addTo(mymap);
+                  });                                
+                };                                                                            
